@@ -15,7 +15,13 @@
 
 # Introduction
 
+![Diagramme de contexte](./image/contextdiagram.png)
+
+\includegraphics[width=6in]{./image/contextdiagram.png}
+
 ## Identification du système
+
+
 
 Le système à pour nom Alice et il est en version 0.1.
 
