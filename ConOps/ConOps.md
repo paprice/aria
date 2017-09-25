@@ -21,13 +21,8 @@
 
 ## Identification du système
 
-<<<<<<< HEAD
-
-
-Le système à pour nom Alice et il est en version 0.1.
-=======
 Le système a pour nom A.L.I.C.E. et il est en version 0.1.
->>>>>>> 4deb638c1029db1f6218f2fc8bd469e32e791279
+
 
 ## Objectifs du document
 
