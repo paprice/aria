@@ -15,14 +15,9 @@
 
 # Introduction
 
-![Diagramme de contexte](./image/contextdiagram.png)
-
-\includegraphics[width=6in]{./image/contextdiagram.png}
-
 ## Identification du système
 
 Le système a pour nom A.L.I.C.E. et il est en version 0.1.
-
 
 ## Objectifs du document
 
@@ -42,7 +37,7 @@ A.L.I.C.E. a pour but principal d'offrir une expérience interactive et communic
 
 Le développement de ce système n'est pas commandité. Il est, à sa conception, développé par Patrice Desrochers, Gildo Conte et Audrey Eugène. A.L.I.C.E. est une application qui fonctionnera sur n'importe quel ordinateur Windows ou iOS.
 
-????DIAGRAMME DE CONTEXTE????
+![Diagramme de contexte](./image/contextdiagram.png)
 
 # Références
 
