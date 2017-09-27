@@ -3,6 +3,9 @@
 % 2017-09-17
 
 # Liste des acronymes et abréviation {-}
+IA
+: Intelligence artificielle
+
 
 # Historique des révisions {-}
 
@@ -35,7 +38,7 @@ A.L.I.C.E. a pour but principal d'offrir une expérience interactive et communic
 - Fournir un outil de psychologie avancé, en rendant le système communicatif et en lui permettant de développer une personnalité
 - Faire participer les internautes; la personnalité et l'intelligence du système doit se développer grâce à un grand nombre d'usagers
 
-Le développement de ce système n'est pas commandité. Il est, à sa conception, développé par Patrice Desrochers, Gildo Conte et Audrey Eugène. A.L.I.C.E. est une application qui fonctionnera sur n'importe quel ordinateur Windows ou iOS.
+Le développement de ce système n'est pas commandité. Il est, à sa conception, développé par Patrice Desrochers, Gildo Conte et Audrey Eugène. A.L.I.C.E. est une application qui fonctionnera sur n'importe quel ordinateur Windows, MacOS et Linux.
 
 ![Diagramme de contexte](./image/contextdiagram.png)
 
@@ -43,7 +46,13 @@ Le développement de ce système n'est pas commandité. Il est, à sa conception
 
 # Le système actuel
 
+CleverBot est une application web qui permet de d'entretenir une conversation avec une intelligence artificielle. L'application apprends à répondre en fonction de la réponse des autres utilisateurs. La page web est en place depuis 2006, mais l'IA est programmé depuis 1988.
+
 ## Contexte, objectifs et portée du système actuel
+
+### Portée
+
+L'IA apprends à répondre à des questions, mais elle n'est pas une personne a part entière, puisqu'elle ne fait qu'apprendre à imiter les humains avec qui elle interagit.
 
 ## Politiques opérationnelles et contraintes
 
