@@ -60,18 +60,18 @@ Cleverbot maintient une conversation en cherchant dans sa base de données les r
 
 ## Politiques opérationnelles et contraintes
 
-Étant donnée que l'application est une application web, elle fonctionne 24 heures sur 24, 7 jours sur 7 et peut fonctionner sur n'importe quel système. Aussi, la quantité maximale de personnes connecté ne simultanée dépend du serveur sur lequel l'application est héberger et non l'application elle même.
+Étant donnée que Cleverbot est une application web, elle fonctionne 24 heures sur 24, 7 jours sur 7 et peut fonctionner sur n'importe quel système. Aussi, la quantité maximale de personnes connectées en simultané dépend du serveur sur lequel l'application est hébergée et non l'application elle-même.
 
 ## Description du système actuel
 
-Les fonctionnalité du système actuel sont :
+Les fonctionnalités du système actuel sont :
 
 - Chatterbot
 : une IA qui "comprends" et qui répond aux phrases qu'on lui dit.
 - Sauvegarde de la plus récente conversation
 - Réinitialisation d'une conversation pour recommencer à 0
 - Possibilité de laisser l'IA choisir un sujet de conversation
-- Possibilité de faire l'IA réfléchir sur le dernier sujet parler
+- Possibilité de faire l'IA réfléchir sur le dernier sujet discuté
 
 ## Les modes d'opération du système
 
