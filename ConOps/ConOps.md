@@ -56,7 +56,7 @@ Il existe plusieurs intelligences artificielles sur le marché dont le but princ
 
 ### Portée
 
-L'IA apprends à répondre à des questions, mais elle n'est pas une personne a part entière, puisqu'elle ne fait qu'apprendre à imiter les humains avec qui elle interagit.
+Cleverbot maintient une conversation en cherchant dans sa base de données les réponses qu'elle a reçues pour une question en particulier. Ainsi, elle peut reproduire le « flow » d'une conversation et apprendre des expressions ainsi que des phrases pré-construites. Cependant, Cleverbot n'est pas une entité a part entière, puisqu'elle ne fait qu'apprendre à imiter les humains avec qui elle interagit. Elle n'a pas de préférence ou d'opinion, elle n'a aucun concept du soi, et elle requiert une question pour pouvoir répondre : elle ne pose aucune question par elle-même.
 
 ## Politiques opérationnelles et contraintes
 
@@ -66,7 +66,7 @@ L'IA apprends à répondre à des questions, mais elle n'est pas une personne a 
 
 Les fonctionnalité du système actuel sont :
 
-- Chatbot
+- Chatterbot
 : une IA qui "comprends" et qui répond aux phrases qu'on lui dit.
 - Sauvegarde de la plus récente conversation
 - Réinitialisation d'une conversation pour recommencer à 0
