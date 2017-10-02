@@ -1,5 +1,5 @@
 % ConOps
-% Nous
+% Patrice Desrochers, Gildo Conte, Audrey Eugène
 % 2017-09-17
 
 # Liste des acronymes et abréviation {-}
@@ -11,7 +11,7 @@ IA
 
 | **Date**   | **Version** | **Description**  | **Auteur**                                                                           |
 | :--------- | :---------: | :--------------- | :----------------------------------------------------------------------------------- |
-| 2017-09-17 |     0.1     | Version initiale | Patrice Desrochers, Gildo Conte |
+| 2017-09-17 |     0.1     | Version initiale | Patrice Desrochers, Gildo Conte, Audrey Engène |
 
 # Préface {-}
 
@@ -44,6 +44,10 @@ Le développement de ce système n'est pas commandité. Il est, à sa conception
 
 # Références
 
+https://www.existor.com/products/cleverbot-data-for-machine-learning/
+
+https://fr.wikipedia.org/wiki/AIML
+
 # Le système actuel
 
 CleverBot est une application web qui permet de d'entretenir une conversation avec une intelligence artificielle. L'application apprends à répondre en fonction de la réponse des autres utilisateurs. La page web est en place depuis 2006, mais l'IA est programmé depuis 1988.
@@ -56,15 +60,30 @@ L'IA apprends à répondre à des questions, mais elle n'est pas une personne a 
 
 ## Politiques opérationnelles et contraintes
 
+Étant donnée que l'application est une application web, elle fonctionne 24 heures sur 24, 7 jours sur 7 et peut fonctionner sur n'importe quel système. Aussi, la quantité maximale de personnes connecté ne simultanée dépend du serveur sur lequel l'application est héberger et non l'application elle même.
+
 ## Description du système actuel
+
+Les fonctionnalité du système actuel sont :
+
+- Chatbot
+: une IA qui "comprends" et qui répond aux phrases qu'on lui dit.
+- Sauvegarde de la plus récente conversation
+- Réinitialisation d'une conversation pour recommencer à 0
+- Possibilité de laisser l'IA choisir un sujet de conversation
+- Possibilité de faire l'IA réfléchir sur le dernier sujet parler
 
 ## Les modes d'opération du système
 
 ## Les classes d'utilisateurs et les autres personnes impliqués
 
+Une des classes d'utilisateur est les gens normaux utilisant l'application.
+
 ### La structure organisationnelle
 
 ### Le profil de chaque classe d'utilisateurs
+
+- gens normaux : Ils interagissent avec l'application et ils permettent à l'application d'apprendre et de répondre mieux aux autres personnes.
 
 ### Les interactions entre les utilisateurs
 
