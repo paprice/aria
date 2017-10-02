@@ -11,7 +11,7 @@ IA
 
 | **Date**   | **Version** | **Description**  | **Auteur**                                                                           |
 | :--------- | :---------: | :--------------- | :----------------------------------------------------------------------------------- |
-| 2017-09-17 |     0.1     | Version initiale | Patrice Desrochers, Gildo Conte, Audrey Engène |
+| 2017-09-17 |     0.1     | Version initiale | Patrice Desrochers, Gildo Conte, Audrey Eugène |
 
 # Préface {-}
 
@@ -50,7 +50,7 @@ https://fr.wikipedia.org/wiki/AIML
 
 # Le système actuel
 
-CleverBot est une application web qui permet de d'entretenir une conversation avec une intelligence artificielle. L'application apprends à répondre en fonction de la réponse des autres utilisateurs. La page web est en place depuis 2006, mais l'IA est programmé depuis 1988.
+Il existe plusieurs intelligences artificielles sur le marché dont le but principal est d'imiter le dialogue avec un individu. Ces logiciels sont communément appelés « Chatterbot ». Nous prendrons ici l'exemple de Cleverbot, une IA qui a été programmée en 1988, puis mise en ligne en 1997. Cleverbot est une application web qui permet d'entretenir une conversation avec une intelligence artificielle. Celle-ci apprend à répondre en fonction des réponses de ses utilisateurs.
 
 ## Contexte, objectifs et portée du système actuel
 
