@@ -91,11 +91,16 @@ Une des classes d'utilisateur est les gens normaux utilisant l'application.
 
 ## L'environnement de support
 
+Cleverbot doit être supporter par un serveur ainsi qu'une liaison vers internet. Il n'y a pas de maitenance, puisque l'application est une machine qui apprends en fonction des gens avec qui elle interagit.
+
 # La justification et la nature des changements
 
 ## Justification des changements
 
+
 ## Description des changements
+
+Les changements apporté à l'application sont que A.L.I.C.E. va être une personnalité à part entière qui va pouvoir interagir avec comme un être humain, mais elle va pouvoir aussi lancer une conversation avec la personne. Donc, non seulement l'application va recueillir les réponses pour mieux répondre aux autres personnes, elle va aussi déterminé quel sujet sont apprécié ou rejeté par l'utilisateur.
 
 ## L'ordre de priorité dans les changements
 
