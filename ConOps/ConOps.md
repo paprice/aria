@@ -75,15 +75,17 @@ Les fonctionnalités du système actuel sont :
 
 ## Les modes d'opération du système
 
+Un seul mode d'opération (connu) existe à l'usage de Cleverbot, soit le mode régulier, qui permet de maintenir une conversation avec l'intelligence artificielle.
+
 ## Les classes d'utilisateurs et les autres personnes impliqués
 
-Une des classes d'utilisateur est les gens normaux utilisant l'application.
+Une seule classe d'utilisateur existe à l'usage de Cleverbot, soit le locuteur.
 
 ### La structure organisationnelle
 
 ### Le profil de chaque classe d'utilisateurs
 
-- gens normaux : Ils interagissent avec l'application et ils permettent à l'application d'apprendre et de répondre mieux aux autres personnes.
+- Le locuteur est définit par une entité capable de fournir des entrées de texte à l'intelligence artificielle. La nature du locuteur est sans conséquence : celui-ci peut-être un individu en chair et en os, ou une autre intelligence artificielle, pour autant qu'il fournit une entrée de texte que Cleverbot peut lire. Le locuteur intéragit avec l'application et permet à l'application d'apprendre et de mieux répondre aux prochaines entrées qui lui seront envoyées.
 
 ### Les interactions entre les utilisateurs
 
