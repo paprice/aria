@@ -97,11 +97,11 @@ S/O
 
 ### Autre personnel impliqué
 
-
+Étant donné la nature expérimentale de certains Chatterbots et des données qu'ils génèrent, leur amélioration et leur utilisation profite à toute la communauté des développeurs d'intelligences artificielles et recherchistes, ainsi qu'à l'avancement du domaine en général. Outre les avancées technologiques que ce type de système expérimental peut encourager, il n'influence en aucun cas le travail d'autres individus.
 
 ## L'environnement de support
 
-Cleverbot doit être supporter par un serveur ainsi qu'une liaison vers internet. Il n'y a pas de maitenance, puisque l'application est une machine qui apprends en fonction des gens avec qui elle interagit.
+Cleverbot est supporté par un serveur ainsi qu'une liaison vers internet. Il n'y a pas de logiciel de maintenance. Les seules réparations sont faites à l'interne. Les améliorations et les apprentissages du logiciel se font au fur et à mesure de ses communications avec les différents locuteurs.
 
 # La justification et la nature des changements
 
