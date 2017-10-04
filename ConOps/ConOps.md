@@ -48,6 +48,8 @@ https://www.existor.com/products/cleverbot-data-for-machine-learning/
 
 https://fr.wikipedia.org/wiki/AIML
 
+https://en.wikipedia.org/wiki/Cleverbot
+
 # Le système actuel
 
 Il existe plusieurs intelligences artificielles sur le marché dont le but principal est d'imiter le dialogue avec un individu. Ces logiciels sont communément appelés « Chatterbot ». Nous prendrons ici l'exemple de Cleverbot, une IA qui a été programmée en 1988, puis mise en ligne en 1997. Cleverbot est une application web qui permet d'entretenir une conversation avec une intelligence artificielle. Celle-ci apprend à répondre en fonction des réponses de ses utilisateurs.
@@ -79,17 +81,23 @@ Un seul mode d'opération (connu) existe à l'usage de Cleverbot, soit le mode r
 
 ## Les classes d'utilisateurs et les autres personnes impliqués
 
-Une seule classe d'utilisateur existe à l'usage de Cleverbot, soit le locuteur.
+Une seule classe d'utilisateur existe à l'usage de Cleverbot, soit le locuteur, qui intéragit avec l'intelligence artificielle.
 
 ### La structure organisationnelle
 
+Les locuteurs ne sont pas en relation et ne communiquent pas entre eux. Leur seule interaction est avec l'application. Cette interaction encourage l'apprentissage de l'intelligence artificielle, qui améliore ensuite l'expérience de tous les utilisateurs.
+
 ### Le profil de chaque classe d'utilisateurs
 
-- Le locuteur est définit par une entité capable de fournir des entrées de texte à l'intelligence artificielle. La nature du locuteur est sans conséquence : celui-ci peut-être un individu en chair et en os, ou une autre intelligence artificielle, pour autant qu'il fournit une entrée de texte que Cleverbot peut lire. Le locuteur intéragit avec l'application et permet à l'application d'apprendre et de mieux répondre aux prochaines entrées qui lui seront envoyées.
+- Le locuteur est définit par une entité capable de fournir des entrées de texte à l'intelligence artificielle. La nature du locuteur est sans conséquence : celui-ci peut-être un individu en chair et en os, ou une autre intelligence artificielle, pour autant qu'il fournit une entrée de texte que Cleverbot peut lire. Le locuteur intéragit avec l'application et permet à l'application d'apprendre et de mieux répondre aux prochaines entrées qui lui seront envoyées. De cette façon, le locuteur est à la fois un consommateur du service et un outil de maintenance passif, profitant du divertissement procuré en entretenant un dialogue avec l'IA, mais fournissant aussi des données qui permettront l'amélioration du service.
 
 ### Les interactions entre les utilisateurs
 
-### Autres personnel impliqué
+S/O
+
+### Autre personnel impliqué
+
+
 
 ## L'environnement de support
 
