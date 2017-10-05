@@ -3,11 +3,12 @@
 % 2017-09-17
 
 # Liste des acronymes et abréviation {-}
+
 IA
 : Intelligence artificielle
+
 ARIA
 : Autonomous Reasoning Intelligent Automaton
-
 
 # Historique des révisions {-}
 
