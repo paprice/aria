@@ -5,6 +5,8 @@
 # Liste des acronymes et abréviation {-}
 IA
 : Intelligence artificielle
+ARIA
+: Autonomous Reasoning Intelligent Automaton
 
 
 # Historique des révisions {-}
@@ -20,7 +22,7 @@ IA
 
 ## Identification du système
 
-Le système a pour nom A.L.I.C.E. et il est en version 0.1.
+Le système a pour nom A.R.I.A. (Autonomous Reasoning Intelligent Automaton) et il est en version 0.1.
 
 ## Objectifs du document
 
@@ -32,13 +34,13 @@ Communiquer les besoins et attentes des usagers du système, des développeurs o
 
 ## Vue d'ensemble du système
 
-A.L.I.C.E. a pour but principal d'offrir une expérience interactive et communicative pour des usagers de tous les âges et d'intérêts variés. En plus de sa facette divertissante, le système contient aussi plusieurs buts secondaires, qui motivent son développement :
+ARIA a pour but principal d'offrir une expérience interactive et communicative pour des usagers de tous les âges et d'intérêts variés. En plus de sa facette divertissante, le système contient aussi plusieurs buts secondaires, qui motivent son développement :
 
 - Faire avancer les technologies associées à la problématique des intelligences artificielles
 - Fournir un outil de psychologie avancé, en rendant le système communicatif et en lui permettant de développer une personnalité
 - Faire participer les internautes; la personnalité et l'intelligence du système doit se développer grâce à un grand nombre d'usagers
 
-Le développement de ce système n'est pas commandité. Il est, à sa conception, développé par Patrice Desrochers, Gildo Conte et Audrey Eugène. A.L.I.C.E. est une application qui fonctionnera sur n'importe quel ordinateur Windows, MacOS et Linux.
+Le développement de ce système n'est pas commandité. Il est, à sa conception, développé par Patrice Desrochers, Gildo Conte et Audrey Eugène. ARIA est une application qui fonctionnera sur n'importe quel ordinateur Windows, MacOS et Linux.
 
 ![Diagramme de contexte](./image/contextdiagram.png)
 
@@ -110,7 +112,7 @@ Cleverbot est supporté par un serveur ainsi qu'une liaison vers internet. Il n'
 
 ## Description des changements
 
-Les changements apporté à l'application sont que A.L.I.C.E. va être une personnalité à part entière qui va pouvoir interagir avec comme un être humain, mais elle va pouvoir aussi lancer une conversation avec la personne. Donc, non seulement l'application va recueillir les réponses pour mieux répondre aux autres personnes, elle va aussi déterminé quel sujet sont apprécié ou rejeté par l'utilisateur.
+Les changements apporté à l'application sont que ARIA va être une personnalité à part entière qui va pouvoir interagir avec comme un être humain, mais elle va pouvoir aussi lancer une conversation avec la personne. Donc, non seulement l'application va recueillir les réponses pour mieux répondre aux autres personnes, elle va aussi déterminé quel sujet sont apprécié ou rejeté par l'utilisateur.
 
 ## L'ordre de priorité dans les changements
 
