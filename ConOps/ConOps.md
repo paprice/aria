@@ -110,6 +110,13 @@ Cleverbot est supporté par un serveur ainsi qu'une liaison vers internet. Il n'
 
 ## Justification des changements
 
+Le système actuel remplit parfaitement ses tâches, mais comprend plusieurs limites qui contribuent à situer le système dans la « vallée dérangeante », soit, la zone technologique où un robot est juste assez proche de l'humain pour que ses aspects non-humains dérangent. Ces défauts empêchent Cleverbot de réellement remplir le rôle d'une intelligence artificielle; entre autres:
+- Le système ne conserve aucune mémoire de la conversation et ne peut pas faire référence à un sujet précédemment discuté
+- Le système ne conserve aucune mémoire des usagers avec lesquels il a discuté
+- Le système ne se forme pas de réelle opinion sur un sujet, ne se forme aucune personnalité
+- Le système n'est pas autonome dans une conversation et doit attendre les entrées d'un utilisateur
+
+Le nouveau système ARIA aura pour objectif de remplir ces fonctions, afin de se rapprocher le plus possible d'une véritable intelligence artificielle. L'application sera lancée localement sur un ordinateur personnel, mais aura accès à une base de donnée en ligne, en plus d'une plus petite base de donnée locale.
 
 ## Description des changements
 
