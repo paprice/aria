@@ -133,3 +133,11 @@ Les changements apporté à l'application sont que ARIA va être une personnalit
 ## Les impacts opérationnels
 
 L'impact le plus important lors de la modification du système est que le système va passer d'une application web à une application de bureau. Cela implique que l'application va pouvoir stocker des données sur l'utilisateur sur l'ordinateur même de celui-ci pour mieux apprendre à le connaître. En ce qui concerne les données, la seule différence est qu'il va falloir réapprendre à ARIA la manière de répondre ou de lancer une conversation, donc le développement part d'une base de donnée vide.
+
+## Les impacts organisationnels
+
+Les impacts organisationnels vont être quasiment nul, puisqu'une fois l'application développé, elle va être autonome, donc aucun support n'est requis.
+
+## Les impacts durant le développement
+
+Aucun impacts ne sera générer lors du développement du nouveau système, puisque c'est une équipe totalement différente qui va développer le système et que le déploiement ne sera pas sur le même support.
