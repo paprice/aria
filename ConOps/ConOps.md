@@ -122,3 +122,14 @@ Les changements apporté à l'application sont que ARIA va être une personnalit
 ## Hypothèses et contraintes
 
 # Le concept du système proposé
+
+
+
+
+
+
+# Le sommaire des impacts
+
+## Les impacts opérationnels
+
+L'impact le plus important lors de la modification du système est que le système va passer d'une application web à une application de bureau. Cela implique que l'application va pouvoir stocker des données sur l'utilisateur sur l'ordinateur même de celui-ci pour mieux apprendre à le connaître. En ce qui concerne les données, la seule différence est qu'il va falloir réapprendre à ARIA la manière de répondre ou de lancer une conversation, donc le développement part d'une base de donnée vide.
