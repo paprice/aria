@@ -123,7 +123,12 @@ Le nouveau système ARIA aura pour objectif de remplir ces fonctions, afin de se
 La nouvelle intelligence artificielle comprendra les changements suivants :
 - Au niveau de l'interface, on communiquera avec ARIA non pas via un site web, mais via une application installée sur l'ordinateur personnel de l'utilisateur.
 - ARIA n'attendra pas forcément de recevoir une entrée de texte de l'utilisateur avant de fournir elle-même une sortie. Ainsi, un utilisateur qui laisse l'application ouverte pourrait retrouver des messages provenant d'ARIA.
-- L'application comprendra une base de donnée locale qui gardera en mémoire le nom de l'utilisateur et ses préférences, basé sur les discussions entretenues avec l'IA. Les usagers devront donc choisir un profil d'utilisateur après avoir démarré l'application.
+- Une application de lecture sera utilisée pour faire parler vocalement ARIA.
+- ARIA comprendra une base de donnée locale qui gardera en mémoire le nom de l'utilisateur, ses préférences et les sujets discutés avec lui, basé sur les discussions entretenues avec l'IA. Les usagers devront donc choisir un profil d'utilisateur après avoir démarré l'application.
+- ARIA communiquera avec une base de donnée en ligne pour se former une mémoire à long terme, accessible à partir de toutes les instances de l'application.
+- L'IA se formera une opinion ou une préférence en assignant une valeur de priorité sur les mots ou groupes de mots, selon les qualitatifs qui auront été utilisés par un utilisateur pour les décrire.
+- Au tout début de la vie de l'IA, des apprentissages de base lui seront conférés par les développeurs, et ce, avant que celle-ci devienne accessible à tous les utilisateurs, afin d'empêcher que les premières discussions du grand public avec ARIA soit limitées à une série d'interminables questions.
+- Une maintenance devra être effectuée durant les débuts de l'application, afin d'assurer son bon fonctionnement.
 
 ## L'ordre de priorité dans les changements
 
