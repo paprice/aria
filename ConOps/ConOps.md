@@ -132,7 +132,25 @@ La nouvelle intelligence artificielle comprendra les changements suivants :
 
 ## L'ordre de priorité dans les changements
 
+Les changements sont classés ici par ordre de priorité:
+
+Essentiels :
+- ARIA doit détenir une base de donnée en ligne, où elle préservera ses apprentissages. Sans cette base de donnée à distance, l'IA aurait une personnalité différente pour chaque utilisateur qui l'utilise sur son ordinateur personnel.
+- ARIA doit assigner une préférence à des mots ou groupes de mots : c'est ce qui contribuera à lui donner une véritable identité, sans quoi, l'objectif de l'application ne sera pas atteint.
+- Comme ARIA sera, dans les débuts de l'application, une intelligence avec peu de connaissance, il est primordial que les développeurs suivent son développement et lui «fournissent un apprentissage de base, comme un enfant apprend de ses géniteurs, sans quoi l'IA pourrait devenir instable ou confuse lors d'une conversation.
+
+Souhaitables :
+- Afin de rendre chaque conversation avec l'IA une expérience personnalisée, il est définitevement souhaitable que les utilisateurs soient enregistrés et reconnus lors de leur intéraction avec ARIA.
+- Découlant du précédent changement souhaitable, il est primordial que l'application soit utilisée localement sur un ordinateur personnel, où se trouvera aussi la base de donnée comprenant les informations sur les usagers. Ce changement est essentiel si le précédent est implémenté. Cela évitera qu'un plus grand travail soit effectué pour gérer les données « utilisateur » et la protection des données.
+- Il est souhaitable qu'une maintenance soit effectuée suivant le lancement de l'application, afin de bien identifier les problèmes et les régler.
+
+Optionnels :
+- ARIA n'attendra pas les entrées texte d'un utilisateur avant d'elle-même fournir une sortie texte. L'implémentation de cette fonctionnalité dépendra de la difficulté à l'implémenter. Même si cette fonction venait à manquer, elle n'empêchera pas l'IA de développer une personnalité.
+- Un module qui fera la lecture vocale des sorties texte de l'IA n'est pas nécessaire au bon fonctionnement de l'application, mais lui permettra de se séparer des autres applications de ce type, et de lui donner une touche personnelle et plus humanoïde.
+
 ## Les changements considérés mais non-inclus
+
+
 
 ## Hypothèses et contraintes
 
