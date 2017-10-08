@@ -110,17 +110,20 @@ Cleverbot est supporté par un serveur ainsi qu'une liaison vers internet. Il n'
 
 ## Justification des changements
 
-Le système actuel remplit parfaitement ses tâches, mais comprend plusieurs limites qui contribuent à situer le système dans la « vallée dérangeante », soit, la zone technologique où un robot est juste assez proche de l'humain pour que ses aspects non-humains dérangent. Ces défauts empêchent Cleverbot de réellement remplir le rôle d'une intelligence artificielle; entre autres:
-- Le système ne conserve aucune mémoire de la conversation et ne peut pas faire référence à un sujet précédemment discuté
-- Le système ne conserve aucune mémoire des usagers avec lesquels il a discuté
-- Le système ne se forme pas de réelle opinion sur un sujet, ne se forme aucune personnalité
-- Le système n'est pas autonome dans une conversation et doit attendre les entrées d'un utilisateur
+Le système actuel remplit parfaitement ses tâches, mais comprend plusieurs limites qui contribuent à situer le système dans la « vallée dérangeante », soit, la zone technologique où un robot est juste assez proche de l'humain pour que ses aspects non-humains dérangent. Ces défauts empêchent Cleverbot de réellement remplir le rôle d'une intelligence artificielle; entre autres :
+- Le système ne conserve aucune mémoire de la conversation et ne peut pas faire référence à un sujet précédemment discuté.
+- Le système ne conserve aucune mémoire des usagers avec lesquels il a discuté.
+- Le système ne se forme pas de réelle opinion sur un sujet, ne se forme aucune personnalité.
+- Le système n'est pas autonome dans une conversation et doit attendre les entrées d'un utilisateur.
 
 Le nouveau système ARIA aura pour objectif de remplir ces fonctions, afin de se rapprocher le plus possible d'une véritable intelligence artificielle. L'application sera lancée localement sur un ordinateur personnel, mais aura accès à une base de donnée en ligne, en plus d'une plus petite base de donnée locale.
 
 ## Description des changements
 
-Les changements apporté à l'application sont que ARIA va être une personnalité à part entière qui va pouvoir interagir avec comme un être humain, mais elle va pouvoir aussi lancer une conversation avec la personne. Donc, non seulement l'application va recueillir les réponses pour mieux répondre aux autres personnes, elle va aussi déterminé quel sujet sont apprécié ou rejeté par l'utilisateur.
+La nouvelle intelligence artificielle comprendra les changements suivants :
+- Au niveau de l'interface, on communiquera avec ARIA non pas via un site web, mais via une application installée sur l'ordinateur personnel de l'utilisateur.
+- ARIA n'attendra pas forcément de recevoir une entrée de texte de l'utilisateur avant de fournir elle-même une sortie. Ainsi, un utilisateur qui laisse l'application ouverte pourrait retrouver des messages provenant d'ARIA.
+- L'application comprendra une base de donnée locale qui gardera en mémoire le nom de l'utilisateur et ses préférences, basé sur les discussions entretenues avec l'IA. Les usagers devront donc choisir un profil d'utilisateur après avoir démarré l'application.
 
 ## L'ordre de priorité dans les changements
 
