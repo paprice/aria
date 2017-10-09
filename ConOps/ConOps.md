@@ -171,7 +171,17 @@ Certaines contraintes devront aussi être respectées, notamment, la protection 
 
 
 
+# Les scénarios d'opération
 
+| Nom |                      |
+| Niveau |                   |
+| Acteurs |                  |
+| Préconditions |            |
+| Postconditions |           |
+| Scénario principal |       |
+| Scénarios alternatifs |    |
+| Fréquence d'occurence |    |
+| Commentaires & exigences | |
 
 # Le sommaire des impacts
 
