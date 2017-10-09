@@ -110,16 +110,56 @@ Cleverbot est supporté par un serveur ainsi qu'une liaison vers internet. Il n'
 
 ## Justification des changements
 
+Le système actuel remplit parfaitement ses tâches, mais comprend plusieurs limites qui contribuent à situer le système dans la « vallée dérangeante », soit, la zone technologique où un robot est juste assez proche de l'humain pour que ses aspects non-humains dérangent. Ces défauts empêchent Cleverbot de réellement remplir le rôle d'une intelligence artificielle; entre autres :
+- Le système ne conserve aucune mémoire de la conversation et ne peut pas faire référence à un sujet précédemment discuté.
+- Le système ne conserve aucune mémoire des usagers avec lesquels il a discuté.
+- Le système ne se forme pas de réelle opinion sur un sujet, ne se forme aucune personnalité.
+- Le système n'est pas autonome dans une conversation et doit attendre les entrées d'un utilisateur.
+
+Le nouveau système ARIA aura pour objectif de remplir ces fonctions, afin de se rapprocher le plus possible d'une véritable intelligence artificielle. L'application sera lancée localement sur un ordinateur personnel, mais aura accès à une base de donnée en ligne, en plus d'une plus petite base de donnée locale.
 
 ## Description des changements
 
-Les changements apporté à l'application sont que ARIA va être une personnalité à part entière qui va pouvoir interagir avec comme un être humain, mais elle va pouvoir aussi lancer une conversation avec la personne. Donc, non seulement l'application va recueillir les réponses pour mieux répondre aux autres personnes, elle va aussi déterminé quel sujet sont apprécié ou rejeté par l'utilisateur.
+La nouvelle intelligence artificielle comprendra les changements suivants :
+- Au niveau de l'interface, on communiquera avec ARIA non pas via un site web, mais via une application installée sur l'ordinateur personnel de l'utilisateur.
+- ARIA n'attendra pas forcément de recevoir une entrée de texte de l'utilisateur avant de fournir elle-même une sortie. Ainsi, un utilisateur qui laisse l'application ouverte pourrait retrouver des messages provenant d'ARIA.
+- Une application de lecture sera utilisée pour faire parler vocalement ARIA.
+- ARIA comprendra une base de donnée locale qui gardera en mémoire le nom de l'utilisateur, ses préférences et les sujets discutés avec lui, basé sur les discussions entretenues avec l'IA. Les usagers devront donc choisir un profil d'utilisateur après avoir démarré l'application.
+- ARIA communiquera avec une base de donnée en ligne pour se former une mémoire à long terme, accessible à partir de toutes les instances de l'application.
+- L'IA se formera une opinion ou une préférence en assignant une valeur de priorité sur les mots ou groupes de mots, selon les qualitatifs qui auront été utilisés par un utilisateur pour les décrire.
+- Au tout début de la vie de l'IA, des apprentissages de base lui seront conférés par les développeurs, et ce, avant que celle-ci devienne accessible à tous les utilisateurs, afin d'empêcher que les premières discussions du grand public avec ARIA soit limitées à une série d'interminables questions.
+- Une maintenance devra être effectuée durant les débuts de l'application, afin d'assurer son bon fonctionnement.
 
 ## L'ordre de priorité dans les changements
 
+Les changements sont classés ici par ordre de priorité:
+
+Essentiels :
+- ARIA doit détenir une base de donnée en ligne, où elle préservera ses apprentissages. Sans cette base de donnée à distance, l'IA aurait une personnalité différente pour chaque utilisateur qui l'utilise sur son ordinateur personnel.
+- ARIA doit assigner une préférence à des mots ou groupes de mots : c'est ce qui contribuera à lui donner une véritable identité, sans quoi, l'objectif de l'application ne sera pas atteint.
+- Comme ARIA sera, dans les débuts de l'application, une intelligence avec peu de connaissance, il est primordial que les développeurs suivent son développement et lui «fournissent un apprentissage de base, comme un enfant apprend de ses géniteurs, sans quoi l'IA pourrait devenir instable ou confuse lors d'une conversation.
+
+Souhaitables :
+- Afin de rendre chaque conversation avec l'IA une expérience personnalisée, il est définitevement souhaitable que les utilisateurs soient enregistrés et reconnus lors de leur intéraction avec ARIA.
+- Découlant du précédent changement souhaitable, il est primordial que l'application soit utilisée localement sur un ordinateur personnel, où se trouvera aussi la base de donnée comprenant les informations sur les usagers. Ce changement est essentiel si le précédent est implémenté. Cela évitera qu'un plus grand travail soit effectué pour gérer les données « utilisateur » et la protection des données.
+- Il est souhaitable qu'une maintenance soit effectuée suivant le lancement de l'application, afin de bien identifier les problèmes et les régler.
+
+Optionnels :
+- ARIA n'attendra pas les entrées texte d'un utilisateur avant d'elle-même fournir une sortie texte. L'implémentation de cette fonctionnalité dépendra de la difficulté à l'implémenter. Même si cette fonction venait à manquer, elle n'empêchera pas l'IA de développer une personnalité.
+- Un module qui fera la lecture vocale des sorties texte de l'IA n'est pas nécessaire au bon fonctionnement de l'application, mais lui permettra de se séparer des autres applications de ce type, et de lui donner une touche personnelle et plus humanoïde.
+
 ## Les changements considérés mais non-inclus
 
+Des changements considérés n'ont pas été retenus, pour diverses raisons :
+- ARIA devait pouvoir accéder d'elle-même à des articles sur internet et faire son apprentissage en lisant ces articles. Cette idée n'a pas été retenue pour plusieurs raison, notamment, parce que la lecture d'un article sur internet ne demande pas la même approche que celle d'un dialogue et imposerait une complexité élevée du code.
+- ARIA devait au début posséder plusieurs personnalités, dépendamment de l'ordinateur personnel sur lequel elle se trouvait, et tenir ses connaissances sur une base de données locale. Cette idée a été rejetée dû à une préférence des développeurs, mais aussi dû à l'envisagement des apprentissages intensifs que doit faire l'application dans ses débuts.
+- ARIA devait pouvoir générer son propre code et poser des actions sur l'ordinateur et sur internet. Étant donné l'imprévisibilité de telles décisions et la complexité du code qui devrait l'encadrer, cette idée a aussi été rejetée.
+
 ## Hypothèses et contraintes
+
+On peut faire plusieurs hypothèses sur les obstacles que rencontreront les utilisateurs de l'application et l'application elle-même. Pour commencer, la base de données comprenant les connaissances de l'application sera vide au départ, ce qui implique que les premières discussions avec l'IA seront basées sur des questions et un apprentissage accru des nouvelles valeurs à ajouter dans la base de données. Comme l'application sera gratuite et disponible à tous, la base de donnée sera forcément accédée par un nombre élevé d'utilisateurs, avec un traffic élevé durant certaines heures de la journée. Tout cela dépend du bon fonctionnement de l'application et de sa popularité au lancement. Enfin, il faut aussi envisager que cette base de donnée sera rapidement remplie à capacité, et devra augmenter en taille pour permettre à l'intelligence artificielle de grandir.
+
+Certaines contraintes devront aussi être respectées, notamment, la protection des données de type « utilisateur », pour ne pas qu'elles soient lisible par un autre utilisateur que l'application elle-même. Cette contrainte est d'une grande importance, en partie parce qu'il est impossible de prévoir le type d'information qui sera échangée entre l'utilisateur et l'IA. Des données sensibles comme une adresse à domicile ou un numéro de téléphone ne doivent en aucun cas être accessibles par autrui.
 
 # Le concept du système proposé
 
