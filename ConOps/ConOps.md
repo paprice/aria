@@ -27,9 +27,9 @@ Le système a pour nom A.R.I.A. (Autonomous Reasoning Intelligent Automaton) et 
 
 ## Objectifs du document
 
-Communiquer les besoins et attentes des usagers du système, des développeurs ou d'un acheteur potentiel du système. ce document s'adresse aux :
+Communiquer les besoins et attentes des usagers du système, des développeurs ou d'un acheteur potentiel du système. Ce document s'adresse aux :
 
--	Usagers : Des participants actifs développement personnel du système. Ce document tentera de décrire leurs besoins de façon fidèle.
+-	Usagers : Des participants actifs au développement personnel du système. Ce document tentera de décrire leurs besoins de façon fidèle.
 -	Acheteurs : Pour tout acheteur potentiel, ce document permettra de mieux comprendre les besoins des usagers et le but du système.
 -	Développeurs : Le document vise aussi à laisser une trace des besoins des usagers pour le développement futur de l'application.
 
@@ -72,7 +72,7 @@ Cleverbot maintient une conversation en cherchant dans sa base de données les r
 Les fonctionnalités du système actuel sont :
 
 - Chatterbot
-: une IA qui "comprends" et qui répond aux phrases qu'on lui dit.
+: une IA qui "comprend" et qui répond aux phrases qu'on lui dit.
 - Sauvegarde de la plus récente conversation
 - Réinitialisation d'une conversation pour recommencer à 0
 - Possibilité de laisser l'IA choisir un sujet de conversation
@@ -168,7 +168,34 @@ Certaines contraintes devront aussi être respectées, notamment, la protection 
 
 # Le concept du système proposé
 
+## Contexte, objectifs et portée du système proposé
 
+Le projet ARIA a pour but de maintenir les capacités du Cleverbot tout en le rendant plus "humain". On veut que les utilisateurs aient l'impression qu'ils discutent avec un être humain et non a une entité qui répond à leurs questions. Elle doit pouvoir retenir les informations qu'elle obtient des utilisateurs et leur poser des questions pour enrichir ses connaissances et maintenir le dialogue.
+
+## Politiques opérationnelles et contraintes
+
+ARIA étant une application elle est toujours disponible à partir du moment où l'utilisateur l'a téléchargé. Un seul utilisateur peut intéragir avec le système par session; si une autre personne souhaite discuter avec ARIA, il lui faudra attendre que le précédent utilisateur termine. Cette application sera accessible sur n'importe quel type d'ordinateur (Windows, MacOS ou Linux) avec un espace nécessaire de ...  pour l'effectuer.
+
+## Description du système proposé
+
+Les fonctionnalités du nouveau système sont :
+
+- ARIA
+: une IA de type Chatterbots qui retient les données reçues par chaque utilisateur spécifiquement et de se forger une "personnalité".
+- Sauvegarde des conversations avec chaque utilisateur
+- Possibilité de faire l'IA poser des questions
+- Possibilité de laisser l'IA choisir un sujet de conversation
+- Possibilité de faire l'IA réfléchir sur un sujet discuté
+
+Tout comme un Chatterbot classique, l'utilisateur participe au développement du système et à sa maintenance à chaque utilisation.
+
+## Les modes d'opérations du système proposé
+
+Pas de changement.
+
+## Les classes d'utilisateurs et les autres personnels impliqués
+
+Pas de changement.
 
 
 # Les scénarios d'opération
