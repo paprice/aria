@@ -219,6 +219,7 @@ Pas de changement.
 | Préconditions            | S/O                          |
 | Postconditions           | Le locuteur est connecté     |
 | Scénario principal       |
+
 - Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale.
 - Si le nom n'est pas exactement identique à ceux présents dans la base de données mais présente des similarités, ARIA propose un nom similaire, et demande au locuteur de confirmer son identité.
 - Le locuteur confirme son identité pour se connecter. |
