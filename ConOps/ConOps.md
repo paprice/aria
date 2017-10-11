@@ -179,11 +179,10 @@ Comme ARIA est une application installée sur un ordinateur personnel, elle est 
 
 ## Description du système proposé
 
-ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Runtime. Le diagramme suivant démontre que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues, et "d'améliorer" sa personnalité) :
-
-![Diagramme de composants](./image/diagrammeComposants.png)
+ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Runtime. Le diagramme suivant démontre que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues, et "d'améliorer" sa personnalité) : ![Diagramme de composants](./image/diagrammeComposants.png)
 
 Le système comprend plusieurs nouvelles fonctionnalités, ainsi que des modifications sur les fonctionnalités de l'ancien système :
+
 - Les utilisateurs doivent se connecter à ARIA, afin qu'elle puisse les reconnaître dans la base de données interne
 - ARIA retient les données reçues par chaque utilisateur et enregistre de nouvelles connaissances dans une base de données en ligne
 - ARIA retient les données qui concernent les utilisateurs et les enregistre dans une base de données interne
@@ -203,6 +202,26 @@ Pas de changement.
 
 # Les scénarios d'opération
 
++---------------+---------------------------------------------+
+| Scénario 1           |       		|
++======================+======================================+
+| Nom		           | Se connecter       |
++---------------+---------------------------------------------+
+| Niveau               | Objectif usager        |
++---------------+---------------------------------------------+
+| Acteurs              | Acteur primaire: le locuteur |
++---------------+---------------------------------------------+
+| Préconditions        | S/O                          |
++---------------+---------------------------------------------+
+| Postconditions       | Le locuteur est connecté     |
++---------------+---------------------------------------------+
+| Scénario principal   | 1) Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un  
+|                      | 1) nom présent dans sa base de données locale. Si le nom n'est pas exactement identique à ceux présents dans la base de données
+|                      | 1) mais présente des similarités, ARIA propose un nom similaire, et demande au locuteur de confirmer son identité. Le locuteur confirme son identité pour se connecter.      |
++---------------+---------------------------------------------+
+
+
+
 | Scénario 1               |              -               |
 | :----------------------- | :--------------------------- |
 | Nom                      | Se connecter                 |
@@ -210,7 +229,7 @@ Pas de changement.
 | Acteurs                  | Acteur primaire: le locuteur |
 | Préconditions            | S/O                          |
 | Postconditions           | Le locuteur est connecté     |
-| Scénario principal       | Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale. Si le nom n'est pas exactement identique à ceux présents dans la base de données mais présente des similarités, ARIA propose un nom similaire, et demande au locuteur de confirmer son identité. Le locuteur confirme son identité pour se connecter. |
+| Scénario principal  |Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un  2) nom présent dans sa base de données locale. Si le nom n'est pas exactement identique à ceux présents dans la base de données mais présente des similarités, ARIA propose un nom similaire, et demande au locuteur de confirmer son identité. Le locuteur confirme son identité pour se connecter. |
 | Scénarios alternatifs    | Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale. Si le nom n'est pas identique à ceux présents dans la base de données et ne présente aucune similarité, ARIA ajoute un nouveau nom dans sa base de données. Le locuteur est connecté. Si à l'inverse, le nom présentait des similarités, mais le locuteur ne confirme pas son identité, son nom est ajouté à la base de données. |
 | Fréquence d'occurence    | Une fois, au début de l'usage de l'application |
 | Commentaires & exigences | Aucun mot de passe n'est requis pour se connecter, étant donné que la base de données des utilisateurs est locale. |
