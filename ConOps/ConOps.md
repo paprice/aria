@@ -216,15 +216,24 @@ Pas de changement.
 
 ## Les impacts opérationnels
 
-L'impact le plus important lors de la modification du système est que le système va passer d'une application web à une application de bureau. Cela implique que l'application va pouvoir stocker des données sur l'utilisateur sur l'ordinateur même de celui-ci pour mieux apprendre à le connaître. En ce qui concerne les données, la seule différence est qu'il va falloir réapprendre à ARIA la manière de répondre ou de lancer une conversation, donc le développement part d'une base de donnée vide.
+Étant donnée que le nouveau système ne se base pas sur l'ancien, plusieurs gros changements vont être amenés :
+
+- la base de données globale doit être recréer, c'est à dire que les usagers et les développeurs vont devoir interagir avec l'application comme si c'était un enfant au début pour lui permettre de se créer une intelligence de base
+- le système passe d'une application web à une application de bureau, ce qui implique que le nouveau système va devoir être installé sur l'ordinateur de l'utilisateur et qu'il va avoir une base de données locale
+ 	- Pour permettre de reconnaître les utilisateurs, le logiciel va utiliser un système de nom d'utilisateur et de mot de passe pour permettre d'avoir plusieurs utilisateurs sur le même poste et de ne pas mélanger les différentes préférences des utilisateurs
+	- Chaque utilisateurs va avoir son propre fichier de type JSON/XML pour permettre de stocker ses préférences
+- laisser l'application fonctionner sans interagir avec pendant un moment va entrainer une action qui va laisser l'application interagir la première avec  l'utilisateur.
+
 
 ## Les impacts organisationnels
 
-Les impacts organisationnels vont être quasiment nul, puisqu'une fois l'application développé, elle va être autonome, donc aucun support n'est requis.
+Le seul impact organisationnel que le nouveau système va apporter est le fait que plusieurs nouveau postes de travail vont être utiliser, puisque nous voulons utiliser une base de données locale.
 
 ## Les impacts durant le développement
 
 Aucun impacts ne sera générer lors du développement du nouveau système, puisque c'est une équipe totalement différente qui va développer le système et que le déploiement ne sera pas sur le même support.
+
+- les usagers devront faire des updates s'il y a changement dans le code interne de l'IA (les algorithmes)
 
 # L'analyse du système proposé
 
