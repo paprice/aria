@@ -179,13 +179,16 @@ Comme ARIA est une application installée sur un ordinateur personnel, elle est 
 
 ## Description du système proposé
 
-ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Runtime. Le diagramme suivant démontre que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues, et "d'améliorer" sa personnalité) : ![Diagramme de composants](./image/diagrammeComposants.png)
+ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Runtime. Le diagramme suivant démontre que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues, et "d'améliorer" sa personnalité) :
+
+![Diagramme de composants](./image/diagrammeComposants.png){width=100%}
+\
 
 Le système comprend plusieurs nouvelles fonctionnalités, ainsi que des modifications sur les fonctionnalités de l'ancien système :
 
 - Les utilisateurs doivent se connecter à ARIA, afin qu'elle puisse les reconnaître dans la base de données interne
 - ARIA retient les données reçues par chaque utilisateur et enregistre de nouvelles connaissances dans une base de données en ligne
-- ARIA retient les données qui concernent les utilisateurs et les enregistre dans une base de données interne
+- ARIA retient les données qui concernent les utilisateurs et les enregistrent dans une base de données interne
 - ARIA fait le choix d'un sujet de conversation si aucune entrée de l'utilisateur n'a été perçue pendant un certain temps
 - Le temps d'attente avant qu'ARIA puisse chercher un sujet de conversation peut être allongé, raccourci, ou éliminé
 
@@ -198,6 +201,24 @@ Comme un Chatterbot classique, l'utilisateur participe au développement du syst
 Étant donné que l'application devient plus intelligente avec les usages répétés, les interactions avec celle-ci deviennent aussi plus intéressantes, augmentant la réutilisabilité de l'application.
 
 Enfin, ARIA possède un grand niveau de portabilité, car l'application peut être installée sur divers systèmes d'opération (Windows, MacOS ou Linux).
+
+Voici à quoi un échange entre l'utilisateur et l'application peut entrainer comme communication entre les différentes partie de l'application
+![Diagramme de séquence](./image/Aria1.jpg)
+\
+
+La connexion d'un utilisateur va aussi entrainer différentes réponses de l'application entre ses composantes :
+
+- Une connexion normale avec un profil déjà existant
+![Diagramme de connexion](./image/Connection.jpg)
+\
+
+- Une tentative de connexion avec un profil non créer
+![Diagramme de mauvais profil](./image/IdentifiantInexistant.jpg)
+\
+
+- La création d'un profil utilisateur
+![Diagramme de création](./image/CreationProfil.jpg)
+\
 
 ## Les modes d'opérations du système proposé
 
