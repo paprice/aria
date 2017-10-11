@@ -181,11 +181,13 @@ ARIA étant une application elle est toujours disponible à partir du moment où
 Les fonctionnalités du nouveau système sont :
 
 - ARIA
-: une IA de type Chatterbots qui retient les données reçues par chaque utilisateur spécifiquement et de se forger une "personnalité".
+: une IA de type Chatterbots qui retient les données reçues par chaque utilisateur et de se forger une "personnalité"
 - Sauvegarde des conversations avec chaque utilisateur
 - Possibilité de faire l'IA poser des questions
-- Possibilité de laisser l'IA choisir un sujet de conversation
-- Possibilité de faire l'IA réfléchir sur un sujet discuté
+
+Le diagramme suivant est celui de composants expliquant que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs de la machine) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues et "améliorer" sa personnalité).
+
+![Diagramme de composants](./image/diagrammeComposants.png)
 
 Tout comme un Chatterbot classique, l'utilisateur participe au développement du système et à sa maintenance à chaque utilisation.
 
