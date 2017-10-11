@@ -200,17 +200,29 @@ Pas de changement.
 
 # Les scénarios d'opération
 
-| Scénario 1               |              -              |
-| :----------------------- | :-------------------------- |
-| Nom                      |                             |
-| Niveau                   |                             |
-| Acteurs                  |                             |
-| Préconditions            |                             |
-| Postconditions           |                             |
-| Scénario principal       |                             |
-| Scénarios alternatifs    |                             |
-| Fréquence d'occurence    |                             |
-| Commentaires & exigences |                             |
+| Scénario 1               |              -               |
+| :----------------------- | :--------------------------- |
+| Nom                      | Se connecter                 |
+| Niveau                   | Objectif usager              |
+| Acteurs                  | Acteur primaire: le locuteur |
+| Préconditions            | S/O                          |
+| Postconditions           | L'utilisateur est connecté   |
+| Scénario principal       |                              |
+| Scénarios alternatifs    |                              |
+| Fréquence d'occurence    |                              |
+| Commentaires & exigences |                              |
+
+| Scénario 2               |              -               |
+| :----------------------- | :--------------------------- |
+| Nom                      | Dialoguer avec ARIA          |
+| Niveau                   | Objectif usager              |
+| Acteurs                  | Acteur primaire: le locuteur |
+| Préconditions            | L'utilisateur est connecté   |
+| Postconditions           | ARIA envoie une réponse à l'utilisateur   |
+| Scénario principal       |                              |
+| Scénarios alternatifs    |                              |
+| Fréquence d'occurence    |                              |
+| Commentaires & exigences |                              |
 
 # Le sommaire des impacts
 
