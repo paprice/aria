@@ -15,6 +15,7 @@ ARIA
 | **Date**   | **Version** | **Description**  | **Auteur**                                                                           |
 | :--------- | :---------: | :--------------- | :----------------------------------------------------------------------------------- |
 | 2017-09-17 |     0.1     | Version initiale | Patrice Desrochers, Gildo Conte, Audrey Eugène |
+| 2017-10-11 |     0.2     | Version Prototype | Patrice Desrochers, Gildo Conte, Audrey Eugène |
 
 # Préface {-}
 
