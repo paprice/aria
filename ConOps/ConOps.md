@@ -210,27 +210,27 @@ Pas de changement.
 
 # Les scénarios d'opération
 
-+---------------+---------------------------------------------+
-| Scénario 1           |       		|
-+=========================+======================================+
++-------------------------+---------------------------------------------+
+| Scénario 1              |       		|
++=========================+=============================================+
 | Nom		              | Se connecter       |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Niveau                  | Objectif usager        |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Acteurs                 | Acteur primaire: le locuteur |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Préconditions           | S/O                          |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Postconditions          | Le locuteur est connecté     |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Scénario principal      | 1) Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un  
 |                         | 1) nom présent dans sa base de données locale. Si le nom n'est pas exactement identique à ceux présents dans la base de données
 |                         | 1) mais présente des similarités, ARIA propose un nom similaire, et demande au locuteur de confirmer son identité. Le locuteur confirme son identité pour se connecter.      |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Fréquence d'occurence   | Une fois, au début de l'usage de l'application |
-+---------------+---------------------------------------------+
-| Commentaires & exigences | Aucun mot de passe n'est requis pour se connecter, étant donné que la base de données des utilisateurs est locale. |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
+| Commentaires & exigences| Aucun mot de passe n'est requis pour se connecter, étant donné que la base de données des utilisateurs est locale. |
++-------------------------+---------------------------------------------+
 
 
 | Scénario 1               |              -               |
@@ -245,27 +245,27 @@ Pas de changement.
 | Fréquence d'occurence    | Une fois, au début de l'usage de l'application |
 | Commentaires & exigences | Aucun mot de passe n'est requis pour se connecter, étant donné que la base de données des utilisateurs est locale. |
 
-+---------------+---------------------------------------------+
-| Scénario 2           |                          |
++-------------------------+---------------------------------------------+
+| Scénario 2              |                          |
 +=========================+======================================+
 | Nom                     | Dialoguer avec ARIA          |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Niveau                  | Objectif usager              |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Acteurs                 | Acteur primaire: le locuteur |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Préconditions           | Le locuteur est connecté     |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Postconditions          | ARIA envoie une réponse au locuteur |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Scénario principal      | Le locuteur envoie une entrée texte à l'IA, qui interprète la phrase et envoie une réponse en consultant ses connaissances et ses préférences sur les éléments envoyés dans l'entrée texte. |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Scénarios alternatifs   | Le locuteur n'envoie pas une entrée texte à l'IA. Celle-ci calcule un certain temps avant d'envoyer une réponse, dépendamment du dernier sujet discuté, d'un sujet présent dans sa base de donnée à distance, ou d'une préférence du locuteur. |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
 | Fréquence d'occurence   | Après la connection du locuteur, ce scénario se répète jusqu'à la fermeture de l'application. |
-+---------------+---------------------------------------------+
-| Commentaires & exigences | Lorsqu'ARIA doit décider du sujet à discuter (dans le cas d'une absence d'entrée de texte de l'utilisateur), son choix se base sur ses propres préférences. Si une préférence du locuteur est d'une valeur similaire à une préférence de l'IA, ARIA préferera ce sujet de conversation. Sinon, elle préferera un sujet dans sa base de données avec une valeur de préférence élevée. De manière aléatoire, elle pourrait aussi favoriser la continuation d'un sujet, en particulier si ce sujet est nouveau dans sa base de données. |
-+---------------+---------------------------------------------+
++-------------------------+---------------------------------------------+
+| Commentaires & exigences| Lorsqu'ARIA doit décider du sujet à discuter (dans le cas d'une absence d'entrée de texte de l'utilisateur), son choix se base sur ses propres préférences. Si une préférence du locuteur est d'une valeur similaire à une préférence de l'IA, ARIA préferera ce sujet de conversation. Sinon, elle préferera un sujet dans sa base de données avec une valeur de préférence élevée. De manière aléatoire, elle pourrait aussi favoriser la continuation d'un sujet, en particulier si ce sujet est nouveau dans sa base de données. |
++-------------------------+---------------------------------------------+
 
 # Le sommaire des impacts
 
