@@ -183,14 +183,12 @@ ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Ru
 
 ![Diagramme de composants](./image/diagrammeComposants.png)
 
-Les fonctionnalités du nouveau système sont :
-
-- ARIA
-: une IA de type Chatterbots qui retient les données reçues par chaque utilisateur et de se forger une "personnalité"
-- Sauvegarde des conversations avec chaque utilisateur
-- Possibilité de faire l'IA poser des questions
-
-
+Le système comprend plusieurs nouvelles fonctionnalités, ainsi que des modifications sur les fonctionnalités de l'ancien système :
+- Les utilisateurs doivent se connecter à ARIA, afin qu'elle puisse les reconnaître dans la base de données interne
+- ARIA retient les données reçues par chaque utilisateur et enregistre de nouvelles connaissances dans une base de données en ligne
+- ARIA retient les données qui concernent les utilisateurs et les enregistre dans une base de données interne
+- ARIA fait le choix d'un sujet de conversation si aucune entrée de l'utilisateur n'a été perçue pendant un certain temps
+- Le temps d'attente avant qu'ARIA puisse chercher un sujet de conversation peut être allongé, raccourci, ou éliminé
 
 Tout comme un Chatterbot classique, l'utilisateur participe au développement du système et à sa maintenance à chaque utilisation.
 
