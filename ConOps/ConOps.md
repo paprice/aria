@@ -232,6 +232,7 @@ Pas de changement.
 ## Les impacts opérationnels
 
 Étant donnée que le nouveau système ne se base pas sur l'ancien, plusieurs gros changements vont être amenés :
+
 - La base de données globale doit être recréer, c'est à dire que les usagers et les développeurs vont devoir interagir avec l'application comme si c'était un enfant au début pour lui permettre de se créer une intelligence de base
 - Le système passe d'une application web à une application de bureau, ce qui implique que le nouveau système va devoir être installé sur l'ordinateur de l'utilisateur et qu'il va avoir une base de données locale
 - Pour permettre de reconnaître les utilisateurs, le logiciel va utiliser un système de nom d'utilisateur et de mot de passe pour permettre d'avoir plusieurs utilisateurs sur le même poste et de ne pas mélanger les différentes préférences des utilisateurs
