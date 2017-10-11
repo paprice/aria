@@ -218,9 +218,7 @@ Pas de changement.
 | Acteurs                  | Acteur primaire: le locuteur |
 | Préconditions            | S/O                          |
 | Postconditions           | Le locuteur est connecté     |
-| Scénario principal       |
-
-- Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale.
+| Scénario principal       | - Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale.
 - Si le nom n'est pas exactement identique à ceux présents dans la base de données mais présente des similarités, ARIA propose un nom similaire, et demande au locuteur de confirmer son identité.
 - Le locuteur confirme son identité pour se connecter. |
 | Scénarios alternatifs    | Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale. Si le nom n'est pas identique à ceux présents dans la base de données et ne présente aucune similarité, ARIA ajoute un nouveau nom dans sa base de données. Le locuteur est connecté. Si à l'inverse, le nom présentait des similarités, mais le locuteur ne confirme pas son identité, son nom est ajouté à la base de données. |
