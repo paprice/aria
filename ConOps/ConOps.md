@@ -190,7 +190,15 @@ Le système comprend plusieurs nouvelles fonctionnalités, ainsi que des modific
 - ARIA fait le choix d'un sujet de conversation si aucune entrée de l'utilisateur n'a été perçue pendant un certain temps
 - Le temps d'attente avant qu'ARIA puisse chercher un sujet de conversation peut être allongé, raccourci, ou éliminé
 
-Tout comme un Chatterbot classique, l'utilisateur participe au développement du système et à sa maintenance à chaque utilisation.
+L'application possède quelques contraintes quant à sa disponibilité; elle peut être démarrée à tout moment sur un ordinateur personnel, mais demande une connexion internet en tout temps. Tenir la base de données en ligne comporte aussi quelques risques quant à cette disponibilité : si la base de données ou le serveur deviennent inaccessibles, l'application devient inutilisable.
+
+Les possibilités d'expansion sont énormes. Plusieurs fonctionnalités contribuant à rendre l'IA plus intelligente et plus autonome peuvent être ajoutées dans des mises à jour, sans pour autant nécessiter un formatage des connaissances acquises par l'IA dans ses bases de données.
+
+Comme un Chatterbot classique, l'utilisateur participe au développement du système et à sa maintenance à chaque utilisation. Cependant, comme les données envoyées par tous les utilisateurs du système ne sont pas contrôlées et sont aléatoires, la maintenance de la base de données en ligne par un développeur peut s'avérer plus difficile, étant donnée la taille incontrôlée des connaissances d'ARIA.
+
+Étant donné que l'application devient plus intelligente avec les usages répétés, les interactions avec celle-ci deviennent aussi plus intéressantes, augmentant la réutilisabilité de l'application.
+
+Enfin, ARIA possède un grand niveau de portabilité, car l'application peut être installée sur divers systèmes d'opération (Windows, MacOS ou Linux).
 
 ## Les modes d'opérations du système proposé
 
