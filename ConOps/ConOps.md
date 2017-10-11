@@ -171,13 +171,15 @@ Certaines contraintes devront aussi être respectées, notamment, la protection 
 
 ## Contexte, objectifs et portée du système proposé
 
-Le projet ARIA a pour but de maintenir les capacités du Cleverbot tout en le rendant plus "humain". On veut que les utilisateurs aient l'impression qu'ils discutent avec un être humain et non a une entité qui répond à leurs questions. Elle doit pouvoir retenir les informations qu'elle obtient des utilisateurs et leur poser des questions pour enrichir ses connaissances et maintenir le dialogue.
+Le projet ARIA a pour but de maintenir les capacités du Cleverbot tout en le rendant plus "humain". On veut que les utilisateurs aient l'impression qu'ils discutent avec un être humain et non à une entité qui répond à leurs questions. Elle doit pouvoir retenir les informations qu'elle obtient des utilisateurs et leur poser des questions pour enrichir ses connaissances et maintenir le dialogue.
 
 ## Politiques opérationnelles et contraintes
 
-ARIA étant une application elle est toujours disponible à partir du moment où l'utilisateur l'a téléchargé. Un seul utilisateur peut intéragir avec le système par session; si une autre personne souhaite discuter avec ARIA, il lui faudra attendre que le précédent utilisateur termine. Cette application sera accessible sur n'importe quel type d'ordinateur (Windows, MacOS ou Linux) avec un espace nécessaire de ...  pour l'effectuer.
+Comme ARIA est une application installée sur un ordinateur personnel, elle est toujours disponible à partir du moment où l'utilisateur l'a téléchargée. Un seul utilisateur peut intéragir avec le système par session; si une autre personne souhaite discuter avec ARIA, il lui faudra attendre que le précédent utilisateur termine. Cette application sera accessible sur n'importe quel type d'ordinateur (Windows, MacOS ou Linux). On peut estimer que l'espace nécessaire au fonctionnement de l'application sera en dessous de 500 méga-octets. Une base de donnée locale contenant les informations des utilisateurs requierra davantage d'espace plus l'application sera utilisée.
 
 ## Description du système proposé
+
+ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Runtime.
 
 Les fonctionnalités du nouveau système sont :
 
@@ -186,7 +188,7 @@ Les fonctionnalités du nouveau système sont :
 - Sauvegarde des conversations avec chaque utilisateur
 - Possibilité de faire l'IA poser des questions
 
-Le diagramme suivant est celui de composants expliquant que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs de la machine) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues et "améliorer" sa personnalité).
+Le diagramme suivant démontre que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs de la machine) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues et "améliorer" sa personnalité).
 
 ![Diagramme de composants](./image/diagrammeComposants.png)
 
