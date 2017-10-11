@@ -206,46 +206,37 @@ Pas de changement.
 | Niveau                   | Objectif usager              |
 | Acteurs                  | Acteur primaire: le locuteur |
 | Préconditions            | S/O                          |
-| Postconditions           | L'utilisateur est connecté   |
-| Scénario principal       |                              |
-| Scénarios alternatifs    |                              |
-| Fréquence d'occurence    |                              |
-| Commentaires & exigences |                              |
+| Postconditions           | Le locuteur est connecté     |
+| Scénario principal       | Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale. Si le nom n'est pas exactement identique à ceux présents dans la base de données mais présente des similarités, ARIA propose un nom similaire, et demande au locuteur de confirmer son identité. Le locuteur confirme son identité pour se connecter. |
+| Scénarios alternatifs    | Le locuteur spécifie son nom à l'IA, qui compare celui-ci à un nom présent dans sa base de données locale. Si le nom n'est pas identique à ceux présents dans la base de données et ne présente aucune similarité, ARIA ajoute un nouveau nom dans sa base de données. Le locuteur est connecté. Si à l'inverse, le nom présentait des similarités, mais le locuteur ne confirme pas son identité, son nom est ajouté à la base de données. |
+| Fréquence d'occurence    | Une fois, au début de l'usage de l'application |
+| Commentaires & exigences | Aucun mot de passe n'est requis pour se connecter, étant donné que la base de données des utilisateurs est locale. |
 
 | Scénario 2               |              -               |
 | :----------------------- | :--------------------------- |
 | Nom                      | Dialoguer avec ARIA          |
 | Niveau                   | Objectif usager              |
 | Acteurs                  | Acteur primaire: le locuteur |
-| Préconditions            | L'utilisateur est connecté   |
-| Postconditions           | ARIA envoie une réponse à l'utilisateur   |
-| Scénario principal       |                              |
-| Scénarios alternatifs    |                              |
-| Fréquence d'occurence    |                              |
-| Commentaires & exigences |                              |
+| Préconditions            | Le locuteur est connecté     |
+| Postconditions           | ARIA envoie une réponse au locuteur |
+| Scénario principal       | Le locuteur envoie une entrée texte à l'IA, qui interprète la phrase et envoie une réponse en consultant ses connaissances et ses préférences sur les éléments envoyés dans l'entrée texte. |
+| Scénarios alternatifs    | Le locuteur n'envoie pas une entrée texte à l'IA. Celle-ci calcule un certain temps avant d'envoyer une réponse, dépendamment du dernier sujet discuté, d'un sujet présent dans sa base de donnée à distance, ou d'une préférence du locuteur. |
+| Fréquence d'occurence    | Après la connection du locuteur, ce scénario se répète jusqu'à la fermeture de l'application. |
+| Commentaires & exigences | Lorsqu'ARIA doit décider du sujet à discuter (dans le cas d'une absence d'entrée de texte de l'utilisateur), son choix se base sur ses propres préférences. Si une préférence du locuteur est d'une valeur similaire à une préférence de l'IA, ARIA préferera ce sujet de conversation. Sinon, elle préferera un sujet dans sa base de données avec une valeur de préférence élevée. De manière aléatoire, elle pourrait aussi favoriser la continuation d'un sujet, en particulier si ce sujet est nouveau dans sa base de données. |
 
 # Le sommaire des impacts
 
 ## Les impacts opérationnels
 
-Étant donnée que le nouveau système ne se base pas sur l'ancien, plusieurs gros changements vont être amenés :
-
-- la base de données globale doit être recréer, c'est à dire que les usagers et les développeurs vont devoir interagir avec l'application comme si c'était un enfant au début pour lui permettre de se créer une intelligence de base
-- le système passe d'une application web à une application de bureau, ce qui implique que le nouveau système va devoir être installé sur l'ordinateur de l'utilisateur et qu'il va avoir une base de données locale
- 	- Pour permettre de reconnaître les utilisateurs, le logiciel va utiliser un système de nom d'utilisateur et de mot de passe pour permettre d'avoir plusieurs utilisateurs sur le même poste et de ne pas mélanger les différentes préférences des utilisateurs
-	- Chaque utilisateurs va avoir son propre fichier de type JSON/XML pour permettre de stocker ses préférences
-- laisser l'application fonctionner sans interagir avec pendant un moment va entrainer une action qui va laisser l'application interagir la première avec  l'utilisateur.
-
+L'impact le plus important lors de la modification du système est que le système va passer d'une application web à une application de bureau. Cela implique que l'application va pouvoir stocker des données sur l'utilisateur sur l'ordinateur même de celui-ci pour mieux apprendre à le connaître. En ce qui concerne les données, la seule différence est qu'il va falloir réapprendre à ARIA la manière de répondre ou de lancer une conversation, donc le développement part d'une base de donnée vide.
 
 ## Les impacts organisationnels
 
-Le seul impact organisationnel que le nouveau système va apporter est le fait que plusieurs nouveau postes de travail vont être utiliser, puisque nous voulons utiliser une base de données locale.
+Les impacts organisationnels vont être quasiment nul, puisqu'une fois l'application développé, elle va être autonome, donc aucun support n'est requis.
 
 ## Les impacts durant le développement
 
 Aucun impacts ne sera générer lors du développement du nouveau système, puisque c'est une équipe totalement différente qui va développer le système et que le déploiement ne sera pas sur le même support.
-
-- les usagers devront faire des updates s'il y a changement dans le code interne de l'IA (les algorithmes)
 
 # L'analyse du système proposé
 
