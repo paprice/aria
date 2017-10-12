@@ -308,13 +308,18 @@ Le seul impact organisationnel que le nouveau système va apporter est le fait q
 
 Aucun impacts ne sera générer lors du développement du nouveau système, puisque c'est une équipe totalement différente qui va développer le système et que le déploiement ne sera pas sur le même support.
 
-les usagers devront faire des updates s'il y a changement dans le code interne de l'IA (les algorithmes)
-
 # L'analyse du système proposé
 
 ## Le sommaire des améliorations
 
-Les améliorations apportés au nouveau logiciel vont faire en sorte que l'utilisateur va avoir beaucoup moins l'impression de converser avec un robot, mais bel et bien avec un humain. En effet, pour ce faire, le nouveau système va pouvoir enregistrer des informations sur l'utilisateur pour pouvoir mieux lui répondre.
+Les améliorations apporté au logiciel vont faire en sorte que l'utilisateur va avoir plus l'impression de parler avec un humain qu'avec un robot. En effet :
+
+- Deux bases de données au lieu d'une seule
+	- Une base de données locale pour permettre à l'IA d'apprendre ce que l'utilisateur préfère ou non
+	- Une base de données globale où l'IA pour se former une mémoire a long terme
+- L'IA va avoir une personnalité, donc moins de réponse qui n'ont pas de sens
+- L'IA ne vas pas toujours attendre une entrée de l'utilisateur, elle va avoir la possibilité de lancer elle-même la conversation
+
 
 ## Les inconvénients et limites
 
