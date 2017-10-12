@@ -200,18 +200,18 @@ Comme un Chatterbot classique, l'utilisateur participe au développement du syst
 
 Enfin, ARIA possède un grand niveau de portabilité, car l'application peut être installée sur divers systèmes d'opération (Windows, MacOS ou Linux).
 
-Voici à quoi un échange entre l'utilisateur et l'application peut entrainer comme communication entre les différentes partie de l'application
+Voici ce qu'un échange entre l'utilisateur et l'application peut entrainer comme communication entre les différentes parties de l'application
 
 ![Diagramme de séquence](./image/Aria1.jpg)
 
-La connexion d'un utilisateur va aussi entrainer différentes réponses de l'application entre ses composantes :
+La connexion d'un utilisateur entraînera aussi différentes réponses de l'application entre ses composantes :
 
 - Une connexion normale avec un profil déjà existant
 
 ![Diagramme de connexion](./image/Connection.jpg)
 \
 
-- Une tentative de connexion avec un profil non créer
+- Une tentative de connexion avec un profil inexistant
 
 ![Diagramme de mauvais profil](./image/IdentifiantInexistant.jpg)
 
