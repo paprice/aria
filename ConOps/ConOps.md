@@ -62,7 +62,7 @@ Il existe plusieurs intelligences artificielles sur le marché dont le but princ
 
 ### Portée
 
-Cleverbot maintient une conversation en cherchant dans sa base de données les réponses qu'elle a reçues pour une question en particulier. Ainsi, elle peut reproduire le « flow » d'une conversation et apprendre des expressions ainsi que des phrases pré-construites. Cependant, Cleverbot n'est pas une entité a part entière, puisqu'elle ne fait qu'apprendre à imiter les humains avec qui elle interagit. Elle n'a pas de préférence ou d'opinion, elle n'a aucun concept du soi, et elle requiert une question pour pouvoir répondre : elle ne pose aucune question par elle-même.
+Cleverbot maintient une conversation en cherchant dans sa base de données les réponses qu'elle a reçues pour une question en particulier. Ainsi, elle peut reproduire le « flow » d'une conversation et apprendre des expressions ainsi que des phrases préconstruites. Cependant, Cleverbot n'est pas une entité a part entière, puisqu'elle ne fait qu'apprendre à imiter les humains avec qui elle interagit. Elle n'a pas de préférence ou d'opinion, elle n'a aucun concept du soi, et elle requiert une question pour pouvoir répondre : elle ne pose aucune question par elle-même.
 
 ## Politiques opérationnelles et contraintes
 
@@ -85,7 +85,7 @@ Un seul mode d'opération (connu) existe à l'usage de Cleverbot, soit le mode r
 
 ## Les classes d'utilisateurs et les autres personnes impliqués
 
-Une seule classe d'utilisateur existe à l'usage de Cleverbot, soit le locuteur, qui intéragit avec l'intelligence artificielle.
+Une seule classe d'utilisateur existe à l'usage de Cleverbot, soit le locuteur, qui interagit avec l'intelligence artificielle.
 
 ### La structure organisationnelle
 
@@ -93,7 +93,7 @@ Les locuteurs ne sont pas en relation et ne communiquent pas entre eux. Leur seu
 
 ### Le profil de chaque classe d'utilisateurs
 
-Le locuteur est définit par une entité capable de fournir des entrées de texte à l'intelligence artificielle. La nature du locuteur est sans conséquence : celui-ci peut-être un individu en chair et en os, ou une autre intelligence artificielle, pour autant qu'il fournit une entrée de texte que Cleverbot peut lire. Le locuteur intéragit avec l'application et permet à l'application d'apprendre et de mieux répondre aux prochaines entrées qui lui seront envoyées. De cette façon, le locuteur est à la fois un consommateur du service et un outil de maintenance passif, profitant du divertissement procuré en entretenant un dialogue avec l'IA, mais fournissant aussi des données qui permettront l'amélioration du service.
+Le locuteur est définit par une entité capable de fournir des entrées de texte à l'intelligence artificielle. La nature du locuteur est sans conséquence : celui-ci peut-être un individu en chair et en os, ou une autre intelligence artificielle, pour autant qu'il fournit une entrée de texte que Cleverbot peut lire. Le locuteur interagit avec l'application et permet à l'application d'apprendre et de mieux répondre aux prochaines entrées qui lui seront envoyées. De cette façon, le locuteur est à la fois un consommateur du service et un outil de maintenance passif, profitant du divertissement procuré en entretenant un dialogue avec l'IA, mais fournissant aussi des données qui permettront l'amélioration du service.
 
 ### Les interactions entre les utilisateurs
 
@@ -173,7 +173,7 @@ Le projet ARIA a pour but de maintenir les capacités du Cleverbot tout en le re
 
 ## Politiques opérationnelles et contraintes
 
-Comme ARIA est une application installée sur un ordinateur personnel, elle est toujours disponible à partir du moment où l'utilisateur l'a téléchargée. Un seul utilisateur peut intéragir avec le système par session; si une autre personne souhaite discuter avec ARIA, il lui faudra attendre que le précédent utilisateur termine. Cette application sera accessible sur n'importe quel type d'ordinateur (Windows, MacOS ou Linux). On peut estimer que l'espace nécessaire au fonctionnement de l'application sera en dessous de 500 méga-octets. Une base de donnée locale contenant les informations des utilisateurs requierra davantage d'espace plus l'application sera utilisée.
+Comme ARIA est une application installée sur un ordinateur personnel, elle est toujours disponible à partir du moment où l'utilisateur l'a téléchargée. Un seul utilisateur peut interagir avec le système par session; si une autre personne souhaite discuter avec ARIA, il lui faudra attendre que le précédent utilisateur termine. Cette application sera accessible sur n'importe quel type d'ordinateur (Windows, MacOs ou Linux). On peut estimer que l'espace nécessaire au fonctionnement de l'application sera en dessous de 500 méga-octets. Une base de donnée locale contenant les informations des utilisateurs requerra davantage d'espace plus l'application sera utilisée.
 
 ## Description du système proposé
 
@@ -225,12 +225,33 @@ La connexion d'un utilisateur va aussi entrainer différentes réponses de l'app
 
 ## Les modes d'opérations du système proposé
 
-Pas de changement.
+Il ne vas y avoir qu'un seul mode d'opération lors de l'exécution de l'application. Ce mode va être le mode normal et il va permettre à l'utilisateur de communiquer avec l'IA au travers de l'interface graphique.
 
 ## Les classes d'utilisateurs et les autres personnels impliqués
 
-Pas de changement.
+### La structure organisationnelle
 
+Les différents groupes d'usagers de l'application vont être les développeurs et les utilisateurs. Donc, dans le début, les développeurs vont être les seuls à interagir avec l'application, que ce soit en ajoutant ou modifiant des fonctionnalités, ou bien en interagissant avec l'IA pour lui apprendre des connaissances de bases. Par la suite, une fois l'application mise sur le marché, les utilisateurs normal vont pouvoir interagir avec l'IA pour entretenir une conversation. Étant donné que l'application va apprendre, il ne vas y avoir aucun groupe dédié au support de l'application, puisque les utilisateurs vont permettre à l'application de mieux répondre en fonction de ce qui lui est donné.
+
+### Le profil de chaque classe d'utilisateurs
+
+- Développeurs
+: Les développeurs vont être ceux qui implémente les fonctionnalités du programme lors du stade de développement de celui-ci et ceux qui vont donner une intelligence basique à l'IA.
+
+- Utilisateurs
+: Les utilisateurs vont être les personnes qui communiquent avec l'IA sur leurs postes et qui vont permettre à l'IA d'apprendre et de mieux répondre.
+
+### Les interactions entre les utilisateurs
+
+Il ne vas pas avoir beaucoup d'interactions entre les différents utilisateurs, puisque une fois l'application mise en service, elle devrait être autonome. Les seules fois où un utilisateur aurait a communiquer avec les développeurs serait si l'utilisateur a trouver un bug majeur soit dans l'IA, soit dans l'application. À l'inverse, les seule fois où un développeur aurait a communiquer avec les utilisateurs serait lorsqu'une mise à jour est relâcher.
+
+### Autre personnel impliqué
+
+Aucune (a mieux formuler)
+
+### L'environnement de support
+
+Le code source de l'application va être héberger sur GitHub. Pour ce qui est de l'entreposage des données de la base de données en ligne, elle va être héberger sur le site de mLab qui va s'occuper de tout ce qui concerne la maintenance des serveurs.
 
 # Les scénarios d'opération
 
