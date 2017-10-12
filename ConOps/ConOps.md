@@ -318,10 +318,33 @@ Les améliorations apporté au logiciel vont faire en sorte que l'utilisateur va
 	- Une base de données globale où l'IA pour se former une mémoire a long terme
 - L'IA va avoir une personnalité, donc moins de réponse qui n'ont pas de sens
 - L'IA ne vas pas toujours attendre une entrée de l'utilisateur, elle va avoir la possibilité de lancer elle-même la conversation
-
+- La création obligatoire d'un profil utilisateur, étant donnée qu'on veut récolter des données sur les préférences de l'utilisateur.
 
 ## Les inconvénients et limites
 
-L'inconvénient majeur du nouveau système est le fait que la base de données de réponse de l'application doit être complètement recréer, puisque le nouveau système est complètement indépendant de l'ancien système.
+Les limites et les inconvénients de l'application sont :
+
+- La base de données globale va partir de zéro, donc une grosse perte d'intelligence lors du lancement de l'application.
+- Aucune manière de filtrer de quoi parle l'application
+- Une connexion continu à internet est demandé pour que l'application puisse fonctionner.
+- La base de données est essentielles et si elle est inaccessible, alors l'application est non-opérationnelle.
+
 
 ## Les alternatives et compromis considérés
+
+Plusieurs fonctionnalités ont été considérées lors de la conception de l'application :
+
+- ARIA devait pouvoir accéder d’elle-même à des articles sur internet et faire son apprentissage en lisant ces articles. Cette idée n’a pas été retenue parce que la lecture d’un article sur internet ne demande pas la même approche que celle d’un dialogue et imposerait une complexité élevée du code.
+- ARIA devait au début posséder plusieurs personnalités, dépendamment de l’ordinateur personnel sur lequel elle se trouvait, et tenir ses connaissances sur une base de données locale. Cette idée a été rejetée dû à une préférence des développeurs, mais aussi dû à l’envisagement des apprentissages intensifs que doit faire l’application dans ses débuts.
+- ARIA devait pouvoir générer son propre code et poser des actions sur l’ordinateur et sur internet. Étant donné l’imprévisibilité de telles décisions et la complexité du code qui devrait l’encadrer
+
+Il a fallu faire des compromis sur d'autres options comme :
+
+- La protection des comptes utilisateurs local et de leurs données par des mots de passes. Étant donnée que si l'utilisateurs oublie son mot de passe, il doit avoir un moyen de le récupérer, cela demandait trop de code à implémenter pour les développeurs. En effet, il faudrait crypter les fichiers sur la base de données locale et garder la clé cacher pour ne pas que quelqu'un la trouve et fasse le lien
+
+
+# Notes
+
+# Annexes
+
+# Glossaire
