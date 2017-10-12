@@ -203,22 +203,27 @@ Comme un Chatterbot classique, l'utilisateur participe au développement du syst
 Enfin, ARIA possède un grand niveau de portabilité, car l'application peut être installée sur divers systèmes d'opération (Windows, MacOS ou Linux).
 
 Voici à quoi un échange entre l'utilisateur et l'application peut entrainer comme communication entre les différentes partie de l'application
+
 ![Diagramme de séquence](./image/Aria1.jpg)
-\
 
 La connexion d'un utilisateur va aussi entrainer différentes réponses de l'application entre ses composantes :
 
 - Une connexion normale avec un profil déjà existant
+
 ![Diagramme de connexion](./image/Connection.jpg)
 \
 
 - Une tentative de connexion avec un profil non créer
+
 ![Diagramme de mauvais profil](./image/IdentifiantInexistant.jpg)
-\
+
+\newpage
 
 - La création d'un profil utilisateur
-![Diagramme de création](./image/CreationProfil.jpg)
-\
+
+![Diagramme de création](./image/CreationProfil.jpg){width=100%}
+
+
 
 ## Les modes d'opérations du système proposé
 
@@ -249,8 +254,8 @@ Pas de changement.
 |                         | 1) Le locuteur confirme son identité pour se connecter.      |
 +-------------------------+---------------------------------------------+
 | Scénario alternatif     | 1) Le locuteur spécifie son nom à l'IA.  |
-|                         | 2a) L'IA compare le nom reçu aux noms présents dans sa base de données locale. Si le nom n'est pas identique à ceux présents dans la base de données et ne présente aucune similarité, ARIA ajoute un nouveau nom dans sa base de données. |
-|                         | 2b) Si à l'inverse, le nom présentait des similarités, mais le locuteur ne confirme pas son identité, son nom est ajouté à la base de données. |
+|                         | 1) a) L'IA compare le nom reçu aux noms présents dans sa base de données locale. Si le nom n'est pas identique à ceux présents dans la base de données et ne présente aucune similarité, ARIA ajoute un nouveau nom dans sa base de données. |
+|                         |		b) Si à l'inverse, le nom présentait des similarités, mais le locuteur ne confirme pas son identité, son nom est ajouté à la base de données. |
 |                         | 3) Le locuteur est connecté.     |
 +-------------------------+---------------------------------------------+
 | Fréquence d'occurence   | Une fois, au début de l'usage de l'application |
