@@ -221,8 +221,6 @@ La connexion d'un utilisateur va aussi entrainer différentes réponses de l'app
 
 ![Diagramme de création](./image/CreationProfil.jpg){width=100%}
 
-
-
 ## Les modes d'opérations du système proposé
 
 Il ne vas y avoir qu'un seul mode d'opération lors de l'exécution de l'application. Ce mode va être le mode normal et il va permettre à l'utilisateur de communiquer avec l'IA au travers de l'interface graphique.
@@ -310,44 +308,43 @@ Le code source de l'application va être héberger sur GitHub. Pour ce qui est d
 
 ## Les impacts opérationnels
 
-Étant donnée que le nouveau système ne se base pas sur l'ancien, plusieurs gros changements vont être amenés :
+Étant donnée que le nouveau système ne se base pas sur le code de l'ancien, plusieurs gros changements seront apportés :
 
-- La base de données globale doit être recréer, c'est à dire que les usagers et les développeurs vont devoir interagir avec l'application comme si c'était un enfant au début pour lui permettre de se créer une intelligence de base
-- Le système passe d'une application web à une application de bureau, ce qui implique que le nouveau système va devoir être installé sur l'ordinateur de l'utilisateur et qu'il va avoir une base de données locale
-- Pour permettre de reconnaître les utilisateurs, le logiciel va utiliser un système de nom d'utilisateur et de mot de passe pour permettre d'avoir plusieurs utilisateurs sur le même poste et de ne pas mélanger les différentes préférences des utilisateurs
-- Chaque utilisateurs va avoir son propre fichier de type JSON/XML pour permettre de stocker ses préférences
-- Laisser l'application fonctionner sans interagir avec pendant un moment va entrainer une action qui va laisser l'application interagir la première avec l'utilisateur.
+- La base de données globale doit être recréée, c'est-à-dire que les usagers et les développeurs devront interagir avec l'application comme si c'était un enfant (dans les débuts de l'application) pour lui permettre de se créer une intelligence de base.
+- Le système passe d'une application web à une application de bureau, ce qui implique que le nouveau système devra être installé sur l'ordinateur de l'utilisateur. Il aura aussi une base de données locale.
+- Pour permettre à ARIA de reconnaître les utilisateurs, le logiciel utilisera un système de noms d'utilisateur pour permettre d'avoir plusieurs utilisateurs sur le même poste et de ne pas mélanger les différentes préférences des utilisateurs.
+- Chaque utilisateur aura son propre fichier de type JSON/XML qui stockera des informations sur ses préférences personnelles.
+- Laisser l'application fonctionner sans interagir avec elle pendant un moment entraînera une action de l'IA, sans le besoin d'une entrée de l'utilisateur.
 
 ## Les impacts organisationnels
 
-Le seul impact organisationnel que le nouveau système va apporter est le fait que plusieurs nouveau postes de travail vont être utiliser, puisque nous voulons utiliser une base de données locale.
+Le seul impact organisationnel que le nouveau système apportera est celui que plusieurs nouveaux postes de travail seront utilisés, puisque l'application devient une application de bureau et qu'elle utilise une base de données locale.
 
 ## Les impacts durant le développement
 
-Aucun impacts ne sera générer lors du développement du nouveau système, puisque c'est une équipe totalement différente qui va développer le système et que le déploiement ne sera pas sur le même support.
+Aucun impact ne sera généré lors du développement du nouveau système, puisque c'est une équipe totalement différente qui développera le système et que le déploiement ne sera pas sur le même support.
 
 # L'analyse du système proposé
 
 ## Le sommaire des améliorations
 
-Les améliorations apporté au logiciel vont faire en sorte que l'utilisateur va avoir plus l'impression de parler avec un humain qu'avec un robot. En effet :
+Les améliorations apportées au logiciel feront en sorte que l'utilisateur aura bien plus l'impression de parler avec un humain qu'avec un robot. En effet :
 
-- Deux bases de données au lieu d'une seule
-	- Une base de données locale pour permettre à l'IA d'apprendre ce que l'utilisateur préfère ou non
-	- Une base de données globale où l'IA pour se former une mémoire a long terme
-- L'IA va avoir une personnalité, donc moins de réponse qui n'ont pas de sens
-- L'IA ne vas pas toujours attendre une entrée de l'utilisateur, elle va avoir la possibilité de lancer elle-même la conversation
-- La création obligatoire d'un profil utilisateur, étant donnée qu'on veut récolter des données sur les préférences de l'utilisateur.
+- Deux bases de données au lieu d'une seule.
+	- Une base de données locale pour permettre à l'IA d'apprendre ce que l'utilisateur préfère ou non.
+	- Une base de données globale où l'IA peut se former une mémoire a long terme.
+- L'IA se développe une personnalité en attribuant des préférences à certains sujets : donc moins de réponse qui n'ont pas de sens.
+- L'IA n'attendra pas toujours une entrée de l'utilisateur, elle aura la possibilité de lancer elle-même la conversation.
+- La création obligatoire d'un profil utilisateur, afin que l'IA puisse récolter des données sur les préférences de l'utilisateur.
 
 ## Les inconvénients et limites
 
 Les limites et les inconvénients de l'application sont :
 
-- La base de données globale va partir de zéro, donc une grosse perte d'intelligence lors du lancement de l'application.
-- Aucune manière de filtrer de quoi parle l'application
-- Une connexion continu à internet est demandé pour que l'application puisse fonctionner.
-- La base de données est essentielles et si elle est inaccessible, alors l'application est non-opérationnelle.
-
+- La base de données globale partira de zéro, donc un gros manque d'intelligence lors du lancement de l'application.
+- Aucune manière directe pour l'utilisateur de filtrer de quoi parle l'application.
+- Une connexion continue à internet est demandée pour que l'application puisse fonctionner.
+- La base de données est essentielle; si elle est inaccessible, alors l'application est non-opérationnelle.
 
 ## Les alternatives et compromis considérés
 
@@ -355,12 +352,11 @@ Plusieurs fonctionnalités ont été considérées lors de la conception de l'ap
 
 - ARIA devait pouvoir accéder d’elle-même à des articles sur internet et faire son apprentissage en lisant ces articles. Cette idée n’a pas été retenue parce que la lecture d’un article sur internet ne demande pas la même approche que celle d’un dialogue et imposerait une complexité élevée du code.
 - ARIA devait au début posséder plusieurs personnalités, dépendamment de l’ordinateur personnel sur lequel elle se trouvait, et tenir ses connaissances sur une base de données locale. Cette idée a été rejetée dû à une préférence des développeurs, mais aussi dû à l’envisagement des apprentissages intensifs que doit faire l’application dans ses débuts.
-- ARIA devait pouvoir générer son propre code et poser des actions sur l’ordinateur et sur internet. Étant donné l’imprévisibilité de telles décisions et la complexité du code qui devrait l’encadrer
+- ARIA devait pouvoir générer son propre code et poser des actions sur l’ordinateur et sur internet. Non retenu étant donné l’imprévisibilité de telles décisions et la complexité du code qui devrait l’encadrer.
 
 Il a fallu faire des compromis sur d'autres options comme :
 
-- La protection des comptes utilisateurs local et de leurs données par des mots de passes. Étant donnée que si l'utilisateurs oublie son mot de passe, il doit avoir un moyen de le récupérer, cela demandait trop de code à implémenter pour les développeurs. En effet, il faudrait crypter les fichiers sur la base de données locale et garder la clé cacher pour ne pas que quelqu'un la trouve et fasse le lien
-
+- La protection des comptes utilisateurs sur la base de données locale et de leurs données par des mots de passes. Étant donné qu'un utilisateur pourrait oublier son mot de passe, cela nécessiterait un moyen de le récupérer, ce qui demandait trop de code à implémenter pour les développeurs. En effet, il faudrait crypter les fichiers sur la base de données locale et garder la clé cachée pour ne pas qu'on intru l'utilise à mauvais escient.
 
 # Notes
 
