@@ -165,8 +165,6 @@ Des changements considérés n'ont pas été retenus, pour diverses raisons :
 
 On peut faire plusieurs hypothèses sur les obstacles que rencontreront les utilisateurs de l'application et l'application elle-même. Pour commencer, la base de données comprenant les connaissances de l'application sera vide au départ, ce qui implique que les premières discussions avec l'IA seront basées sur des questions et un apprentissage accru des nouvelles valeurs à ajouter dans la base de données. Comme l'application sera gratuite et disponible à tous, la base de donnée sera forcément accédée par un nombre élevé d'utilisateurs, avec un trafic élevé durant certaines heures de la journée. Tout cela dépend du bon fonctionnement de l'application et de sa popularité au lancement. Enfin, il faut aussi envisager que cette base de donnée sera rapidement remplie à capacité, et devra augmenter en taille pour permettre à l'intelligence artificielle de grandir.
 
-Certaines contraintes devront aussi être respectées, notamment, la protection des données de type « utilisateur », pour ne pas qu'elles soient lisible par un autre utilisateur que l'application elle-même. Cette contrainte est d'une grande importance, en partie parce qu'il est impossible de prévoir le type d'information qui sera échangée entre l'utilisateur et l'IA. Des données sensibles comme une adresse à domicile ou un numéro de téléphone ne doivent en aucun cas être accessibles par autrui.
-
 # Le concept du système proposé
 
 ## Contexte, objectifs et portée du système proposé
