@@ -182,14 +182,14 @@ Comme ARIA est une application installée sur un ordinateur personnel, elle est 
 ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Runtime. Le diagramme suivant démontre que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues, et "d'améliorer" sa personnalité) :
 
 ![Diagramme de composants](./image/diagrammeComposants.png){width=100%}
-\
+
 
 \newpage
 
 Le diagramme du domaine montre comment les différentes parties de l'application interagissent entre elles :
 
 ![Diagramme de classe](./image/classDiagram.png){width=100%}
-\
+
 
 Le système comprend plusieurs nouvelles fonctionnalités, ainsi que des modifications sur les fonctionnalités de l'ancien système :
 
