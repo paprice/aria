@@ -182,6 +182,9 @@ ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Ru
 ![Diagramme de composants](./image/diagrammeComposants.png){width=100%}
 \
 
+![Diagramme de classe](./image/classDiagram.png)
+\
+
 Le système comprend plusieurs nouvelles fonctionnalités, ainsi que des modifications sur les fonctionnalités de l'ancien système :
 
 - Les utilisateurs doivent se connecter à ARIA, afin qu'elle puisse les reconnaître dans la base de données interne
