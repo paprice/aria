@@ -248,9 +248,6 @@ Les différents groupes d'usagers de l'application seront les développeurs et l
 
 ### Le profil de chaque classe d'utilisateurs
 
-- Développeurs
-: Les développeurs sont ceux qui implémentent les fonctionnalités du programme lors du stade de développement de celui-ci et ceux qui donnent une intelligence de base à l'IA.
-
 - Scripteurs
 : Les scripteurs communiquent avec l'IA sur leur poste et permettent à l'IA d'approfondir des connaissances et de mieux répondre.
 
