@@ -175,6 +175,8 @@ Le projet ARIA a pour but de maintenir les capacités du Cleverbot tout en le re
 
 Comme ARIA est une application installée sur un ordinateur personnel, elle est toujours disponible à partir du moment où l'utilisateur l'a téléchargée. Un seul utilisateur peut interagir avec le système par session; si une autre personne souhaite discuter avec ARIA, il lui faudra attendre que le précédent utilisateur termine. Cette application sera accessible sur n'importe quel type d'ordinateur (Windows, MacOs ou Linux). On peut estimer que l'espace nécessaire au fonctionnement de l'application sera en dessous de 500 méga-octets. Une base de donnée locale contenant les informations des utilisateurs requerra davantage d'espace plus l'application sera utilisée.
 
+\newpage
+
 ## Description du système proposé
 
 ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Runtime. Le diagramme suivant démontre que le système est utilisable à travers une application liée à une base de données interne (pour conserver les informations des utilisateurs) et à une base de données en ligne (permettant de sauvegarder toutes les informations obtenues, et "d'améliorer" sa personnalité) :
@@ -182,7 +184,11 @@ ARIA fonctionne sur n'importe quel système qui supporte l'environnement Java Ru
 ![Diagramme de composants](./image/diagrammeComposants.png){width=100%}
 \
 
-![Diagramme de classe](./image/classDiagram.png)
+\newpage
+
+Le diagramme du domaine montre comment les différentes parties de l'application interagissent entre elles :
+
+![Diagramme de classe](./image/classDiagram.png){width=100%}
 \
 
 Le système comprend plusieurs nouvelles fonctionnalités, ainsi que des modifications sur les fonctionnalités de l'ancien système :
@@ -278,10 +284,13 @@ Le code source de l'application va être héberger sur GitHub. Pour ce qui est d
 |                         |		b) Si à l'inverse, le nom présentait des similarités, mais le locuteur ne confirme pas son identité, son nom est ajouté à la base de données. |
 |                         | 3) Le locuteur est connecté.     |
 +-------------------------+---------------------------------------------+
-| Fréquence d'occurence   | Une fois, au début de l'usage de l'application |
+| Fréquence d'occurrence   | Une fois, au début de l'usage de l'application |
 +-------------------------+---------------------------------------------+
-| Commentaires & exigences| Aucun mot de passe n'est requis pour se connecter, étant donné que la base de données des utilisateurs est locale. |
+| Commentaires & exigences | Aucun mot de passe n'est requis pour se connecter, étant donné que la base de données des utilisateurs est locale. |
 +-------------------------+---------------------------------------------+
+
+&nbsp;
+
 
 +-------------------------+---------------------------------------------+
 | Scénario 2              |                          |
@@ -302,9 +311,9 @@ Le code source de l'application va être héberger sur GitHub. Pour ce qui est d
 | Scénarios alternatifs   | 1) Le locuteur n'envoie pas une entrée texte à l'IA. |
 |                         | 1) L'IA calcule un certain temps avant d'envoyer une réponse, dépendamment du dernier sujet discuté, d'un sujet présent dans sa base de donnée à distance, ou d'une préférence du locuteur. |
 +-------------------------+---------------------------------------------+
-| Fréquence d'occurence   | Après la connection du locuteur, ce scénario se répète jusqu'à la fermeture de l'application. |
+| Fréquence d'occurrence   | Après la connexion du locuteur, ce scénario se répète jusqu'à la fermeture de l'application. |
 +-------------------------+---------------------------------------------+
-| Commentaires & exigences| Lorsqu'ARIA doit décider du sujet à discuter (dans le cas d'une absence d'entrée de texte de l'utilisateur), son choix se base sur ses propres préférences. Si une préférence du locuteur est d'une valeur similaire à une préférence de l'IA, ARIA préferera ce sujet de conversation. Sinon, elle préferera un sujet dans sa base de données avec une valeur de préférence élevée. De manière aléatoire, elle pourrait aussi favoriser la continuation d'un sujet, en particulier si ce sujet est nouveau dans sa base de données. |
+| Commentaires & exigences | Lorsqu'ARIA doit décider du sujet à discuter (dans le cas d'une absence d'entrée de texte de l'utilisateur), son choix se base sur ses propres préférences. Si une préférence du locuteur est d'une valeur similaire à une préférence de l'IA, ARIA préfèrera ce sujet de conversation. Sinon, elle préfèrera un sujet dans sa base de données avec une valeur de préférence élevée. De manière aléatoire, elle pourrait aussi favoriser la continuation d'un sujet, en particulier si ce sujet est nouveau dans sa base de données. |
 +-------------------------+---------------------------------------------+
 
 # Le sommaire des impacts
@@ -359,7 +368,7 @@ Plusieurs fonctionnalités ont été considérées lors de la conception de l'ap
 
 Il a fallu faire des compromis sur d'autres options comme :
 
-- La protection des comptes utilisateurs sur la base de données locale et de leurs données par des mots de passes. Étant donné qu'un utilisateur pourrait oublier son mot de passe, cela nécessiterait un moyen de le récupérer, ce qui demandait trop de code à implémenter pour les développeurs. En effet, il faudrait crypter les fichiers sur la base de données locale et garder la clé cachée pour ne pas qu'on intru l'utilise à mauvais escient.
+- La protection des comptes utilisateurs sur la base de données locale et de leurs données par des mots de passes. Étant donné qu'un utilisateur pourrait oublier son mot de passe, cela nécessiterait un moyen de le récupérer, ce qui demandait trop de code à implémenter pour les développeurs. En effet, il faudrait crypter les fichiers sur la base de données locale et garder la clé cachée pour ne pas qu'un intrus l'utilise à mauvais escient.
 
 # Notes
 
