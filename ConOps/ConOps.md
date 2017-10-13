@@ -85,15 +85,15 @@ Un seul mode d'opération (connu) existe à l'usage de Cleverbot, soit le mode r
 
 ## Les classes d'utilisateurs et les autres personnes impliqués
 
-Une seule classe d'utilisateur existe à l'usage de Cleverbot, soit le locuteur, qui interagit avec l'intelligence artificielle.
+Une seule classe d'utilisateur existe à l'usage de Cleverbot, soit le scripteur, qui interagit avec l'intelligence artificielle.
 
 ### La structure organisationnelle
 
-Les locuteurs ne sont pas en relation et ne communiquent pas entre eux. Leur seule interaction est avec l'application. Cette interaction encourage l'apprentissage de l'intelligence artificielle, qui améliore ensuite l'expérience de tous les utilisateurs.
+Les scripteurs ne sont pas en relation et ne communiquent pas entre eux. Leur seule interaction est avec l'application. Cette interaction encourage l'apprentissage de l'intelligence artificielle, qui améliore ensuite l'expérience de tous les utilisateurs.
 
 ### Le profil de chaque classe d'utilisateurs
 
-Le locuteur est définit par une entité capable de fournir des entrées de texte à l'intelligence artificielle. La nature du locuteur est sans conséquence : celui-ci peut-être un individu en chair et en os, ou une autre intelligence artificielle, pour autant qu'il fournit une entrée de texte que Cleverbot peut lire. Le locuteur interagit avec l'application et permet à l'application d'apprendre et de mieux répondre aux prochaines entrées qui lui seront envoyées. De cette façon, le locuteur est à la fois un consommateur du service et un outil de maintenance passif, profitant du divertissement procuré en entretenant un dialogue avec l'IA, mais fournissant aussi des données qui permettront l'amélioration du service.
+Le scripteur est définit par une entité capable de fournir des entrées de texte à l'intelligence artificielle. La nature du scripteur est sans conséquence : celui-ci peut-être un individu en chair et en os, ou une autre intelligence artificielle, pour autant qu'il fournit une entrée de texte que Cleverbot peut lire. Le scripteur interagit avec l'application et permet à l'application d'apprendre et de mieux répondre aux prochaines entrées qui lui seront envoyées. De cette façon, le scripteur est à la fois un consommateur du service et un outil de maintenance passif, profitant du divertissement procuré en entretenant un dialogue avec l'IA, mais fournissant aussi des données qui permettront l'amélioration du service.
 
 ### Les interactions entre les utilisateurs
 
@@ -105,7 +105,7 @@ S/O
 
 ## L'environnement de support
 
-Cleverbot est supporté par un serveur ainsi qu'une liaison vers internet. Il n'y a pas de logiciel de maintenance. Les seules réparations sont faites à l'interne. Les améliorations et les apprentissages du logiciel se font au fur et à mesure de ses communications avec les différents locuteurs.
+Cleverbot est supporté par un serveur ainsi qu'une liaison vers internet. Il n'y a pas de logiciel de maintenance. Les seules réparations sont faites à l'interne. Les améliorations et les apprentissages du logiciel se font au fur et à mesure de ses communications avec les différents scripteurs.
 
 # La justification et la nature des changements
 
@@ -235,33 +235,33 @@ La connexion d'un utilisateur entraînera aussi différentes réponses de l'appl
 
 ## Les modes d'opérations du système proposé
 
-Il ne vas y avoir qu'un seul mode d'opération lors de l'exécution de l'application. Ce mode va être le mode normal et il va permettre à l'utilisateur de communiquer avec l'IA au travers de l'interface graphique.
+Il ne vas y avoir qu'un seul mode d'opération lors de l'exécution de l'application. Ce mode sera le mode normal et il permettra à l'utilisateur de communiquer avec l'IA au travers de l'interface graphique.
 
 ## Les classes d'utilisateurs et les autres personnels impliqués
 
 ### La structure organisationnelle
 
-Les différents groupes d'usagers de l'application vont être les développeurs et les utilisateurs. Donc, dans le début, les développeurs vont être les seuls à interagir avec l'application, que ce soit en ajoutant ou modifiant des fonctionnalités, ou bien en interagissant avec l'IA pour lui apprendre des connaissances de bases. Par la suite, une fois l'application mise sur le marché, les utilisateurs normal vont pouvoir interagir avec l'IA pour entretenir une conversation. Étant donné que l'application va apprendre, il ne vas y avoir aucun groupe dédié au support de l'application, puisque les utilisateurs vont permettre à l'application de mieux répondre en fonction de ce qui lui est donné.
+Les différents groupes d'usagers de l'application seront les développeurs et les scripteurs. Dans les débuts de l'application, les développeurs seront les seuls à interagir avec l'application, que ce soit en ajoutant ou modifiant des fonctionnalités, ou bien en interagissant avec l'IA pour lui fournir des connaissances de bases. Par la suite, une fois l'application mise sur le marché, les scripteurs pourront interagir avec l'IA pour entretenir une conversation. Étant donné que l'application sera en apprentissage autonome, il n'y aura aucun groupe dédié au support de l'application, puisque les utilisateurs permettront à l'application de mieux répondre en fonction des informations qui lui sont données.
 
 ### Le profil de chaque classe d'utilisateurs
 
 - Développeurs
-: Les développeurs vont être ceux qui implémente les fonctionnalités du programme lors du stade de développement de celui-ci et ceux qui vont donner une intelligence basique à l'IA.
+: Les développeurs sont ceux qui implémentent les fonctionnalités du programme lors du stade de développement de celui-ci et ceux qui donnent une intelligence de base à l'IA.
 
-- Utilisateurs
-: Les utilisateurs vont être les personnes qui communiquent avec l'IA sur leurs postes et qui vont permettre à l'IA d'apprendre et de mieux répondre.
+- Scripteurs
+: Les scripteurs communiquent avec l'IA sur leur poste et permettent à l'IA d'approfondir des connaissances et de mieux répondre.
 
 ### Les interactions entre les utilisateurs
 
-Il ne vas pas avoir beaucoup d'interactions entre les différents utilisateurs, puisque une fois l'application mise en service, elle devrait être autonome. Les seules fois où un utilisateur aurait a communiquer avec les développeurs serait si l'utilisateur a trouver un bug majeur soit dans l'IA, soit dans l'application. À l'inverse, les seule fois où un développeur aurait a communiquer avec les utilisateurs serait lorsqu'une mise à jour est relâcher.
+Il n'y aura pas beaucoup d'interactions entre les différents utilisateurs, puisqu'une fois l'application mise en service, elle sera autonome. Les seules fois où un utilisateur aura à communiquer avec un développeur est si celui-ci a trouvé un bogue majeur, soit dans l'IA, soit dans l'application. À l'inverse, les seules fois où un développeur aura à communiquer avec les utilisateurs sera lorsqu'une mise à jour est relâchée.
 
 ### Autre personnel impliqué
 
-Aucune (a mieux formuler)
+S/O
 
 ### L'environnement de support
 
-Le code source de l'application va être héberger sur GitHub. Pour ce qui est de l'entreposage des données de la base de données en ligne, elle va être héberger sur le site de mLab qui va s'occuper de tout ce qui concerne la maintenance des serveurs.
+Le code source de l'application sera hébergé sur GitHub. Pour ce qui est de l'entreposage des données de la base de données en ligne, elle sera hébergée sur le site de mLab qui s'occupera de tout ce qui concerne la maintenance des serveurs.
 
 # Les scénarios d'opération
 
