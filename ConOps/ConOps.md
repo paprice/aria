@@ -19,6 +19,9 @@ ARIA
 
 # Préface {-}
 
+Le présent document passe en détail les composantes du projet A.R.I.A., une intelligence artificielle de type chatterbot dont le principal objectif est de se développer une personnalités. Suivront une description d'un système existant, ses limites et contraintes, une justification des changements à apporter, et une analyse en détail du système proposé.
+
+Les développeurs du système ARIA espèrent faire avancer les technologies et les études sur les intelligences artificielles, ainsi que créer une IA véritablement unique en son genre, qui saura dépasser leurs ambitions.
 
 # Introduction
 
