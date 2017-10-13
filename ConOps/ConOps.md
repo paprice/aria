@@ -213,22 +213,25 @@ Voici ce qu'un échange entre l'utilisateur et l'application peut entrainer comm
 
 ![Diagramme de séquence](./image/Aria1.jpg)
 
+\newpage
+
 La connexion d'un utilisateur entraînera aussi différentes réponses de l'application entre ses composantes :
 
 - Une connexion normale avec un profil déjà existant
 
-![Diagramme de connexion](./image/Connection.jpg)
-\
+![Diagramme de connexion](./image/Connection.jpg){height=50%}
 
+\newpage
 - Une tentative de connexion avec un profil inexistant
 
 ![Diagramme de mauvais profil](./image/IdentifiantInexistant.jpg)
 
 \newpage
-
+ \newpage
 - La création d'un profil utilisateur
 
-![Diagramme de création](./image/CreationProfil.jpg){width=100%}
+![Diagramme de création](./image/CreationProfil.jpg){height=75%}
+
 
 ## Les modes d'opérations du système proposé
 
