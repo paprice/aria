@@ -253,7 +253,7 @@ Les différents groupes d'usagers de l'application seront les développeurs et l
 
 ### Les interactions entre les utilisateurs
 
-Il n'y aura pas beaucoup d'interactions entre les différents utilisateurs, puisqu'une fois l'application mise en service, elle sera autonome. Les seules fois où un utilisateur aura à communiquer avec un développeur est si celui-ci a trouvé un bogue majeur, soit dans l'IA, soit dans l'application. À l'inverse, les seules fois où un développeur aura à communiquer avec les utilisateurs sera lorsqu'une mise à jour est relâchée.
+Les scripteurs n'interagissent qu'avec l'intelligence artificielle et ne communiquent pas entre eux. Ainsi il n'existe aucune interaction entre les utilisateurs de l'application.
 
 ### Autre personnel impliqué
 
