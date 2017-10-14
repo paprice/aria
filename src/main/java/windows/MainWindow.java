@@ -48,11 +48,9 @@ public class MainWindow extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1000, 750));
         setSize(new java.awt.Dimension(1000, 750));
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 102));
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 750));
 
-        UserText.setBackground(new java.awt.Color(51, 51, 255));
-        UserText.setForeground(new java.awt.Color(255, 255, 255));
         UserText.setToolTipText("Entrer votre texte");
         jScrollPane1.setViewportView(UserText);
 
@@ -68,10 +66,10 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 862, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -84,10 +82,10 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Fichier");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Modifier");
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -96,7 +94,7 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1007, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,26 +110,50 @@ public class MainWindow extends javax.swing.JFrame {
         int panel = jPanel1.getHeight();
         int userTExt = UserText.getHeight();
 
-        for (int i = 0; i < nbSquare-1; i++) {
+        for (int i = 0; i < nbSquare - 1; i++) {
             discu[i].setBounds(discu[i].getX(), discu[i].getY() - (userTExt + 15), discu[i].getWidth(), discu[i].getHeight());
         }
 
         int height = panel - 2 * (userTExt + 15);
         JTextPane text = new JTextPane();
         text.setText(UserText.getText());
-        if (nbSquare % 2 == 0) {
-            text.setBounds(5, height, UserText.getWidth(), UserText.getHeight());
-        } else {
-            text.setBounds((jPanel1.getWidth() - 5 - UserText.getWidth()), height, UserText.getWidth(), UserText.getHeight());
-        }
 
+        text.setBounds((jPanel1.getWidth() - 5 - UserText.getWidth()), height, UserText.getWidth(), UserText.getHeight());
+        text.setBackground(new java.awt.Color(0, 191, 255));
+        text.setEnabled(false);
+        text.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         text.setVisible(true);
         jPanel1.add(text);
         discu[nbSquare - 1] = text;
         UserText.setText("");
         nbSquare++;
+
+        //       
+        GetAIResponse("My name is jeff");
     }//GEN-LAST:event_SendActionPerformed
 
+    private void GetAIResponse(String resp) {
+
+        int panel = jPanel1.getHeight();
+        int userTExt = UserText.getHeight();
+
+        for (int i = 0; i < nbSquare - 1; i++) {
+            discu[i].setBounds(discu[i].getX(), discu[i].getY() - (userTExt + 15), discu[i].getWidth(), discu[i].getHeight());
+        }
+
+        int height = panel - 2 * (userTExt + 15);
+        JTextPane text = new JTextPane();
+        text.setText(resp);
+
+        text.setBounds(5, height, UserText.getWidth(), UserText.getHeight());
+        text.setBackground(new java.awt.Color(124, 252, 0));
+        text.setEnabled(false);
+        text.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        text.setVisible(true);
+        jPanel1.add(text);
+        discu[nbSquare - 1] = text;
+        nbSquare++;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Send;
