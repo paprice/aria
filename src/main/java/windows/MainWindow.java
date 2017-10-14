@@ -5,6 +5,8 @@
  */
 package windows;
 
+import javax.swing.JTextPane;
+
 /**
  *
  * @author despa
@@ -14,6 +16,9 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form MainWindow
      */
+    int nbSquare = 1;
+    JTextPane[] discu = new JTextPane[10];
+
     public MainWindow() {
         initComponents();
         this.setVisible(true);
@@ -28,18 +33,28 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Send = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        UserText = new javax.swing.JTextPane();
+        Send = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("A.R.I.A");
+        setBackground(new java.awt.Color(0, 0, 204));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(1000, 750));
         setSize(new java.awt.Dimension(1000, 750));
+
+        jPanel1.setBackground(new java.awt.Color(0, 51, 102));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 750));
+
+        UserText.setBackground(new java.awt.Color(51, 51, 255));
+        UserText.setForeground(new java.awt.Color(255, 255, 255));
+        UserText.setToolTipText("Entrer votre texte");
+        jScrollPane1.setViewportView(UserText);
 
         Send.setText("Envoyer");
         Send.addActionListener(new java.awt.event.ActionListener() {
@@ -48,8 +63,26 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jTextPane1.setToolTipText("Entrer votre texte");
-        jScrollPane1.setViewportView(jTextPane1);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 862, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(816, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -63,21 +96,11 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 862, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(655, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
         );
 
         pack();
@@ -85,16 +108,38 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SendActionPerformed
 
+        int panel = jPanel1.getHeight();
+        int userTExt = UserText.getHeight();
+
+        for (int i = 0; i < nbSquare-1; i++) {
+            discu[i].setBounds(discu[i].getX(), discu[i].getY() - (userTExt + 15), discu[i].getWidth(), discu[i].getHeight());
+        }
+
+        int height = panel - 2 * (userTExt + 15);
+        JTextPane text = new JTextPane();
+        text.setText(UserText.getText());
+        if (nbSquare % 2 == 0) {
+            text.setBounds(5, height, UserText.getWidth(), UserText.getHeight());
+        } else {
+            text.setBounds((jPanel1.getWidth() - 5 - UserText.getWidth()), height, UserText.getWidth(), UserText.getHeight());
+        }
+
+        text.setVisible(true);
+        jPanel1.add(text);
+        discu[nbSquare - 1] = text;
+        UserText.setText("");
+        nbSquare++;
+    }//GEN-LAST:event_SendActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Send;
+    private javax.swing.JTextPane UserText;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }
