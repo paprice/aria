@@ -1,5 +1,7 @@
 % ConOps
-% Patrice Desrochers, Gildo Conte, Audrey Eugène
+% Patrice Desrochers -- DESP02049609
+  Gildo Conte -- CONG02118709
+  Audrey Eugène -- EUGA21589707
 % 2017-09-17
 
 # Liste des acronymes et abréviation {-}
