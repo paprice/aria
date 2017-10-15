@@ -133,7 +133,6 @@ public class MainWindow extends javax.swing.JFrame {
         nbSquare++;
 
         try {
-            //
             GetAIResponse(Parse(text.getText()));
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
