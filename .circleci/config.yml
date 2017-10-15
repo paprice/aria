@@ -22,7 +22,10 @@ jobs:
 
     steps:
       - checkout
-
+      - save_cache:
+          key: librairy
+          paths:
+            - ./libs/
       # Download and cache dependencies
       - restore_cache:
           keys:
