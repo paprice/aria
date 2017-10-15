@@ -38,4 +38,8 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run: mvn compile
+      - run : cd nerc-fr/core
+      - run : mvn compile
+      - run : cd ../..
+      - run : mvn compile  
+
