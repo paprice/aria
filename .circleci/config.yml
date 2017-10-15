@@ -30,6 +30,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run : cd nerc-fr/core
+      - run : mvn compile
       - run: mvn dependency:go-offline
 
       - save_cache:
@@ -38,8 +40,6 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run : cd nerc-fr/core
-      - run : mvn compile
       - run : cd ../..
       - run : mvn compile  
 
