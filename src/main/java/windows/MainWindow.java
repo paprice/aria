@@ -5,6 +5,10 @@
  */
 package windows;
 
+import static Language.LanguageProcessing.Parse;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextPane;
 
 /**
@@ -128,8 +132,12 @@ public class MainWindow extends javax.swing.JFrame {
         UserText.setText("");
         nbSquare++;
 
-        //       
-        GetAIResponse("My name is jeff");
+        try {
+            //
+            GetAIResponse(Parse(text.getText()));
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_SendActionPerformed
 
     private void GetAIResponse(String resp) {
