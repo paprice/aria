@@ -23,9 +23,13 @@ jobs:
     steps:
       - checkout
       - save_cache:
-          key: librairy
           paths:
-            - ./libs/
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+      - save_cache:
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+          paths:
+            - ./libs
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -36,10 +40,7 @@ jobs:
 
       - run: mvn dependency:go-offline
 
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
+
 
       # run tests!
 
