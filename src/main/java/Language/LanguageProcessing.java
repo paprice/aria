@@ -38,10 +38,10 @@ public class LanguageProcessing {
         mot_typeDeMotGenreNombre  -> pommes_NCmp (Nom Commun Masculin Pluriels
         
         NC -> nom commun
-        D -> Déterminant
-        CL_ -> Pronom où le _ est remplacer par la personne (1,2 ou 3)
-        VP_/VK_/VS_ -> Verbeoù le _ est remplacer par la personne (1,2 ou 3)
-        A -> Adjectif
+        DET -> Déterminant
+        C -> Pronom
+        V/VINF -> Verbe
+        ADJ -> Adjectif
         
         P -> Préposition
         ADV -> Adverbe
@@ -51,7 +51,7 @@ public class LanguageProcessing {
         
         
         POSModel model = new POSModelLoader()
-                .load(new File("fr-pos-ftb-morpho.bin"));
+                .load(new File("models/fr-pos.bin"));
         PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
         POSTaggerME tagger = new POSTaggerME(model);
 
