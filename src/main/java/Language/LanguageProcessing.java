@@ -39,13 +39,16 @@ public class LanguageProcessing {
         
         NC -> nom commun
         DET -> Déterminant
-        C -> Pronom
+        CLS -> Pronom
         V/VINF -> Verbe
         ADJ -> Adjectif
         
         P -> Préposition
         ADV -> Adverbe
         CC -> Conjonction
+        
+        
+        syntaxe complète des models : http://www.llf.cnrs.fr/Gens/Abeille/French-Treebank-fr.php
         
         ////////////////////////////////////////////////////////////*/
         
