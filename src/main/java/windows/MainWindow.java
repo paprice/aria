@@ -21,7 +21,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     int nbSquare = 1;
-    JTextPane[] discu = new JTextPane[10];
+    // à changer la grosseur du tableau
+    JTextPane[] discu = new JTextPane[100];
 
     public MainWindow() {
         initComponents();
