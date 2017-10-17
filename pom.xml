@@ -12,13 +12,6 @@
     </properties>
     
     <name>aria</name>
-    
-    <repositories>
-        <repository>
-            <id>Internal project repository</id>
-            <url>file://${basedir}/libs</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -28,10 +21,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.vicomtech</groupId>
+            <groupId>org.apache.opennlp</groupId>
             <artifactId>opennlp-tools</artifactId>
-            <version>custom-0.0.1</version>
-            <scope>compile</scope>
+            <version>1.8.2</version>
         </dependency>
     </dependencies>
     

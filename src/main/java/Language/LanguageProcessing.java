@@ -15,10 +15,8 @@ import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
 import opennlp.tools.util.*;
 
 import opennlp.tools.util.PlainTextByLineStream;
@@ -55,22 +53,18 @@ public class LanguageProcessing {
                 .load(new File("models/fr-pos.bin"));
         PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
         POSTaggerME tagger = new POSTaggerME(model);
-        ObjectStream<String> lineStream = new PlainTextByLineStream(new StringReader(sentence));
         perfMon.start();
-        String line;
         String ret = new String();
-        while ((line = lineStream.read()) != null) {
-            InputStream modelIn = new FileInputStream("models/fr-token.bin");
-            TokenizerModel TokModel;
-            TokModel = new TokenizerModel(modelIn);
-            TokenizerME tokenizer = new TokenizerME(TokModel);
-            String tokens[] = tokenizer.tokenize(sentence);
-            String[] tags = tagger.tag(tokens);
-            POSSample sample = new POSSample(tokens, tags);
-            //System.out.println(sample.toString());
-            ret = sample.toString();
-            perfMon.incrementCounter();
-        }
+        InputStream modelIn = new FileInputStream("models/fr-token.bin");
+        TokenizerModel TokModel;
+        TokModel = new TokenizerModel(modelIn);
+        TokenizerME tokenizer = new TokenizerME(TokModel);
+        String tokens[] = tokenizer.tokenize(sentence);
+        String[] tags = tagger.tag(tokens);
+        POSSample sample = new POSSample(tokens, tags);
+        //System.out.println(sample.toString());
+        ret = sample.toString();
+        perfMon.incrementCounter();
 
         return ret;
     }
