@@ -49,24 +49,27 @@ public class LanguageProcessing {
         CC -> Conjonction
         syntaxe complète des models : http://www.llf.cnrs.fr/Gens/Abeille/French-Treebank-fr.php
         ////////////////////////////////////////////////////////////*/
+        PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
+        perfMon.start();
+        // modèle de classes de mots
         POSModel model = new POSModelLoader()
                 .load(new File("models/fr-pos.bin"));
-        PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
         POSTaggerME tagger = new POSTaggerME(model);
-        perfMon.start();
-        String ret = new String();
+        // Séparation des mots
         InputStream modelIn = new FileInputStream("models/fr-token.bin");
         TokenizerModel TokModel;
         TokModel = new TokenizerModel(modelIn);
         TokenizerME tokenizer = new TokenizerME(TokModel);
+        // séparation de la phrase
         String tokens[] = tokenizer.tokenize(sentence);
+        // Tagging des mots
         String[] tags = tagger.tag(tokens);
+        // Remise de tous les mots dans une string
         POSSample sample = new POSSample(tokens, tags);
-        //System.out.println(sample.toString());
-        ret = sample.toString();
+ 
         perfMon.incrementCounter();
 
-        return ret;
+        return sample.toString();
     }
 
 }
