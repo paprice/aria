@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextPane;
+import Language.LanguageProcessing;
 
 /**
  *
@@ -144,14 +145,28 @@ public class MainWindow extends javax.swing.JFrame {
 
         int panel = jPanel1.getHeight();
         int userTExt = UserText.getHeight();
-
+        
         for (int i = 0; i < nbSquare - 1; i++) {
             discu[i].setBounds(discu[i].getX(), discu[i].getY() - (userTExt + 15), discu[i].getWidth(), discu[i].getHeight());
         }
 
         int height = panel - 2 * (userTExt + 15);
         JTextPane text = new JTextPane();
-        text.setText(resp);
+        
+        //testing language processor
+        String tags = "";
+        try 
+        {
+            for (String word : LanguageProcessing.Parse(resp).getTags())
+            {
+                tags += (word + " ");
+            }
+        }
+        catch (Exception e)
+        {
+            
+        }
+        text.setText(tags);
 
         text.setBounds(5, height, UserText.getWidth(), UserText.getHeight());
         text.setBackground(new java.awt.Color(124, 252, 0));
