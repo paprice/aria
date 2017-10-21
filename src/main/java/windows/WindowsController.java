@@ -28,7 +28,7 @@ public class WindowsController {
             ret += i;
         }
         
-        return LanguageProcessing.Parse(ret).toString();
+        return parsed.toString();
     }
 
 }
