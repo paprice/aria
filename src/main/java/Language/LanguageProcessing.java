@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import opennlp.tools.cmdline.PerformanceMonitor;
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
@@ -17,9 +16,6 @@ import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
-import opennlp.tools.util.*;
-
-import opennlp.tools.util.PlainTextByLineStream;
 
 /**
  *
@@ -34,7 +30,7 @@ public class LanguageProcessing {
      * @throws IOException
      *
      */
-    public static String Parse(String sentence) throws IOException {
+    public static POSSample Parse(String sentence) throws IOException {
 
         /*//////////////////////////////////////////////////////////////*
         Syntaxe de retour de la fonction :
@@ -52,10 +48,12 @@ public class LanguageProcessing {
         PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
         perfMon.start();
         // modèle de classes de mots
+        
         POSModel model = new POSModelLoader()
                 .load(new File("models/fr-pos.bin"));
         POSTaggerME tagger = new POSTaggerME(model);
         // Séparation des mots
+        
         InputStream modelIn = new FileInputStream("models/fr-token.bin");
         TokenizerModel TokModel;
         TokModel = new TokenizerModel(modelIn);
@@ -69,7 +67,7 @@ public class LanguageProcessing {
  
         perfMon.incrementCounter();
 
-        return sample.toString();
+        return sample;
     }
 
 }

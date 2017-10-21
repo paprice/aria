@@ -5,7 +5,7 @@
  */
 package windows;
 
-import static Language.LanguageProcessing.Parse;
+import static windows.WindowsController.AiDecortication;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,13 +134,13 @@ public class MainWindow extends javax.swing.JFrame {
         nbSquare++;
 
         try {
-            GetAIResponse(Parse(text.getText()));
+            ShowAIResponse(AiDecortication(text.getText()));
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_SendActionPerformed
 
-    private void GetAIResponse(String resp) {
+    private void ShowAIResponse(String resp) {
 
         int panel = jPanel1.getHeight();
         int userTExt = UserText.getHeight();
