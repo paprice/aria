@@ -3,7 +3,13 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2
+
+notify:
+      webhooks:
+          -url: https://discordapp.com/api/webhooks/371312843770953728/Bmedn_r0_NHAFyoV8Pfl0M_BUxaI455OVZn3i1uX2LBdV7HvTO6akLcl894SnXS5duHT/circle
+    
 jobs:
+    
   build:
     docker:
       # specify the version you desire here
@@ -40,8 +46,6 @@ jobs:
 
       - run: mvn dependency:go-offline
 
-
-
-      # run tests!
-
-      - run : mvn compile 
+      - run : 
+            name: Compilation
+            command: mvn compile 
