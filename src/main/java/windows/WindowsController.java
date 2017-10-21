@@ -5,6 +5,7 @@
  */
 package windows;
 
+import Language.LanguageProcessing;
 import static Language.LanguageProcessing.Parse;
 import static Language.Words.ExtractImportant;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class WindowsController {
             ret += i;
         }
         
-        return ret;
+        return LanguageProcessing.Parse(ret).toString();
     }
 
 }
