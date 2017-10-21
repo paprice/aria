@@ -19,7 +19,9 @@ public class main {
     public static void main(String[] args) {
         // Prints "Hello, World" to the terminal window.
         db = new MongoDB();
+        db.getCollection("names", db.GetDatabase());
         MainWindow win = new MainWindow();
+        
     }
 
 }

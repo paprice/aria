@@ -18,6 +18,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     public MainWindow() {
         initComponents();
+        Console.setLineWrap(true);
+        Console.setWrapStyleWord(true);
         this.setVisible(true);
     }
 
@@ -62,10 +64,12 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        Console.setEditable(false);
         Console.setBackground(new java.awt.Color(0, 0, 0));
         Console.setColumns(20);
         Console.setForeground(new java.awt.Color(255, 255, 255));
         Console.setRows(5);
+        Console.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(Console);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -88,8 +92,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(UserText, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                    .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                    .addComponent(UserText))
                 .addContainerGap())
         );
 

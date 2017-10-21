@@ -60,7 +60,6 @@ public class MongoDB {
      *
      * @param doc the list of document to insert
      * @param collectionName the name of the collections to insert in
-     * @param type the reference to check if the doc is
      */
     public static void InsertIfNotIn(List<Document> doc, String collectionName) {
 
@@ -68,7 +67,6 @@ public class MongoDB {
         MongoCollection collect = db.getCollection(collectionName, data);
 
         for (Document d : doc) {
-             System.out.println(d.get("word").toString());
             Document isFind = (Document) collect.find(eq("word", d.get("word"))).first();
             if (isFind != null) {
 
