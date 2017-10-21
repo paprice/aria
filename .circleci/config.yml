@@ -48,5 +48,5 @@ jobs:
             
 notify:
       webhooks:
-          -url: https://discordapp.com/api/webhooks/371312843770953728/Bmedn_r0_NHAFyoV8Pfl0M_BUxaI455OVZn3i1uX2LBdV7HvTO6akLcl894SnXS5duHT/circle
+          -url: https://discordapp.com/api/webhooks/371318786965504001/kJ4UrhmJShXxj9Erqsr7ipVPxdvwCbYsO_ruN12K5WTHMVMSOEA1jxJQkpXmObxYqiWp/circleci
     
