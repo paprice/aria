@@ -9,8 +9,11 @@ import static windows.WindowsController.AiDecortication;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextPane;
-import Language.LanguageProcessing;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,16 +21,13 @@ import Language.LanguageProcessing;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainWindow
-     */
-    int nbSquare = 1;
-    // à changer la grosseur du tableau
-    JTextPane[] discu = new JTextPane[100];
-
     public MainWindow() {
         initComponents();
         this.setVisible(true);
+        ImagePanel image = new ImagePanel();
+        image.setVisible(true);
+        jPanel1.add(image);
+
     }
 
     /**
@@ -40,9 +40,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        UserText = new javax.swing.JTextPane();
         Send = new javax.swing.JButton();
+        UserText = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Console = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -57,9 +58,6 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 750));
 
-        UserText.setToolTipText("Entrer votre texte");
-        jScrollPane1.setViewportView(UserText);
-
         Send.setText("Envoyer");
         Send.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,24 +65,40 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        UserText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserTextActionPerformed(evt);
+            }
+        });
+
+        Console.setBackground(new java.awt.Color(0, 0, 0));
+        Console.setColumns(20);
+        Console.setForeground(new java.awt.Color(255, 255, 255));
+        Console.setRows(5);
+        jScrollPane1.setViewportView(Console);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 862, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(UserText, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(821, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(UserText, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                    .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -112,67 +126,59 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendActionPerformed
         // TODO add your handling code here:
-
-        int panel = jPanel1.getHeight();
-        int userTExt = UserText.getHeight();
-
-        for (int i = 0; i < nbSquare - 1; i++) {
-            discu[i].setBounds(discu[i].getX(), discu[i].getY() - (userTExt + 15), discu[i].getWidth(), discu[i].getHeight());
-        }
-
-        int height = panel - 2 * (userTExt + 15);
-        JTextPane text = new JTextPane();
-        text.setText(UserText.getText());
-
-        text.setBounds((jPanel1.getWidth() - 5 - UserText.getWidth()), height, UserText.getWidth(), UserText.getHeight());
-        text.setBackground(new java.awt.Color(0, 191, 255));
-        text.setEnabled(false);
-        text.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        text.setVisible(true);
-        jPanel1.add(text);
-        discu[nbSquare - 1] = text;
+        String userText = UserText.getText();
+        Console.setText(Console.getText() + "user > " + userText + "\n");
         UserText.setText("");
-        nbSquare++;
 
         try {
-            ShowAIResponse(AiDecortication(text.getText()));
+            ShowAIResponse(AiDecortication(userText));
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_SendActionPerformed
 
+    private void UserTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UserTextActionPerformed
+
     private void ShowAIResponse(String resp) {
-
-        int panel = jPanel1.getHeight();
-        int userTExt = UserText.getHeight();
-        
-        for (int i = 0; i < nbSquare - 1; i++) {
-            discu[i].setBounds(discu[i].getX(), discu[i].getY() - (userTExt + 15), discu[i].getWidth(), discu[i].getHeight());
-        }
-
-        int height = panel - 2 * (userTExt + 15);
-        JTextPane text = new JTextPane();
-        
-        //testing language processor
-        text.setText(resp);
-
-        text.setBounds(5, height, UserText.getWidth(), UserText.getHeight());
-        text.setBackground(new java.awt.Color(124, 252, 0));
-        text.setEnabled(false);
-        text.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        text.setVisible(true);
-        jPanel1.add(text);
-        discu[nbSquare - 1] = text;
-        nbSquare++;
+        Console.setText(Console.getText() + "ARIA > " + resp + "\n");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea Console;
     private javax.swing.JButton Send;
-    private javax.swing.JTextPane UserText;
+    private javax.swing.JTextField UserText;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+}
+
+class ImagePanel extends JPanel {
+
+    private ImageIcon imageIcon;
+
+    public ImagePanel() {
+        try {
+            imageIcon = new ImageIcon(ImageIO.read(ImagePanel.class.getResource(
+                    "Image 6.png")));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return (imageIcon == null ? new Dimension(100, 100) : new Dimension(
+                imageIcon.getIconWidth(), imageIcon.getIconHeight()));
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(imageIcon.getImage(),750, 150, this);
+    }
 }
