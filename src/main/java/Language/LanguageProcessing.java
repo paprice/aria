@@ -69,5 +69,21 @@ public class LanguageProcessing {
 
         return sample;
     }
+    
+    public static String PreParse(String sentence) throws IOException {
+        String preParsed;
+        for (int i = 0; i < sentence.length(); i++)
+        {
+            if (i != sentence.length() - 1)
+            {
+                if (sentence.charAt(i) != ' ' && (sentence.charAt(i + 1) == '!' || sentence.charAt(i + 1) == '?'))
+                {
+                    preParsed = sentence.substring(0, i + 1) + ' ' + sentence.substring(i + 1, sentence.length());
+                    sentence = PreParse(preParsed);
+                }
+            }
+        }
+        return sentence;
+    }
 
 }

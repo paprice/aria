@@ -6,6 +6,7 @@
 package windows;
 
 import static Language.LanguageProcessing.Parse;
+import static Language.LanguageProcessing.PreParse;
 import static Language.Words.ExtractImportant;
 import static DataBase.MongoDB.InsertIfNotIn;
 import com.mongodb.MongoClient;
@@ -24,6 +25,7 @@ public class WindowsController {
 
     public static String AiDecortication(String userInput) throws IOException {
 
+        userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
         List<Document> important = ExtractImportant(parsed);
         InsertIfNotIn(important, "names");
