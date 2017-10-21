@@ -5,6 +5,7 @@
  */
 package main;
 
+import DataBase.MongoDB;
 import windows.MainWindow;
 
 /**
@@ -13,8 +14,11 @@ import windows.MainWindow;
  */
 public class main {
 
+    public static MongoDB db;
+
     public static void main(String[] args) {
         // Prints "Hello, World" to the terminal window.
+        db = new MongoDB();
         MainWindow win = new MainWindow();
     }
 

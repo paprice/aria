@@ -9,11 +9,6 @@ import static windows.WindowsController.AiDecortication;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 /**
  *
@@ -24,10 +19,6 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         this.setVisible(true);
-        ImagePanel image = new ImagePanel();
-        image.setVisible(true);
-        jPanel1.add(image);
-
     }
 
     /**
@@ -155,30 +146,4 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-}
-
-class ImagePanel extends JPanel {
-
-    private ImageIcon imageIcon;
-
-    public ImagePanel() {
-        try {
-            imageIcon = new ImageIcon(ImageIO.read(ImagePanel.class.getResource(
-                    "Image 6.png")));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return (imageIcon == null ? new Dimension(100, 100) : new Dimension(
-                imageIcon.getIconWidth(), imageIcon.getIconHeight()));
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(imageIcon.getImage(),750, 150, this);
-    }
 }

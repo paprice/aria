@@ -5,12 +5,14 @@
  */
 package windows;
 
-import Language.LanguageProcessing;
 import static Language.LanguageProcessing.Parse;
 import static Language.Words.ExtractImportant;
+import static DataBase.MongoDB.InsertIfNotIn;
+import com.mongodb.MongoClient;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import opennlp.tools.postag.POSSample;
+import org.bson.Document;
 
 /**
  *
@@ -18,16 +20,14 @@ import opennlp.tools.postag.POSSample;
  */
 public class WindowsController {
 
+    MongoClient client;
+
     public static String AiDecortication(String userInput) throws IOException {
 
         POSSample parsed = Parse(userInput);
-        ArrayList<String> important = ExtractImportant(parsed);
+        List<Document> important = ExtractImportant(parsed);
+        InsertIfNotIn(important, "names");
 
-        String ret = "";
-        for(String i : important){
-            ret += i;
-        }
-        
         return parsed.toString();
     }
 

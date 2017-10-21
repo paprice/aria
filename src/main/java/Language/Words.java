@@ -7,6 +7,8 @@ package Language;
 
 import opennlp.tools.postag.POSSample;
 import java.util.ArrayList;
+import java.util.List;
+import org.bson.Document;
 
 /**
  *
@@ -14,16 +16,16 @@ import java.util.ArrayList;
  */
 public class Words {
 
-    public static ArrayList<String> ExtractImportant(POSSample userInput) {
+    public static List<Document> ExtractImportant(POSSample userInput) {
 
         String[] words = userInput.getSentence();
         String[] wordTags = userInput.getTags();
 
-        ArrayList<String> important = new ArrayList<String>();
+        List<Document> important = new ArrayList<Document>();
 
         for (int i = 0; i < wordTags.length; i++) {
             if (wordTags[i].equals("NPP") || wordTags[i].equals("NC")) {
-                important.add(words[i]);
+                important.add(new Document("type", "nc").append("word", words[i]));
             }
         }
 
