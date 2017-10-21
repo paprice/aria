@@ -154,19 +154,7 @@ public class MainWindow extends javax.swing.JFrame {
         JTextPane text = new JTextPane();
         
         //testing language processor
-        String tags = "";
-        try 
-        {
-            for (String word : LanguageProcessing.Parse(resp).getTags())
-            {
-                tags += (word + " ");
-            }
-        }
-        catch (Exception e)
-        {
-            
-        }
-        text.setText(tags);
+        text.setText(resp);
 
         text.setBounds(5, height, UserText.getWidth(), UserText.getHeight());
         text.setBackground(new java.awt.Color(124, 252, 0));
