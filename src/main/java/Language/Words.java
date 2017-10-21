@@ -5,9 +5,7 @@
  */
 package Language;
 
-import java.lang.reflect.Array;
 import opennlp.tools.postag.POSSample;
-import java.lang.String;
 import java.util.ArrayList;
 
 /**
