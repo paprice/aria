@@ -47,10 +47,14 @@ public class WindowsController {
                 = factory.createClause(theMan, "saluer", theCrowd);
 
         SPhraseSpec p = factory.createClause();
+        boolean entree = false;
         for (Document d : important) {
-            p.setSubject(d.get("word"));
-            p.setVerb("mange");
-            p.setObject("une pomme");
+            if (!entree) {
+                p.setSubject(d.get("word"));
+                p.setVerb("mange");
+                p.setObject("une pomme");
+                entree = true;
+            }
 
         }
 
