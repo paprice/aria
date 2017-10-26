@@ -8,20 +8,17 @@ package main;
 import DataBase.MongoDB;
 import windows.MainWindow;
 
-
 /**
  *
  * @author Patrice Desrochers
  */
 public class main {
 
-    public static MongoDB db;
-
     public static void main(String[] args) {
         // Prints "Hello, World" to the terminal window.
-        db = new MongoDB();
-        db.getCollection("names", db.GetDatabase());
-        MainWindow win = new MainWindow();
+        MongoDB db = new MongoDB();
+        
+        MainWindow win = new MainWindow(db);
 
     }
 

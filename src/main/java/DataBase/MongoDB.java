@@ -11,7 +11,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import java.util.List;
-import static main.main.db;
 import org.bson.Document;
 
 /**
@@ -22,18 +21,20 @@ public class MongoDB {
 
     MongoClient client;
     MongoClientURI uri;
+    MongoDatabase data;
+    MongoCollection nameCommun;
+    MongoCollection properName;
+    MongoCollection adj;
+    MongoCollection verb;
 
     public MongoDB() {
         uri = new MongoClientURI("mongodb://user:user@ds161471.mlab.com:61471/dictionnaire");
         client = new MongoClient(uri);
-    }
-
-    public MongoDatabase GetDatabase() {
-        return client.getDatabase("dictionnaire");
-    }
-
-    public MongoCollection getCollection(String name, MongoDatabase db) {
-        return db.getCollection(name);
+        data = client.getDatabase("dictionnaire");
+        nameCommun = data.getCollection("names");
+        properName = data.getCollection("Pname");
+        adj = data.getCollection("adj");
+        verb = data.getCollection("verb");
     }
 
     public void CloseConnection() {
@@ -52,6 +53,10 @@ public class MongoDB {
         collect.updateOne(toUpdate, new Document("$set", update));
     }
 
+    public void updateQueryInc(Document toUpdate, Document update, MongoCollection collect) {
+        collect.updateOne(toUpdate, new Document("$inc", update));
+    }
+
     public void removeDocument(MongoCollection collect, Document doc) {
         collect.deleteOne(doc);
     }
@@ -61,19 +66,36 @@ public class MongoDB {
      * @param doc the list of document to insert
      * @param collectionName the name of the collections to insert in
      */
-    public static void InsertIfNotIn(List<Document> doc, String collectionName) {
+    public void InsertOrUpdate(List<Document> doc, String collectionName) {
 
-        MongoDatabase data = db.GetDatabase();
-        MongoCollection collect = db.getCollection(collectionName, data);
-
-        for (Document d : doc) {
-            Document isFind = (Document) collect.find(eq("word", d.get("word"))).first();
-            if (isFind != null) {
-
-            } else {
-                db.insertDocument(collect, d);
+        if (collectionName.equals("names")) {
+            for (Document d : doc) {
+                Document isFind = (Document) nameCommun.find(eq("word", d.get("word"))).first();
+                if (isFind != null) {
+                    Document upd = new Document("count", 1);
+                    updateQueryInc(d, upd, nameCommun);
+                } else {
+                    this.insertDocument(nameCommun, d);
+                }
             }
         }
+    }
+
+    public int FindType(String word, String typeWord) {
+        if (typeWord.equals("nc")) {
+            Document isFind = (Document) nameCommun.find(eq("word", word)).first();
+            if (isFind != null) {
+                String type = (String) isFind.getString("desc");
+                if (type == null) {
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public void UpdateType(Document toUpdate, Document upd, String collectionName) {
+        updateQuery(toUpdate, upd, nameCommun);
     }
 
 }

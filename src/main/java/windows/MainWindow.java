@@ -5,7 +5,7 @@
  */
 package windows;
 
-import static windows.WindowsController.AiDecortication;
+import DataBase.MongoDB;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +16,12 @@ import java.util.logging.Logger;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    public MainWindow() {
+    private final MongoDB db;
+    WindowsController wc;
+
+    public MainWindow(MongoDB pdb) {
+        db = pdb;
+        wc = new WindowsController();
         initComponents();
         Console.setLineWrap(true);
         Console.setWrapStyleWord(true);
@@ -126,7 +131,7 @@ public class MainWindow extends javax.swing.JFrame {
         UserText.setText("");
 
         try {
-            ShowAIResponse(AiDecortication(userText));
+            ShowAIResponse(wc.AiDecortication(userText, db));
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }

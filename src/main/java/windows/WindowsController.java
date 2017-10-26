@@ -5,11 +5,10 @@
  */
 package windows;
 
+import DataBase.MongoDB;
 import static Language.LanguageProcessing.Parse;
 import static Language.LanguageProcessing.PreParse;
 import static Language.Words.ExtractImportant;
-import static DataBase.MongoDB.InsertIfNotIn;
-import com.mongodb.MongoClient;
 import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
@@ -27,40 +26,63 @@ import simplenlg.lexicon.Lexicon;
  */
 public class WindowsController {
 
-    MongoClient client;
+    private boolean isWaitingDef;
+    private String WaitingDef;
 
-    public static String AiDecortication(String userInput) throws IOException {
+    public WindowsController() {
+        isWaitingDef = false;
+    }
+
+    public String AiDecortication(String userInput, MongoDB db) throws IOException {
+
+        String output = "";
 
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
         List<Document> important = ExtractImportant(parsed);
-        InsertIfNotIn(important, "names");
 
-        Lexicon lexicon = new simplenlg.lexicon.french.XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
+        db.InsertOrUpdate(important, "names");
 
-        NPPhraseSpec theMan = factory.createNounPhrase("le", "homme");
-        NPPhraseSpec theCrowd = factory.createNounPhrase("le", "foule");
-
-        SPhraseSpec greeting
-                = factory.createClause(theMan, "saluer", theCrowd);
-
-        SPhraseSpec p = factory.createClause();
-        boolean entree = false;
-        for (Document d : important) {
-            if (!entree) {
-                p.setSubject(d.get("word"));
-                p.setVerb("mange");
-                p.setObject("une pomme");
-                entree = true;
+        if (!isWaitingDef) {
+            for (Document d : important) {
+                int hasType = db.FindType(d.getString("word"), "nc");
+                if (hasType == 1) {
+                    isWaitingDef = true;
+                    output = "Que veux dire " + d.getString("word") + "?";
+                    WaitingDef = d.getString("word");
+                }
             }
 
+            Lexicon lexicon = new simplenlg.lexicon.french.XMLLexicon();
+            NLGFactory factory = new NLGFactory(lexicon);
+            Realiser realiser = new Realiser();
+            /*NPPhraseSpec theMan = factory.createNounPhrase("le", "homme");
+            NPPhraseSpec theCrowd = factory.createNounPhrase("le", "foule");
+
+            SPhraseSpec greeting
+                    = factory.createClause(theMan, "saluer", theCrowd);
+
+            SPhraseSpec p = factory.createClause();
+             */
+            if (!isWaitingDef) {
+                boolean entree = false;
+                for (Document d : important) {
+                    if (!entree) {
+                        entree = true;
+                        output = d.getString("word");
+                    }
+                }
+            }
+        } else {
+            for (Document d : important) {
+                Document upd = new Document("desc", d.getString("word"));
+                Document toUpdate = new Document("word", WaitingDef);
+                db.UpdateType(toUpdate, upd, "names");
+                output = "Merci";
+                isWaitingDef = false;
+                WaitingDef = "";
+            }
         }
-
-        String output = realiser.realiseSentence(greeting) + " " + realiser.realiseSentence(p);
-
         return output;
     }
-
 }
