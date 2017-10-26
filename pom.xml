@@ -30,6 +30,32 @@
             <artifactId>mongodb-driver</artifactId>
             <version>3.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>lexAccess2011</groupId>
+            <artifactId>lexAccess2011</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/lexAccess2011dist.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>lexCheck2016</groupId>
+            <artifactId>lexCheck2016</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/lexCheck2006api.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>lvg2011api</groupId>
+            <artifactId>lvg2011api</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/lvg2011api.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>SimpleNLG-EnFr</groupId>
+            <artifactId>SimpleNLG-EnFr</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
     
     <build>

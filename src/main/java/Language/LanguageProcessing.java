@@ -19,7 +19,7 @@ import opennlp.tools.tokenize.TokenizerModel;
 
 /**
  *
- * @author despa
+ * @author Patrice Desrochers
  */
 public class LanguageProcessing {
 

@@ -15,9 +15,15 @@ import java.util.List;
 import opennlp.tools.postag.POSSample;
 import org.bson.Document;
 
+import simplenlg.framework.*;
+import simplenlg.realiser.*;
+import simplenlg.phrasespec.*;
+import simplenlg.features.*;
+import simplenlg.lexicon.Lexicon;
+
 /**
  *
- * @author despa
+ * @author Patrice Desrochers
  */
 public class WindowsController {
 
@@ -30,7 +36,27 @@ public class WindowsController {
         List<Document> important = ExtractImportant(parsed);
         InsertIfNotIn(important, "names");
 
-        return parsed.toString();
+        Lexicon lexicon = new simplenlg.lexicon.french.XMLLexicon();
+        NLGFactory factory = new NLGFactory(lexicon);
+        Realiser realiser = new Realiser();
+
+        NPPhraseSpec theMan = factory.createNounPhrase("le", "homme");
+        NPPhraseSpec theCrowd = factory.createNounPhrase("le", "foule");
+
+        SPhraseSpec greeting
+                = factory.createClause(theMan, "saluer", theCrowd);
+
+        SPhraseSpec p = factory.createClause();
+        for (Document d : important) {
+            p.setSubject(d.get("word"));
+            p.setVerb("mange");
+            p.setObject("une pomme");
+
+        }
+
+        String output = realiser.realiseSentence(greeting) + " " + realiser.realiseSentence(p);
+
+        return output;
     }
 
 }

@@ -12,7 +12,7 @@ import org.bson.Document;
 
 /**
  *
- * @author despa
+ * @author Patrice Desrochers
  */
 public class Words {
 

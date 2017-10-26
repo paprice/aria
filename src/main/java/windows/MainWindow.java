@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author despa
+ * @author Patrice Desrochers
  */
 public class MainWindow extends javax.swing.JFrame {
 

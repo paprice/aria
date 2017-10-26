@@ -8,9 +8,10 @@ package main;
 import DataBase.MongoDB;
 import windows.MainWindow;
 
+
 /**
  *
- * @author despa
+ * @author Patrice Desrochers
  */
 public class main {
 
@@ -21,7 +22,7 @@ public class main {
         db = new MongoDB();
         db.getCollection("names", db.GetDatabase());
         MainWindow win = new MainWindow();
-        
+
     }
 
 }
