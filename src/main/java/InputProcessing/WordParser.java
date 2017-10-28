@@ -25,7 +25,7 @@ public class WordParser {
 
         for (int i = 0; i < wordTags.length; i++) {
             if (wordTags[i].equals("NC")) {
-                wordList.add(new Document("type", "nc").append("word", words[i]));
+                wordList.add(new Document("type", "nc").append("word", parseNoun(words[i])));
             }
             else if (wordTags[i].equals("V")) {
                 wordList.add(new Document("type", "v").append("word", words[i]));
@@ -43,7 +43,7 @@ public class WordParser {
         return wordList;
     }
     
-    private static String ParseNoun (String noun){
+    private static String parseNoun (String noun){
         int last = noun.length() - 1;
         int sndLast = noun.length() - 2;
         
@@ -65,25 +65,47 @@ public class WordParser {
                 }
                 //default
                 else {
-                    return noun.substring(0, noun.length() - 1);
+                    return noun.substring(0, last);
                 }
             
             //Case plural 'x'
             case 'x' :
-                //if "is"
-                if (noun.endsWith("ois") || noun.endsWith("vis") || noun.endsWith("llis") || noun.endsWith("dis") || noun.endsWith("pis") ||
-                        noun.endsWith("quis") || noun.endsWith("uis") || noun.endsWith("dais") || noun.endsWith("rais") || noun.endsWith("chis") ||
-                        noun.endsWith("outis") || noun.endsWith("ssis") || noun.endsWith("bis") || noun.endsWith("stis") || noun.endsWith("mmis") ||
-                        noun.endsWith("lais") || noun.endsWith("otis")){
+                //skip if singular form "aux"
+                if (noun.endsWith("aux") && noun.length() == 4){
                     return noun;
                 }
-                //skip if invariable exception
-                else if (noun.length() == 3 || noun.equals("souris") || noun.equals("mépris") || noun.equals("indécis") || noun.equals("vernis")){
-                    return noun;
+                //if exception form "yeux"
+                else if (noun.equals("yeux")){
+                    return "oeil";
                 }
-                //default
+                //if exception form "ail" to "aux"
+                else if (noun.equals("coraux") || noun.equals("fermaux") || noun.equals("gemmaux") || noun.equals("soupiraux") ||
+                        noun.equals("vantaux") || noun.equals("ventaux") || noun.equals("vitraux")){
+                    return noun.substring(0, sndLast) + "il";
+                }
+                //if "oux" form
+                else if (noun.endsWith("oux") && noun.length() > 4){
+                    return noun.substring(0, last);
+                }
+                //if "eux" form
+                else if (noun.endsWith("eux")){
+                    return noun.substring(0, last);
+                }
+                //if "eaux" form
+                else if (noun.endsWith("eaux")){
+                    return noun.substring(0, last);
+                }
+                //if "au" to "aux" form
+                else if (noun.endsWith("yaux") || noun.endsWith("baux") || noun.endsWith("iaux")){
+                    return noun.substring(0, last);
+                }
+                //if "al" to "aux" form
+                else if (noun.endsWith("aux")){
+                    return noun.substring(0, sndLast) + "l";
+                }
+                //default skip
                 else {
-                    return noun.substring(0, noun.length() - 1);
+                    return noun;
                 }
             
             //Case singular
