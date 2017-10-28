@@ -26,6 +26,7 @@ public class MongoDB {
     MongoCollection properName;
     MongoCollection adj;
     MongoCollection verb;
+    MongoCollection adv;
 
     public MongoDB() {
         uri = new MongoClientURI("mongodb://user:user@ds161471.mlab.com:61471/dictionnaire");
@@ -35,6 +36,7 @@ public class MongoDB {
         properName = data.getCollection("Pname");
         adj = data.getCollection("adj");
         verb = data.getCollection("verb");
+        adv = data.getCollection("adv");
     }
 
     public void CloseConnection() {
@@ -64,12 +66,11 @@ public class MongoDB {
     /**
      *
      * @param doc the list of document to insert
-     * @param collectionName the name of the collections to insert in
      */
-    public void InsertOrUpdate(List<Document> doc, String collectionName) {
+    public void InsertOrUpdate(List<Document> doc) {
 
-        if (collectionName.equals("names")) {
-            for (Document d : doc) {
+        for (Document d : doc) {
+            if (d.get("type").equals("nc")) {
                 Document isFind = (Document) nameCommun.find(eq("word", d.get("word"))).first();
                 if (isFind != null) {
                     Document upd = new Document("count", 1);
@@ -77,8 +78,38 @@ public class MongoDB {
                 } else {
                     this.insertDocument(nameCommun, d);
                 }
+            } else if (d.get("type").equals("v")) {
+                Document isFind = (Document) verb.find(eq("word", d.get("word"))).first();
+                if (isFind != null) {
+
+                } else {
+                    this.insertDocument(verb, d);
+                }
+            } else if (d.get("type").equals("adj")) {
+                Document isFind = (Document) adj.find(eq("word", d.get("word"))).first();
+                if (isFind != null) {
+
+                } else {
+                    this.insertDocument(adj, d);
+                }
+            } else if (d.get("type").equals("adv")) {
+                Document isFind = (Document) adv.find(eq("word", d.get("word"))).first();
+                if (isFind != null) {
+
+                } else {
+                    this.insertDocument(adv, d);
+                }
+            } else if (d.get("type").equals("npp")) {
+                Document isFind = (Document) properName.find(eq("word", d.get("word"))).first();
+                if (isFind != null) {
+
+                } else {
+                    this.insertDocument(properName, d);
+                }
             }
+
         }
+
     }
 
     public int FindType(String word, String typeWord) {
