@@ -55,24 +55,14 @@
             <groupId>SimpleNLG-EnFr</groupId>
             <artifactId>SimpleNLG-EnFr</artifactId>
             <version>1.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/SimpleNLG-EnFr-1.1.jar</systemPath>
+            <scope>compile</scope>
+            
         </dependency>
     </dependencies>
     
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
-                    <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
-                    </configuration>
-                </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>

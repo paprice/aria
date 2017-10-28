@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
 import org.bson.Document;
-
-import simplenlg.framework.*;
-import simplenlg.realiser.*;
-import simplenlg.phrasespec.*;
-import simplenlg.features.*;
+import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
+import simplenlg.realiser.Realiser;
+
+
+
 
 /**
  *
