@@ -6,9 +6,9 @@
 package windows;
 
 import DataBase.MongoDB;
-import static Language.LanguageProcessing.Parse;
-import static Language.LanguageProcessing.PreParse;
-import static Language.Words.ExtractImportant;
+import static InputProcessing.SentenceParser.Parse;
+import static InputProcessing.SentenceParser.PreParse;
+import static InputProcessing.WordParser.ExtractImportant;
 import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
