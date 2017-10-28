@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Language;
+package InputProcessing;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +21,7 @@ import opennlp.tools.tokenize.TokenizerModel;
  *
  * @author Patrice Desrochers
  */
-public class LanguageProcessing {
+public class SentenceParser {
 
     /**
      *

@@ -8,7 +8,7 @@ package windows;
 import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.Parse;
 import static InputProcessing.SentenceParser.PreParse;
-import static InputProcessing.WordParser.ExtractImportant;
+import static InputProcessing.WordParser.ExtractAll;
 import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
@@ -39,7 +39,7 @@ public class WindowsController {
 
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
-        List<Document> important = ExtractImportant(parsed);
+        List<Document> important = ExtractAll(parsed);
 
         db.InsertOrUpdate(important, "names");
 

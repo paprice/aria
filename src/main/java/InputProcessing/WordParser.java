@@ -70,12 +70,25 @@ public class WordParser {
             
             //Case plural 'x'
             case 'x' :
-                break;
+                //if "is"
+                if (noun.endsWith("ois") || noun.endsWith("vis") || noun.endsWith("llis") || noun.endsWith("dis") || noun.endsWith("pis") ||
+                        noun.endsWith("quis") || noun.endsWith("uis") || noun.endsWith("dais") || noun.endsWith("rais") || noun.endsWith("chis") ||
+                        noun.endsWith("outis") || noun.endsWith("ssis") || noun.endsWith("bis") || noun.endsWith("stis") || noun.endsWith("mmis") ||
+                        noun.endsWith("lais") || noun.endsWith("otis")){
+                    return noun;
+                }
+                //skip if invariable exception
+                else if (noun.length() == 3 || noun.equals("souris") || noun.equals("mépris") || noun.equals("indécis") || noun.equals("vernis")){
+                    return noun;
+                }
+                //default
+                else {
+                    return noun.substring(0, noun.length() - 1);
+                }
             
             //Case singular
             default : return noun;
         }
-        return noun;
     }
 
 }
