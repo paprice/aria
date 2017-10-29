@@ -130,7 +130,11 @@ public class MainWindow extends javax.swing.JFrame {
         Console.setText(Console.getText() + "user > " + userText + "\n");
         UserText.setText("");
 
-        ShowAIResponse(wc.AiDecortication(userText, db));
+        try {
+            ShowAIResponse(wc.AiDecortication(userText, db));
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_SendActionPerformed
 

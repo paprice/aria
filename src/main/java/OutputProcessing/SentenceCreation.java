@@ -5,7 +5,12 @@
  */
 package OutputProcessing;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import opennlp.tools.lemmatizer.LemmatizerME;
 import org.bson.Document;
 
 import simplenlg.framework.*;
@@ -14,18 +19,18 @@ import simplenlg.lexicon.french.XMLLexicon;
 import simplenlg.phrasespec.*;
 import simplenlg.realiser.*;
 
+import opennlp.tools.lemmatizer.LemmatizerModel;
+
 /**
  *
  * @author Patrice Desrochers
  */
 public class SentenceCreation {
 
-    public static String GenerateResponse(List<Document> word) {
-        String output = "";
+    public static String GenerateResponse(List<Document> word) throws FileNotFoundException, IOException {
+        
+        return "";
 
-        output = "Le support n'est pas encore implémenter";
-
-        return output;
     }
 
     public static String GenerateResponse(String toDef, String def) {
