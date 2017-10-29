@@ -6,6 +6,8 @@
 package main;
 
 import DataBase.MongoDB;
+import static InputProcessing.SentenceParser.LoadModel;
+import java.io.IOException;
 import windows.MainWindow;
 
 /**
@@ -14,10 +16,10 @@ import windows.MainWindow;
  */
 public class main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Prints "Hello, World" to the terminal window.
         MongoDB db = new MongoDB();
-        
+        LoadModel();
         MainWindow win = new MainWindow(db);
 
     }

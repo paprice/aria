@@ -20,7 +20,6 @@ import org.bson.Document;
 public class MongoDB {
 
     MongoClient client;
-    MongoClientURI uri;
     MongoDatabase data;
     MongoCollection nameCommun;
     MongoCollection properName;
@@ -29,7 +28,7 @@ public class MongoDB {
     MongoCollection adv;
 
     public MongoDB() {
-        uri = new MongoClientURI("mongodb://user:user@ds161471.mlab.com:61471/dictionnaire");
+        MongoClientURI uri = new MongoClientURI("mongodb://user:user@ds161471.mlab.com:61471/dictionnaire");
         client = new MongoClient(uri);
         data = client.getDatabase("dictionnaire");
         nameCommun = data.getCollection("names");
@@ -112,7 +111,7 @@ public class MongoDB {
 
     }
 
-    public int FindType(String word, String typeWord) {
+    public int HaveDefinition(String word, String typeWord) {
         if (typeWord.equals("nc")) {
             Document isFind = (Document) nameCommun.find(eq("word", word)).first();
             if (isFind != null) {

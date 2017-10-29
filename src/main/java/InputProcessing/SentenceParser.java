@@ -7,6 +7,7 @@ package InputProcessing;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import opennlp.tools.cmdline.PerformanceMonitor;
@@ -22,6 +23,21 @@ import opennlp.tools.tokenize.TokenizerModel;
  * @author Patrice Desrochers
  */
 public class SentenceParser {
+
+    private static TokenizerME tokenizer;
+    private static POSTaggerME tagger;
+
+    public static void LoadModel() throws FileNotFoundException, IOException {
+        POSModel model = new POSModelLoader()
+                .load(new File("models/fr-pos.bin"));
+        tagger = new POSTaggerME(model);
+        // Séparation des mots
+
+        InputStream modelIn = new FileInputStream("models/fr-token.bin");
+        TokenizerModel TokModel;
+        TokModel = new TokenizerModel(modelIn);
+        tokenizer = new TokenizerME(TokModel);
+    }
 
     /**
      *
@@ -48,36 +64,24 @@ public class SentenceParser {
         PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
         perfMon.start();
         // modèle de classes de mots
-        
-        POSModel model = new POSModelLoader()
-                .load(new File("models/fr-pos.bin"));
-        POSTaggerME tagger = new POSTaggerME(model);
-        // Séparation des mots
-        
-        InputStream modelIn = new FileInputStream("models/fr-token.bin");
-        TokenizerModel TokModel;
-        TokModel = new TokenizerModel(modelIn);
-        TokenizerME tokenizer = new TokenizerME(TokModel);
+
         // séparation de la phrase
         String tokens[] = tokenizer.tokenize(sentence);
         // Tagging des mots
         String[] tags = tagger.tag(tokens);
         // Remise de tous les mots dans une string
         POSSample sample = new POSSample(tokens, tags);
- 
+
         perfMon.incrementCounter();
 
         return sample;
     }
-    
+
     public static String PreParse(String sentence) throws IOException {
         String preParsed;
-        for (int i = 0; i < sentence.length(); i++)
-        {
-            if (i != sentence.length() - 1)
-            {
-                if (sentence.charAt(i) != ' ' && (sentence.charAt(i + 1) == '!' || sentence.charAt(i + 1) == '?'))
-                {
+        for (int i = 0; i < sentence.length(); i++) {
+            if (i != sentence.length() - 1) {
+                if (sentence.charAt(i) != ' ' && (sentence.charAt(i + 1) == '!' || sentence.charAt(i + 1) == '?')) {
                     preParsed = sentence.substring(0, i + 1) + ' ' + sentence.substring(i + 1, sentence.length());
                     sentence = PreParse(preParsed);
                 }
