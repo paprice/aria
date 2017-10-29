@@ -54,6 +54,7 @@ public class SentenceCreation {
             int c = d.getInteger("count");
             if (c > count) {
                 object = d.getString("word");
+                count = c;
             }
         }
 
