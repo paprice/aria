@@ -38,7 +38,7 @@ public class WindowsController {
         isWaitingDef = false;
     }
 
-    public String AiDecortication(String userInput, MongoDB db) throws IOException {
+    public String AiDecortication(String userInput, MongoDB db) {
 
         String output = "";
 

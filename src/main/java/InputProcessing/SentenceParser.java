@@ -43,10 +43,9 @@ public class SentenceParser {
      *
      * @param sentence the sentence send by the user
      * @return the sentence with all the type of the word
-     * @throws IOException
      *
      */
-    public static POSSample Parse(String sentence) throws IOException {
+    public static POSSample Parse(String sentence){
 
         /*//////////////////////////////////////////////////////////////*
         Syntaxe de retour de la fonction :
@@ -77,7 +76,7 @@ public class SentenceParser {
         return sample;
     }
 
-    public static String PreParse(String sentence) throws IOException {
+    public static String PreParse(String sentence){
         String preParsed;
         for (int i = 0; i < sentence.length(); i++) {
             if (i != sentence.length() - 1) {
