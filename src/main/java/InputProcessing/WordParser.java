@@ -5,6 +5,7 @@
  */
 package InputProcessing;
 
+import static ConversationHandler.CurrentConversation.addSubjectsFromList;
 import static InputProcessing.SentenceParser.Chunker;
 import java.io.IOException;
 import opennlp.tools.postag.POSSample;
@@ -53,6 +54,7 @@ public class WordParser {
                     break;
             }
         }
+        addSubjectsFromList(wordList);
         
         String chunk[] = Chunker(words,wordTags);
         
