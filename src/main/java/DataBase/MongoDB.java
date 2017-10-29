@@ -5,11 +5,15 @@
  */
 package DataBase;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 
@@ -75,6 +79,7 @@ public class MongoDB {
                     Document upd = new Document("count", 1);
                     updateQueryInc(d, upd, nameCommun);
                 } else {
+                    d.append("count", 1);
                     this.insertDocument(nameCommun, d);
                 }
             } else if (d.get("type").equals("v")) {
@@ -122,6 +127,18 @@ public class MongoDB {
             }
         }
         return 0;
+    }
+
+    public List<Document> FindDesc(String word) {
+        List<Document> allDef = new ArrayList<>();
+        
+        Document def = (Document) nameCommun.find(eq("word", word)).first();
+        
+        FindIterable<Document> isFind = nameCommun.find(eq("desc", def.getString("desc")));
+        for(Document d : isFind){
+            allDef.add(d);
+        }
+        return allDef;
     }
 
     public void UpdateType(Document toUpdate, Document upd, String collectionName) {

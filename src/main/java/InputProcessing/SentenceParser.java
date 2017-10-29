@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.cmdline.PerformanceMonitor;
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
@@ -26,17 +28,23 @@ public class SentenceParser {
 
     private static TokenizerME tokenizer;
     private static POSTaggerME tagger;
+    private static ChunkerME chunker;
 
     public static void LoadModel() throws FileNotFoundException, IOException {
         POSModel model = new POSModelLoader()
                 .load(new File("models/fr-pos.bin"));
         tagger = new POSTaggerME(model);
         // Séparation des mots
+        try (InputStream modelIn = new FileInputStream("models/fr-token.bin")) {
+            TokenizerModel TokModel;
+            TokModel = new TokenizerModel(modelIn);
+            tokenizer = new TokenizerME(TokModel);
+        }
+        try (InputStream modelInChun = new FileInputStream("models/fr-chunk.bin")) {
+            ChunkerModel modelChun = new ChunkerModel(modelInChun);
+            chunker = new ChunkerME(modelChun);
+        }
 
-        InputStream modelIn = new FileInputStream("models/fr-token.bin");
-        TokenizerModel TokModel;
-        TokModel = new TokenizerModel(modelIn);
-        tokenizer = new TokenizerME(TokModel);
     }
 
     /**
@@ -45,7 +53,7 @@ public class SentenceParser {
      * @return the sentence with all the type of the word
      *
      */
-    public static POSSample Parse(String sentence){
+    public static POSSample Parse(String sentence) {
 
         /*//////////////////////////////////////////////////////////////*
         Syntaxe de retour de la fonction :
@@ -76,7 +84,7 @@ public class SentenceParser {
         return sample;
     }
 
-    public static String PreParse(String sentence){
+    public static String PreParse(String sentence) {
         String preParsed;
         for (int i = 0; i < sentence.length(); i++) {
             if (i != sentence.length() - 1) {
@@ -87,6 +95,12 @@ public class SentenceParser {
             }
         }
         return sentence;
+    }
+
+    public static String[] Chunker(String sentence[], String pos[]) {
+
+        return chunker.chunk(sentence, pos);
+
     }
 
 }

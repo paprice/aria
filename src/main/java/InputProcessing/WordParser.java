@@ -5,16 +5,12 @@
  */
 package InputProcessing;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import static InputProcessing.SentenceParser.Chunker;
 import java.io.IOException;
-import java.io.InputStream;
 import opennlp.tools.postag.POSSample;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import opennlp.tools.lemmatizer.DictionaryLemmatizer;
-import opennlp.tools.lemmatizer.LemmatizerME;
-import opennlp.tools.lemmatizer.LemmatizerModel;
 import org.bson.Document;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedTokenReadings;
@@ -49,6 +45,13 @@ public class WordParser {
                 wordList.add(new Document("type", "npp").append("word", lemmatize[i]));
             }
         }
+        
+        String chunk[] = Chunker(words,wordTags);
+        
+        System.out.println(Arrays.toString(chunk));
+        
+        
+        
         return wordList;
     }
 

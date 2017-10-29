@@ -40,7 +40,7 @@ public class WindowsController {
 
         output = CheckDef(important, db);
         if (output.equals("")) {
-            output = GenerateResponse(important);
+            output = GenerateResponse(important,db);
         }
         return output;
     }
