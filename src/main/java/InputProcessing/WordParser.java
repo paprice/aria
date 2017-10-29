@@ -16,6 +16,10 @@ import opennlp.tools.lemmatizer.DictionaryLemmatizer;
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
 import org.bson.Document;
+import org.languagetool.AnalyzedSentence;
+import org.languagetool.AnalyzedTokenReadings;
+import org.languagetool.JLanguageTool;
+import org.languagetool.language.French;
 
 /**
  *
@@ -27,22 +31,22 @@ public class WordParser {
 
         String[] words = userInput.getSentence();
         String[] wordTags = userInput.getTags();
+        String[] lemmatize = LemmatizeWord(words);
 
         List<Document> wordList = new ArrayList<Document>();
-
 
         for (int i = 0; i < wordTags.length; i++) {
 
             if (wordTags[i].equals("NC")) {
-                wordList.add(new Document("type", "nc").append("word", parseNoun(words[i])));
+                wordList.add(new Document("type", "nc").append("word", lemmatize[i]));
             } else if (wordTags[i].equals("V")) {
-                wordList.add(new Document("type", "v").append("word", words[i]));
+                wordList.add(new Document("type", "v").append("word", lemmatize[i]));
             } else if (wordTags[i].equals("ADJ")) {
-                wordList.add(new Document("type", "adj").append("word", words[i]));
+                wordList.add(new Document("type", "adj").append("word", lemmatize[i]));
             } else if (wordTags[i].equals("ADV")) {
-                wordList.add(new Document("type", "adv").append("word", words[i]));
+                wordList.add(new Document("type", "adv").append("word", lemmatize[i]));
             } else if (wordTags[i].equals("NPP")) {
-                wordList.add(new Document("type", "npp").append("word", words[i]));
+                wordList.add(new Document("type", "npp").append("word", lemmatize[i]));
             }
         }
         return wordList;
@@ -108,4 +112,24 @@ public class WordParser {
                 return noun;
         }
     }
+
+    private static String[] LemmatizeWord(String[] word) throws IOException {
+        String[] ret = new String[word.length];
+        
+        JLanguageTool lt = new JLanguageTool(new French());
+
+        for (int i = 0; i < word.length; i++) {
+            List<AnalyzedSentence> analyzedSentences = lt.analyzeText(word[i]);
+            for (AnalyzedSentence analyzedSentence : analyzedSentences) {
+                for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
+                    if (analyzedTokens.getReadings().size() > 0) {
+                        ret[i] = analyzedTokens.getReadings().get(0).getLemma();
+                    }
+                }
+            }
+        }
+        
+        return ret;
+    }
+
 }

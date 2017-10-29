@@ -5,13 +5,16 @@
  */
 package OutputProcessing;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import opennlp.tools.lemmatizer.LemmatizerME;
 import org.bson.Document;
+
+/*Faire fonctionner les dépendance : 
+Aller  dans le dossier Dependencies et click droit sur la dépendance SimpleNLG-EnFr-1.1.jar
+Ensuite tu fais manually install artifact
+sélectionne le bon jar qui est dans le dossier libs/
+ */
 
 import simplenlg.framework.*;
 import simplenlg.lexicon.Lexicon;
@@ -19,7 +22,6 @@ import simplenlg.lexicon.french.XMLLexicon;
 import simplenlg.phrasespec.*;
 import simplenlg.realiser.*;
 
-import opennlp.tools.lemmatizer.LemmatizerModel;
 
 /**
  *

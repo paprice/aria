@@ -14,20 +14,6 @@ import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
 import org.bson.Document;
-import org.languagetool.AnalyzedSentence;
-import org.languagetool.AnalyzedTokenReadings;
-import org.languagetool.JLanguageTool;
-import org.languagetool.language.French;
-
-
-/*Faire fonctionner les dépendance : 
-Aller  dans le dossier Dependencies et click droit sur la dépendance SimpleNLG-EnFr-1.1.jar
-Ensuite tu fais manually install artifact
-sélectionne le bon jar qui est dans le dossier libs/
- */
-import simplenlg.framework.NLGFactory;
-import simplenlg.lexicon.Lexicon;
-import simplenlg.realiser.Realiser;
 
 /**
  *
@@ -46,30 +32,22 @@ public class WindowsController {
 
         String output = "";
 
-        /*userInput = PreParse(userInput);
+        userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
-        List<Document> important = ExtractAll(parsed);*/
-        JLanguageTool lt = new JLanguageTool(new French());
+        List<Document> important = ExtractAll(parsed);
 
-        List<AnalyzedSentence> analyzedSentences = lt.analyzeText(userInput);
-        for (AnalyzedSentence analyzedSentence : analyzedSentences) {
-            for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
-                if (analyzedTokens.getReadings().size() > 0) {
-                    output += (analyzedTokens.getReadings().get(0).getLemma() +" "+ analyzedTokens.getReadings().get(0).getPOSTag()+ " ");
-                }
-            }
-        }
+        db.InsertOrUpdate(important);
 
-        //db.InsertOrUpdate();
-
-        //output = CheckDef(important, db, output);
+        output = CheckDef(important, db);
         if (output.equals("")) {
-            //output = GenerateResponse(important);
+            output = GenerateResponse(important);
         }
         return output;
     }
 
-    private String CheckDef(List<Document> important, MongoDB db, String output) {
+    private String CheckDef(List<Document> important, MongoDB db) {
+        String output = "";
+        
         if (!isWaitingDef) {
             for (Document d : important) {
                 int hasType = db.HaveDefinition(d.getString("word"), "nc");
