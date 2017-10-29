@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
 import org.bson.Document;
+import org.languagetool.AnalyzedSentence;
+import org.languagetool.AnalyzedTokenReadings;
+import org.languagetool.JLanguageTool;
+import org.languagetool.language.French;
 
 
 /*Faire fonctionner les dépendance : 
@@ -42,15 +46,25 @@ public class WindowsController {
 
         String output = "";
 
-        userInput = PreParse(userInput);
+        /*userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
-        List<Document> important = ExtractAll(parsed);
+        List<Document> important = ExtractAll(parsed);*/
+        JLanguageTool lt = new JLanguageTool(new French());
 
-        db.InsertOrUpdate(important);
+        List<AnalyzedSentence> analyzedSentences = lt.analyzeText(userInput);
+        for (AnalyzedSentence analyzedSentence : analyzedSentences) {
+            for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
+                if (analyzedTokens.getReadings().size() > 0) {
+                    output += (analyzedTokens.getReadings().get(0).getLemma() +" "+ analyzedTokens.getReadings().get(0).getPOSTag()+ " ");
+                }
+            }
+        }
 
-        output = CheckDef(important, db, output);
+        //db.InsertOrUpdate();
+
+        //output = CheckDef(important, db, output);
         if (output.equals("")) {
-            output = GenerateResponse(important);
+            //output = GenerateResponse(important);
         }
         return output;
     }

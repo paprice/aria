@@ -30,7 +30,6 @@ public class WordParser {
 
         List<Document> wordList = new ArrayList<Document>();
 
-        Lemmatize(words, wordTags);
 
         for (int i = 0; i < wordTags.length; i++) {
 
@@ -108,15 +107,5 @@ public class WordParser {
             default:
                 return noun;
         }
-    }
-
-    private static void Lemmatize(String[] words, String[] wordTags) throws FileNotFoundException, IOException {
-        LemmatizerModel model = null;
-        InputStream modelIn; 
-        modelIn = new FileInputStream("models/fr.hfst.ol");
-
-        model = new LemmatizerModel(modelIn);
-        LemmatizerME lemmatizer = new LemmatizerME(model);
-
     }
 }
