@@ -26,6 +26,7 @@ public class WordParser {
 
     public static List<Document> ExtractAll(POSSample userInput) throws IOException {
 
+        int preference = 0;
         String[] words = userInput.getSentence();
         String[] wordTags = userInput.getTags();
         String[] lemmatize = LemmatizeWord(words);
@@ -34,6 +35,8 @@ public class WordParser {
 
         for (int i = 0; i < wordTags.length; i++) {
 
+            preference = getPreferenceValue(i, lemmatize, wordTags);
+            
             switch (wordTags[i]) {
                 case "NC":
                     wordList.add(new Document("type", "nc").append("word", lemmatize[i]));
@@ -80,8 +83,48 @@ public class WordParser {
                 }
             }
         }
-        
         return ret;
+    }
+    
+    private static int getPreferenceValue(int i, String[] words, String[] wordTags) throws IOException{
+        
+        //Normal sentence
+        for (int j = 0; j < i; ++j){
+            //Cases for decreasing preference
+            if (wordTags[j].equals("V") && (words[j].equals("détester") || words[j].equals("haïr"))){
+                return -1;
+            }
+            
+            if (wordTags[j].equals("V") && ((j < words.length - 1 && words[j].equals("aimer") && words[j+1].equals("pas")) ||
+                    (j < words.length - 2 && words[j].equals("aimer") && words[j+2].equals("pas")))){
+                return -1;
+            }
+            
+            //Cases for raising preference
+            if (wordTags[j].equals("V") &&
+                    (words[j].equals("aimer") || words[j].equals("adorer") || words[j].equals("préférer") || words[j].equals("idolâtrer"))){
+                return 1;
+            }
+        }
+        
+        //Inverted sentence
+        for (int j = words.length - 1; j > i; --j){
+            //Cases for decreasing preference
+            if (wordTags[j].equals("V") && (words[j].equals("déplaire") || words[j].equals("dégoûter"))){
+                return -1;
+            }
+            
+            if ((j < words.length - 1 && (words[j].equals("plaire") && words[j+1].equals("pas"))) ||
+                    (j < words.length - 2 && (words[j].equals("plaire") && words[j+2].equals("pas")))){
+                return -1;
+            }
+            
+            //Cases for raising preference
+            if (wordTags[j].equals("V") && words[j].equals("plaire")){
+                return 1;
+            }
+        }
+        return 0;
     }
 
 }

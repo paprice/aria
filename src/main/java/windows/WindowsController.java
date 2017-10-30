@@ -32,6 +32,7 @@ public class WindowsController {
 
         String output = "";
 
+        //Parsing the user input
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
         List<Document> important = ExtractAll(parsed);

@@ -16,6 +16,7 @@ import org.bson.Document;
 public class CurrentConversation {
     
     private static List<String> currentSubjects = new ArrayList<>();
+    private static String lastUserSentence = "";
     
     public static void addSubjectsFromList (List<Document> wordList){
         String item;
