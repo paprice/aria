@@ -35,6 +35,25 @@ public class SentenceCreation {
         String subject = "";
         String object = "";
         List<Document> def = new ArrayList<>();
+        Lexicon lexicon = new XMLLexicon();
+        NLGFactory factory = new NLGFactory(lexicon);
+        Realiser realiser = new Realiser();
+        
+        GeneratePreferenceResponse(words, db);
+
+        //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
+        //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
+        //selon le contenu de la dernière phrase. À Discuter.
+        
+        return "";
+
+    }
+
+    public static String GeneratePreferenceResponse(List<Document> words, MongoDB db) {
+        String verb = "";
+        String subject = "";
+        String object = "";
+        List<Document> def = new ArrayList<>();
 
         Lexicon lexicon = new XMLLexicon();
         NLGFactory factory = new NLGFactory(lexicon);
@@ -58,8 +77,8 @@ public class SentenceCreation {
         return realiser.realiseSentence(ret);
 
     }
-
-    public static String GenerateResponse(String toDef, String def) {
+    
+    public static String GenerateDefinitionResponse(String toDef, String def) {
         String output;
 
         Lexicon lexicon = new XMLLexicon();
