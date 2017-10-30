@@ -7,11 +7,9 @@ package OutputProcessing;
 
 import ConversationHandler.Preference;
 import DataBase.MongoDB;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import simplenlg.features.Feature;
 
 /*Faire fonctionner les dépendance : 
 Aller  dans le dossier Dependencies et click droit sur la dépendance SimpleNLG-EnFr-1.1.jar
@@ -31,21 +29,14 @@ import simplenlg.realiser.*;
 public class SentenceCreation {
 
     public static String GenerateResponse(List<Document> words, MongoDB db) {
-        String verb = "";
-        String subject = "";
-        String object = "";
-        List<Document> def = new ArrayList<>();
-        Lexicon lexicon = new XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
-        
-        GeneratePreferenceResponse(words, db);
+        String output;
+
+        output = GeneratePreferenceResponse(words, db);
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
-        
-        return "";
+        return output;
 
     }
 
@@ -53,7 +44,8 @@ public class SentenceCreation {
         String verb = "";
         String subject = "";
         String object = "";
-        List<Document> def = new ArrayList<>();
+        String ono = "";
+        boolean neg = false;
 
         Lexicon lexicon = new XMLLexicon();
         NLGFactory factory = new NLGFactory(lexicon);
@@ -61,23 +53,30 @@ public class SentenceCreation {
 
         for (Document doc : words) {
             if (doc.getString("type").equals("nc")) {
-                subject = Preference.ReturnPref(doc.getInteger("preference"));
+                Document pref = Preference.ReturnPref(doc.getInteger("preference"));
                 object = doc.getString("word");
+                subject = pref.getString("subject");
+                verb = pref.getString("verb");
+                ono = pref.getString("ono");
+                neg = pref.getBoolean("neg");
             }
         }
 
+
         NPPhraseSpec obj = factory.createNounPhrase("le", object);
         obj.setPlural(true);
-        
-        
+
         SPhraseSpec ret = factory.createClause();
+        ret.addFrontModifier(ono);
         ret.setSubject(subject);
+        ret.setVerb(verb);
         ret.setObject(obj);
+        ret.setFeature(Feature.NEGATED, neg);        
 
         return realiser.realiseSentence(ret);
 
     }
-    
+
     public static String GenerateDefinitionResponse(String toDef, String def) {
         String output;
 
