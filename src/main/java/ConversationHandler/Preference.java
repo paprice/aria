@@ -7,7 +7,8 @@ package ConversationHandler;
 
 /**
  *
- * @author Gildo
+ * @author Gildo Conte
+ * @author Audrey Eugène
  */
 public enum Preference {
     HATE("Beurk! Je déteste ", -20),
