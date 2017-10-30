@@ -79,7 +79,7 @@ public class MongoDB {
                     Document upd = new Document("preference", d.get("preference"));
                     updateQueryInc(d, upd, nameCommun);
                 } else {
-                    d.append("count", 1);
+                    d.append("preference", 0);
                     this.insertDocument(nameCommun, d);
                 }
             } else if (d.get("type").equals("v")) {
