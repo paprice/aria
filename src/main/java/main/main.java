@@ -8,11 +8,6 @@ package main;
 import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.LoadModel;
 import java.io.IOException;
-import java.util.List;
-import org.languagetool.AnalyzedSentence;
-import org.languagetool.AnalyzedTokenReadings;
-import org.languagetool.JLanguageTool;
-import org.languagetool.language.French;
 import windows.MainWindow;
 
 /**

@@ -69,15 +69,23 @@ public class MongoDB {
     /**
      *
      * @param doc the list of document to insert
+     * @return 
      */
-    public void InsertOrUpdate(List<Document> doc) {
+    public List<Document> InsertOrUpdate(List<Document> doc) {
 
+        List<Document> retDoc = new ArrayList<>();
+        
         for (Document d : doc) {
             if (d.get("type").equals("nc")) {
                 Document isFind = (Document) nameCommun.find(eq("word", d.get("word"))).first();
                 if (isFind != null) {
                     Document upd = new Document("preference", d.get("preference"));
-                    updateQueryInc(d, upd, nameCommun);
+                    updateQueryInc(isFind, upd, nameCommun);
+                    Document Find = (Document) nameCommun.find(eq("word", d.get("word"))).first();
+                    if (Find != null) {
+                        retDoc.add(Find);
+                    }
+
                 } else {
                     this.insertDocument(nameCommun, d);
                 }
@@ -86,6 +94,10 @@ public class MongoDB {
                 if (isFind != null) {
                     Document upd = new Document("preference", d.get("preference"));
                     updateQueryInc(d, upd, verb);
+                    Document Find = (Document) verb.find(eq("word", d.get("word"))).first();
+                    if (Find != null) {
+                        retDoc.add(Find);
+                    }
                 } else {
                     this.insertDocument(verb, d);
                 }
@@ -108,6 +120,10 @@ public class MongoDB {
                 if (isFind != null) {
                     Document upd = new Document("preference", d.get("preference"));
                     updateQueryInc(d, upd, properName);
+                    Document Find = (Document) properName.find(eq("word", d.get("word"))).first();
+                    if (Find != null) {
+                        retDoc.add(Find);
+                    }
                 } else {
                     this.insertDocument(properName, d);
                 }
@@ -115,6 +131,8 @@ public class MongoDB {
 
         }
 
+        return retDoc;
+        
     }
 
     public int HaveDefinition(String word, String typeWord) {
@@ -132,11 +150,11 @@ public class MongoDB {
 
     public List<Document> FindDesc(String word) {
         List<Document> allDef = new ArrayList<>();
-        
+
         Document def = (Document) nameCommun.find(eq("word", word)).first();
-        
+
         FindIterable<Document> isFind = nameCommun.find(eq("desc", def.getString("desc")));
-        for(Document d : isFind){
+        for (Document d : isFind) {
             allDef.add(d);
         }
         return allDef;

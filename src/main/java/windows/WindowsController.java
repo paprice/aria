@@ -37,7 +37,7 @@ public class WindowsController {
         POSSample parsed = Parse(userInput);
         List<Document> important = ExtractAll(parsed);
 
-        db.InsertOrUpdate(important);
+        important = db.InsertOrUpdate(important);
 
         output = CheckDef(important, db);
         if (output.equals("")) {

@@ -15,19 +15,19 @@ public enum Preference {
     NEUTRAL("Hmmm. Je ne sais pas quoi penser sur ", 0),
     LIKE("Oui! Moi j'aime ", 10),
     LOVE("Ooooh! J'ADORE ", 20);
-    
+
     public String pref;
     public int scorePref;
-    
-    public String getPref(){
+
+    public String getPref() {
         return pref;
     }
-    
-    public int getScorePref(){
+
+    public int getScorePref() {
         return scorePref;
     }
-    
-    public void setPref (int score){
+
+    public void setPref(int score) {
         if (score >= 20) {
             this.pref = Preference.LOVE.getPref();
         } else if (score >= 10 && score < 20) {
@@ -40,14 +40,28 @@ public enum Preference {
             this.pref = Preference.HATE.getPref();
         }
     }
-    
-    public void setScorePref (int score){
+
+    public void setScorePref(int score) {
         this.scorePref = score;
     }
-    
-    Preference (String pref, int score)
-    {
+
+    Preference(String pref, int score) {
         this.pref = pref;
         this.scorePref = score;
     }
+
+    public static String ReturnPref(int score) {
+        if (score >= 20) {
+            return LOVE.getPref();
+        } else if (score >= 10 && score < 20) {
+            return LIKE.getPref();
+        } else if (score < 10 && score > -10) {
+            return NEUTRAL.getPref();
+        } else if (score <= -10 && score > -20) {
+            return DISLIKE.getPref();
+        } else {
+            return HATE.getPref();
+        }
+    }
+
 }

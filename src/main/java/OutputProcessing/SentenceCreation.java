@@ -5,6 +5,7 @@
  */
 package OutputProcessing;
 
+import ConversationHandler.Preference;
 import DataBase.MongoDB;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,9 +30,9 @@ import simplenlg.realiser.*;
  */
 public class SentenceCreation {
 
-    public static String GenerateResponse(List<Document> words, MongoDB db) throws FileNotFoundException, IOException {
+    public static String GenerateResponse(List<Document> words, MongoDB db) {
         String verb = "";
-        String subject = "je";
+        String subject = "";
         String object = "";
         List<Document> def = new ArrayList<>();
 
@@ -40,15 +41,19 @@ public class SentenceCreation {
         Realiser realiser = new Realiser();
 
         for (Document doc : words) {
-            if (doc.getString("type").equals("v")) {
-                verb = doc.getString("word");
-            }
-            else if (doc.getString("type").equals("nc")) {
-                def = db.FindDesc(doc.getString("word"));
+            if (doc.getString("type").equals("nc")) {
+                subject = Preference.ReturnPref(doc.getInteger("preference"));
+                object = doc.getString("word");
             }
         }
 
-        SPhraseSpec ret = factory.createClause(subject, verb, object);
+        NPPhraseSpec obj = factory.createNounPhrase("le", object);
+        obj.setPlural(true);
+        
+        
+        SPhraseSpec ret = factory.createClause();
+        ret.setSubject(subject);
+        ret.setObject(obj);
 
         return realiser.realiseSentence(ret);
 
