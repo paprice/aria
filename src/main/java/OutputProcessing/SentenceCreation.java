@@ -48,16 +48,6 @@ public class SentenceCreation {
             }
         }
 
-        int count = 0;
-
-        for (Document d : def) {
-            int c = d.getInteger("count");
-            if (c > count) {
-                object = d.getString("word");
-                count = c;
-            }
-        }
-
         SPhraseSpec ret = factory.createClause(subject, verb, object);
 
         return realiser.realiseSentence(ret);
