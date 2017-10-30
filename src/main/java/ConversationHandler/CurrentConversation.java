@@ -11,7 +11,7 @@ import org.bson.Document;
 
 /**
  *
- * @author Gildo
+ * @author Gildo Conte
  */
 public class CurrentConversation {
     

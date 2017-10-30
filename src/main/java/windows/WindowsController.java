@@ -10,6 +10,7 @@ import static InputProcessing.SentenceParser.Parse;
 import static InputProcessing.SentenceParser.PreParse;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.GenerateResponse;
+import static OutputProcessing.SentenceCreation.GenerateDefinitionResponse;
 import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
@@ -64,7 +65,7 @@ public class WindowsController {
                     Document upd = new Document("desc", d.getString("word"));
                     Document toUpdate = new Document("word", waitingDef);
                     db.UpdateType(toUpdate, upd, "names");
-                    output = GenerateResponse(waitingDef, d.getString("word"));
+                    output = GenerateDefinitionResponse(waitingDef, d.getString("word"));
                     isWaitingDef = false;
                     waitingDef = "";
                 }
