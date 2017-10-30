@@ -76,7 +76,7 @@ public class MongoDB {
             if (d.get("type").equals("nc")) {
                 Document isFind = (Document) nameCommun.find(eq("word", d.get("word"))).first();
                 if (isFind != null) {
-                    Document upd = new Document("count", 1);
+                    Document upd = new Document("preference", d.get("preference"));
                     updateQueryInc(d, upd, nameCommun);
                 } else {
                     d.append("count", 1);
@@ -85,7 +85,8 @@ public class MongoDB {
             } else if (d.get("type").equals("v")) {
                 Document isFind = (Document) verb.find(eq("word", d.get("word"))).first();
                 if (isFind != null) {
-
+                    Document upd = new Document("preference", d.get("preference"));
+                    updateQueryInc(d, upd, verb);
                 } else {
                     this.insertDocument(verb, d);
                 }
@@ -106,7 +107,8 @@ public class MongoDB {
             } else if (d.get("type").equals("npp")) {
                 Document isFind = (Document) properName.find(eq("word", d.get("word"))).first();
                 if (isFind != null) {
-
+                    Document upd = new Document("preference", d.get("preference"));
+                    updateQueryInc(d, upd, properName);
                 } else {
                     this.insertDocument(properName, d);
                 }
