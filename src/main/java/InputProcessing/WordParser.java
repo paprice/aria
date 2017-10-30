@@ -39,10 +39,10 @@ public class WordParser {
             
             switch (wordTags[i]) {
                 case "NC":
-                    wordList.add(new Document("type", "nc").append("word", lemmatize[i]));
+                    wordList.add(new Document("type", "nc").append("word", lemmatize[i]).append("preference", preference));
                     break;
                 case "V":
-                    wordList.add(new Document("type", "v").append("word", lemmatize[i]));
+                    wordList.add(new Document("type", "v").append("word", lemmatize[i]).append("preference", preference));
                     break;
                 case "ADJ":
                     wordList.add(new Document("type", "adj").append("word", lemmatize[i]));
@@ -51,7 +51,7 @@ public class WordParser {
                     wordList.add(new Document("type", "adv").append("word", lemmatize[i]));
                     break;
                 case "NPP":
-                    wordList.add(new Document("type", "npp").append("word", lemmatize[i]));
+                    wordList.add(new Document("type", "npp").append("word", lemmatize[i]).append("preference", preference));
                     break;
                 default:
                     break;
