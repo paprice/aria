@@ -50,7 +50,7 @@ public class SentenceCreation {
         SPhraseSpec ret = factory.createClause();
         ret.setSubject(subject);
         ret.setObject(obj);
-        if (doc.containsValue("?")){
+        if (!doc.containsValue("?")){
             ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
         }
         
