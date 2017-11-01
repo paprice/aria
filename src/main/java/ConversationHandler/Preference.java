@@ -12,40 +12,44 @@ import org.bson.Document;
  * @author Gildo
  */
 public enum Preference {
-    HATE("Beurk!", "je", "détester", false, -20),
-    DISLIKE("Ouf...", "je", "aimer", true, -10),
-    NEUTRAL("Hmmm.", " je", "savoir", true, 0),
-    LIKE("Oui!", "je", "aimer", false, 10),
-    LOVE("Ooooh!", "je", "adorer", false, 20);
+    HATE("Beurk!", "je", "détester", "le", "", false, -20),
+    DISLIKE("Ouf...", "je", "aimer", "le", "", true, -10),
+    NEUTRAL("Hmmm.", " je", "savoir", "de", "quoi penser", true, 0),
+    LIKE("Oui!", "je", "aimer", "le", "", false, 10),
+    LOVE("Ooooh!", "je", "adorer", "le", "", false, 20);
 
-    public String ono;
-    public String subject;
-    public String verb;
-    public boolean isNegative;
-    public int scorePref;
+    private final String ono;
+    private final String subject;
+    private final String verb;
+    private final String det;
+    private final String complement;
+    private final boolean isNegative;
+    private final int scorePref;
 
-    Preference(String o, String s, String v, boolean neg, int score) {
+    Preference(String o, String s, String v, String det, String complement, boolean neg, int score) {
         this.ono = o;
         this.subject = s;
         this.verb = v;
         this.isNegative = neg;
         this.scorePref = score;
+        this.det = det;
+        this.complement = complement;
     }
 
     private Document getAll() {
-        Document doc = new Document("ono", this.ono).append("subject", this.subject).append("verb", this.verb).append("neg", this.isNegative);
-  
+        Document doc = new Document("ono", this.ono).append("subject", this.subject).append("verb", this.verb).append("det", this.det).append("comp", this.complement).append("neg", this.isNegative);
+
         return doc;
     }
 
     public static Document ReturnPref(int score) {
-        if (score >= 20) {
+        if (score >= LOVE.scorePref) {
             return LOVE.getAll();
-        } else if (score >= 10 && score < 20) {
+        } else if (score >= LIKE.scorePref && score < LOVE.scorePref) {
             return LIKE.getAll();
-        } else if (score < 10 && score > -10) {
+        } else if (score < LIKE.scorePref && score > DISLIKE.scorePref) {
             return NEUTRAL.getAll();
-        } else if (score <= -10 && score > -20) {
+        } else if (score <= DISLIKE.scorePref && score > HATE.scorePref) {
             return DISLIKE.getAll();
         } else {
             return HATE.getAll();

@@ -5,6 +5,7 @@
  */
 package InputProcessing;
 
+import static OutputProcessing.SentenceCreation.InitializeRealiser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,6 +46,8 @@ public class SentenceParser {
             chunker = new ChunkerME(modelChun);
         }
 
+        InitializeRealiser();
+        
     }
 
     /**
@@ -88,7 +91,7 @@ public class SentenceParser {
         String preParsed;
         for (int i = 0; i < sentence.length(); i++) {
             if (i != sentence.length() - 1) {
-                if (sentence.charAt(i) != ' ' && (sentence.charAt(i + 1) == '!' || sentence.charAt(i + 1) == '?')) {
+                if (sentence.charAt(i) != ' ' && (sentence.charAt(i + 1) == '!' || sentence.charAt(i + 1) == '?' || sentence.charAt(i + 1) == '-')) {
                     preParsed = sentence.substring(0, i + 1) + ' ' + sentence.substring(i + 1, sentence.length());
                     sentence = PreParse(preParsed);
                 }

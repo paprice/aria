@@ -6,7 +6,6 @@
 package OutputProcessing;
 
 import ConversationHandler.Preference;
-import DataBase.MongoDB;
 import java.util.List;
 import org.bson.Document;
 import simplenlg.features.Feature;
@@ -29,18 +28,28 @@ import simplenlg.realiser.*;
  */
 public class SentenceCreation {
 
+    private static Lexicon lexicon = new XMLLexicon();
+    private static NLGFactory factory = new NLGFactory(lexicon);
+    private static Realiser realiser = new Realiser();
+
+    public static void InitializeRealiser() {
+        lexicon = new XMLLexicon();
+        factory = new NLGFactory(lexicon);
+        realiser = new Realiser();
+    }
+
     public static String GenerateResponse(List<Document> words, boolean isQuestion) {
         String output;
 
-        if (isQuestion) {
+        //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
+        //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
+        //selon le contenu de la dernière phrase. À Discuter.
+        if (!isQuestion) {
             output = GenerateQuestionResponse(words);
         } else {
             output = GeneratePreferenceResponse(words);
         }
 
-        //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
-        //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
-        //selon le contenu de la dernière phrase. À Discuter.
         return output;
 
     }
@@ -50,11 +59,9 @@ public class SentenceCreation {
         String subject = "";
         String object = "";
         String ono = "";
+        String det = "";
+        String comp = "";
         boolean neg = false;
-
-        Lexicon lexicon = new XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
 
         for (Document doc : words) {
             if (doc.getString("type").equals("nc")) {
@@ -63,19 +70,25 @@ public class SentenceCreation {
                 subject = pref.getString("subject");
                 verb = pref.getString("verb");
                 ono = pref.getString("ono");
+                det = pref.getString("det");
                 neg = pref.getBoolean("neg");
+                comp = pref.getString("comp");
             }
         }
 
-        NPPhraseSpec obj = factory.createNounPhrase("le", object);
+        NPPhraseSpec obj = factory.createNounPhrase(det, object);
         obj.setPlural(true);
+
+        VPPhraseSpec ve = factory.createVerbPhrase(verb);
+        ve.setFeature(Feature.NEGATED, neg);
+        AdvPhraseSpec adv = factory.createAdverbPhrase(comp);
+        ve.addComplement(comp);
 
         SPhraseSpec ret = factory.createClause();
         ret.addFrontModifier(ono);
         ret.setSubject(subject);
-        ret.setVerb(verb);
+        ret.setVerb(ve);
         ret.setObject(obj);
-        ret.setFeature(Feature.NEGATED, neg);
 
         return realiser.realiseSentence(ret);
 
@@ -83,10 +96,6 @@ public class SentenceCreation {
 
     public static String GenerateDefinitionResponse(String toDef, String def) {
         String output;
-
-        Lexicon lexicon = new XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
 
         NPPhraseSpec defi = factory.createNounPhrase("un", def);
         SPhraseSpec ret = factory.createClause("Merci, maitenant je sais que " + toDef, "être", defi);
@@ -100,10 +109,6 @@ public class SentenceCreation {
         String verb = "";
         String subject = "tu";
         String object = "";
-
-        Lexicon lexicon = new XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
 
         for (Document doc : words) {
             if (doc.getString("type").equals("v")) {

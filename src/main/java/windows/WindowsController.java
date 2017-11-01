@@ -32,18 +32,18 @@ public class WindowsController {
     public String AiDecortication(String userInput, MongoDB db) throws IOException {
 
         String output;
-        boolean question = userInput.contains("?");
+        boolean isQuestion = userInput.contains("?");
 
         //Parsing the user input
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
-        List<Document> important = ExtractAll(parsed);
+        List<Document> important = ExtractAll(parsed,isQuestion);
 
         important = db.InsertOrUpdate(important);
 
         output = CheckDef(important, db);
         if (output.equals("")) {
-            output = GenerateResponse(important,question);
+            output = GenerateResponse(important,isQuestion);
         }
         return output;
     }
