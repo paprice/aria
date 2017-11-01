@@ -45,8 +45,16 @@ public class SentenceCreation {
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
+        Document doc = words.get(words.size()-1);
         
-        return "";
+        SPhraseSpec ret = factory.createClause();
+        ret.setSubject(subject);
+        ret.setObject(obj);
+        if (doc.containsValue("?")){
+            ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
+        }
+        
+        return realiser.realiseSentence(ret);
 
     }
 
