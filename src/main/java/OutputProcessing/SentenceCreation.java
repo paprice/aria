@@ -10,6 +10,7 @@ import DataBase.MongoDB;
 import java.util.List;
 import org.bson.Document;
 import simplenlg.features.Feature;
+import simplenlg.features.InterrogativeType;
 
 /*Faire fonctionner les dépendance : 
 Aller  dans le dossier Dependencies et click droit sur la dépendance SimpleNLG-EnFr-1.1.jar
@@ -28,10 +29,14 @@ import simplenlg.realiser.*;
  */
 public class SentenceCreation {
 
-    public static String GenerateResponse(List<Document> words, MongoDB db) {
+    public static String GenerateResponse(List<Document> words, boolean isQuestion) {
         String output;
 
-        output = GeneratePreferenceResponse(words, db);
+        if (isQuestion) {
+            output = GenerateQuestionResponse(words);
+        } else {
+            output = GeneratePreferenceResponse(words);
+        }
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
@@ -40,7 +45,7 @@ public class SentenceCreation {
 
     }
 
-    public static String GeneratePreferenceResponse(List<Document> words, MongoDB db) {
+    public static String GeneratePreferenceResponse(List<Document> words) {
         String verb = "";
         String subject = "";
         String object = "";
@@ -62,7 +67,6 @@ public class SentenceCreation {
             }
         }
 
-
         NPPhraseSpec obj = factory.createNounPhrase("le", object);
         obj.setPlural(true);
 
@@ -71,7 +75,7 @@ public class SentenceCreation {
         ret.setSubject(subject);
         ret.setVerb(verb);
         ret.setObject(obj);
-        ret.setFeature(Feature.NEGATED, neg);        
+        ret.setFeature(Feature.NEGATED, neg);
 
         return realiser.realiseSentence(ret);
 
@@ -90,6 +94,36 @@ public class SentenceCreation {
         output = realiser.realiseSentence(ret);
 
         return output;
+    }
+
+    private static String GenerateQuestionResponse(List<Document> words) {
+        String verb = "";
+        String subject = "tu";
+        String object = "";
+
+        Lexicon lexicon = new XMLLexicon();
+        NLGFactory factory = new NLGFactory(lexicon);
+        Realiser realiser = new Realiser();
+
+        for (Document doc : words) {
+            if (doc.getString("type").equals("v")) {
+                verb = doc.getString("word");
+            }
+            if (doc.getString("type").equals("nc")) {
+                object = doc.getString("word");
+            }
+        }
+
+        NPPhraseSpec obj = factory.createNounPhrase("le", object);
+        obj.setPlural(true);
+
+        SPhraseSpec ret = factory.createClause();
+        ret.setSubject(subject);
+        ret.setVerb(verb);
+        ret.setObject(obj);
+        ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+
+        return realiser.realiseSentence(ret);
     }
 
 }

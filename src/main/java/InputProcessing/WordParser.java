@@ -59,10 +59,6 @@ public class WordParser {
         }
         addSubjectsFromList(wordList);
 
-        String chunk[] = Chunker(words, wordTags);
-
-        System.out.println(Arrays.toString(chunk));
-
         return wordList;
     }
 

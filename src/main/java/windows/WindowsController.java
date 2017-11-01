@@ -31,7 +31,8 @@ public class WindowsController {
 
     public String AiDecortication(String userInput, MongoDB db) throws IOException {
 
-        String output = "";
+        String output;
+        boolean question = userInput.contains("?");
 
         //Parsing the user input
         userInput = PreParse(userInput);
@@ -42,7 +43,7 @@ public class WindowsController {
 
         output = CheckDef(important, db);
         if (output.equals("")) {
-            output = GenerateResponse(important,db);
+            output = GenerateResponse(important,question);
         }
         return output;
     }
