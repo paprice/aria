@@ -53,7 +53,6 @@ public class SentenceCreation {
 
         return output;
 
-
     }
 
     public static String GeneratePreferenceResponse(List<Document> words) {
@@ -83,7 +82,6 @@ public class SentenceCreation {
 
         VPPhraseSpec ve = factory.createVerbPhrase(verb);
         ve.setFeature(Feature.NEGATED, neg);
-        AdvPhraseSpec adv = factory.createAdverbPhrase(comp);
         ve.addComplement(comp);
 
         SPhraseSpec ret = factory.createClause();
@@ -109,20 +107,31 @@ public class SentenceCreation {
 
     private static String GenerateQuestionResponse(List<Document> words) {
         String verb = "";
-        String subject = "tu";
+        String subject = "";
         String object = "";
-
+        NPPhraseSpec obj = factory.createNounPhrase();
+        
+        
         for (Document doc : words) {
             if (doc.getString("type").equals("v")) {
                 verb = doc.getString("word");
-            }
-            if (doc.getString("type").equals("nc")) {
+            } else if (doc.getString("type").equals("nc")) {
                 object = doc.getString("word");
             }
-        }
 
-        NPPhraseSpec obj = factory.createNounPhrase("le", object);
-        obj.setPlural(true);
+            String pronom = doc.getString("cls");
+            if (pronom != null) {
+                if (pronom.equals("je")) {
+                    subject = "tu";
+                } else if (pronom.equals("tu")) {
+                    subject = "je";
+                }
+                obj = factory.createNounPhrase("le", object);
+                obj.setPlural(true);
+            } else {
+                subject = "il";
+            }
+        }
 
         SPhraseSpec ret = factory.createClause();
         ret.setSubject(subject);

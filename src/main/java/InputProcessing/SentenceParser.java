@@ -72,8 +72,6 @@ public class SentenceParser {
         CC -> Conjonction
         syntaxe complète des models : http://www.llf.cnrs.fr/Gens/Abeille/French-Treebank-fr.php
         ////////////////////////////////////////////////////////////*/
-        PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
-        perfMon.start();
         // modèle de classes de mots
 
         // séparation de la phrase
@@ -83,8 +81,15 @@ public class SentenceParser {
         // Remise de tous les mots dans une string
         POSSample sample = new POSSample(tokens, tags);
 
-        perfMon.incrementCounter();
+        
+        String tag[] = chunker.chunk(tokens,tags);
+        double probs[] = chunker.probs();
 
+        for(int i = 0; i < tags.length;i++){
+            System.out.println(tokens[i] + " " + tag[i] + " " + probs[i] + " - ");
+        }
+        
+        
         return sample;
     }
 
