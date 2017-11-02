@@ -36,4 +36,8 @@ public class CurrentConversation {
     public static void setLastUserSentence (String sentence){
         lastUserSentence = sentence;
     }
+    
+    public static String getLastSentence(){
+        return lastUserSentence;
+    }
 }

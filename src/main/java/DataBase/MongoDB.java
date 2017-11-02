@@ -70,12 +70,12 @@ public class MongoDB {
     /**
      *
      * @param doc the list of document to insert
-     * @return 
+     * @return
      */
     public List<Document> InsertOrUpdate(List<Document> doc) {
 
         List<Document> retDoc = new ArrayList<>();
-        
+
         for (Document d : doc) {
             if (d.get("type").equals("nc")) {
                 Document isFind = (Document) nameCommun.find(eq("word", d.get("word"))).first();
@@ -89,6 +89,7 @@ public class MongoDB {
 
                 } else {
                     this.insertDocument(nameCommun, d);
+                    retDoc.add(d);
                 }
             } else if (d.get("type").equals("v")) {
                 Document isFind = (Document) verb.find(eq("word", d.get("word"))).first();
@@ -101,6 +102,7 @@ public class MongoDB {
                     }
                 } else {
                     this.insertDocument(verb, d);
+                    retDoc.add(d);
                 }
             } else if (d.get("type").equals("adj")) {
                 Document isFind = (Document) adj.find(eq("word", d.get("word"))).first();
@@ -108,6 +110,7 @@ public class MongoDB {
 
                 } else {
                     this.insertDocument(adj, d);
+                    retDoc.add(d);
                 }
             } else if (d.get("type").equals("adv")) {
                 Document isFind = (Document) adv.find(eq("word", d.get("word"))).first();
@@ -115,6 +118,7 @@ public class MongoDB {
 
                 } else {
                     this.insertDocument(adv, d);
+                    retDoc.add(d);
                 }
             } else if (d.get("type").equals("npp")) {
                 Document isFind = (Document) properName.find(eq("word", d.get("word"))).first();
@@ -127,13 +131,14 @@ public class MongoDB {
                     }
                 } else {
                     this.insertDocument(properName, d);
+                    retDoc.add(d);
                 }
             }
 
         }
 
         return retDoc;
-        
+
     }
 
     public int HaveDefinition(String word, String typeWord) {

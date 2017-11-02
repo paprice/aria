@@ -68,6 +68,11 @@ public class MainWindow extends javax.swing.JFrame {
                 UserTextActionPerformed(evt);
             }
         });
+        UserText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                UserTextKeyPressed(evt);
+            }
+        });
 
         Console.setEditable(false);
         Console.setBackground(new java.awt.Color(0, 0, 0));
@@ -125,22 +130,32 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendActionPerformed
+        PrintLine();
+
+    }//GEN-LAST:event_SendActionPerformed
+
+    private void PrintLine() {
         // TODO add your handling code here:
         String userText = UserText.getText();
         Console.setText(Console.getText() + "user > " + userText + "\n");
         UserText.setText("");
 
-        try {
-            ShowAIResponse(wc.AiDecortication(userText, db));
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String output = wc.AiDecortication(userText, db);
+        ShowAIResponse(output);
 
-    }//GEN-LAST:event_SendActionPerformed
+    }
+
 
     private void UserTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UserTextActionPerformed
+
+    private void UserTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UserTextKeyPressed
+        if (evt.getKeyChar() == '\n') {
+            PrintLine();
+        }
+
+    }//GEN-LAST:event_UserTextKeyPressed
 
     private void ShowAIResponse(String resp) {
         Console.setText(Console.getText() + "ARIA > " + resp + "\n");

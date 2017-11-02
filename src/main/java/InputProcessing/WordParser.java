@@ -10,6 +10,8 @@ import java.io.IOException;
 import opennlp.tools.postag.POSSample;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bson.Document;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedTokenReadings;
@@ -23,7 +25,7 @@ import org.languagetool.language.French;
  */
 public class WordParser {
 
-    public static List<Document> ExtractAll(POSSample userInput, boolean question) throws IOException {
+    public static List<Document> ExtractAll(POSSample userInput, boolean question){
 
         int preference = 0;
         String[] words = userInput.getSentence();
@@ -32,7 +34,6 @@ public class WordParser {
 
         List<Document> wordList = new ArrayList<>();
 
-        
         for (int i = 0; i < wordTags.length; i++) {
 
             preference = getPreferenceValue(i, lemmatize, wordTags);
@@ -53,23 +54,30 @@ public class WordParser {
                 case "NPP":
                     wordList.add(new Document("type", "npp").append("word", lemmatize[i]).append("preference", preference));
                     break;
+                case "CLS":
+                    wordList.add(new Document("type", "cls").append("word", lemmatize[i]));
+                    break;
                 default:
                     break;
             }
         }
         addSubjectsFromList(wordList);
-        
 
         return wordList;
     }
 
-    private static String[] LemmatizeWord(String[] word) throws IOException {
+    private static String[] LemmatizeWord(String[] word) {
         String[] ret = new String[word.length];
 
         JLanguageTool lt = new JLanguageTool(new French());
 
         for (int i = 0; i < word.length; i++) {
-            List<AnalyzedSentence> analyzedSentences = lt.analyzeText(word[i]);
+            List<AnalyzedSentence> analyzedSentences = null;
+            try {
+                analyzedSentences = lt.analyzeText(word[i]);
+            } catch (IOException ex) {
+                Logger.getLogger(WordParser.class.getName()).log(Level.SEVERE, null, ex);
+            }
             for (AnalyzedSentence analyzedSentence : analyzedSentences) {
                 for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
                     if (analyzedTokens.getReadings().size() > 0) {
@@ -83,7 +91,7 @@ public class WordParser {
         return ret;
     }
 
-    private static int getPreferenceValue(int i, String[] words, String[] wordTags) throws IOException {
+    private static int getPreferenceValue(int i, String[] words, String[] wordTags) {
 
         //Normal sentence
         for (int j = 0; j < i; ++j) {
@@ -107,10 +115,10 @@ public class WordParser {
         //Inverted sentence
         for (int j = words.length - 1; j > i; --j) {
             //Cases for decreasing preference
-            if(j == 1){
+            if (j == 1) {
                 int k = 0;
             }
-            
+
             if (wordTags[j].equals("V") && (words[j].equals("déplaire") || words[j].equals("dégoûter"))) {
                 return -1;
             }
