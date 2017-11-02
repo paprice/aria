@@ -28,9 +28,9 @@ import simplenlg.realiser.*;
  */
 public class SentenceCreation {
 
-    private static Lexicon lexicon = new XMLLexicon();
-    private static NLGFactory factory = new NLGFactory(lexicon);
-    private static Realiser realiser = new Realiser();
+    private static Lexicon lexicon;
+    private static NLGFactory factory;
+    private static Realiser realiser;
 
     public static void InitializeRealiser() {
         lexicon = new XMLLexicon();
