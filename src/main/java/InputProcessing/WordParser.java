@@ -19,6 +19,7 @@ import org.languagetool.language.French;
 /**
  *
  * @author Patrice Desrochers
+ * @author Gildo Conte
  */
 public class WordParser {
 
@@ -31,6 +32,7 @@ public class WordParser {
 
         List<Document> wordList = new ArrayList<>();
 
+        
         for (int i = 0; i < wordTags.length; i++) {
 
             preference = getPreferenceValue(i, lemmatize, wordTags);
@@ -56,6 +58,7 @@ public class WordParser {
             }
         }
         addSubjectsFromList(wordList);
+        
 
         return wordList;
     }

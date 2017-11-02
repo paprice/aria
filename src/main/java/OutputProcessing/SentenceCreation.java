@@ -25,6 +25,7 @@ import simplenlg.realiser.*;
 /**
  *
  * @author Patrice Desrochers
+ * @author Gildo Conte
  */
 public class SentenceCreation {
 
@@ -51,6 +52,7 @@ public class SentenceCreation {
         }
 
         return output;
+
 
     }
 

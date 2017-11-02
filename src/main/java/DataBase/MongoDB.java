@@ -20,6 +20,7 @@ import org.bson.Document;
 /**
  *
  * @author Patrice Desrochers
+ * @author Gildo Conte
  */
 public class MongoDB {
 

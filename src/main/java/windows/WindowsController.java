@@ -11,6 +11,7 @@ import static InputProcessing.SentenceParser.PreParse;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.GenerateResponse;
 import static OutputProcessing.SentenceCreation.GenerateDefinitionResponse;
+import static ConversationHandler.CurrentConversation.setLastUserSentence;
 import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
@@ -19,6 +20,7 @@ import org.bson.Document;
 /**
  *
  * @author Patrice Desrochers
+ * @author Gildo Conte
  */
 public class WindowsController {
 
@@ -38,6 +40,10 @@ public class WindowsController {
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
         List<Document> important = ExtractAll(parsed,isQuestion);
+        
+        //Sending user input to LastConversation
+        setLastUserSentence(userInput);
+
 
         important = db.InsertOrUpdate(important);
 

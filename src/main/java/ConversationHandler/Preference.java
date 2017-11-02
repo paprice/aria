@@ -9,7 +9,8 @@ import org.bson.Document;
 
 /**
  *
- * @author Gildo
+ * @author Gildo Conte
+ * @author Audrey Eugène
  */
 public enum Preference {
     HATE("Beurk!", "je", "détester", "le", "", false, -20),

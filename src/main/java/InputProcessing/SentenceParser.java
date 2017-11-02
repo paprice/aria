@@ -24,6 +24,7 @@ import opennlp.tools.tokenize.TokenizerModel;
 /**
  *
  * @author Patrice Desrochers
+ * @author Gildo Conte
  */
 public class SentenceParser {
 
