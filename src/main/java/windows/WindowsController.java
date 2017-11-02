@@ -5,13 +5,13 @@
  */
 package windows;
 
+import static ConversationHandler.CurrentConversation.*;
 import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.Parse;
 import static InputProcessing.SentenceParser.PreParse;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.GenerateResponse;
 import static OutputProcessing.SentenceCreation.GenerateDefinitionResponse;
-import static ConversationHandler.CurrentConversation.setLastUserSentence;
 import java.io.IOException;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
@@ -26,9 +26,11 @@ public class WindowsController {
 
     private boolean isWaitingDef;
     private String waitingDef;
+    private boolean sendResponse;
 
     public WindowsController() {
         isWaitingDef = false;
+        sendResponse = false;
     }
 
     public String AiDecortication(String userInput, MongoDB db) throws IOException {
@@ -51,6 +53,13 @@ public class WindowsController {
         if (output.equals("")) {
             output = GenerateResponse(important,isQuestion);
         }
+        
+        if(sendResponse){
+            sendResponse = false;
+            output = "\n" + AiDecortication(getLastSentence(), db);
+            
+        }
+        
         return output;
     }
 
@@ -75,6 +84,7 @@ public class WindowsController {
                     output = GenerateDefinitionResponse(waitingDef, d.getString("word"));
                     isWaitingDef = false;
                     waitingDef = "";
+                    sendResponse = true;
                 }
             }
         }
