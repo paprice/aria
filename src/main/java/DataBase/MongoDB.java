@@ -133,6 +133,8 @@ public class MongoDB {
                     this.insertDocument(properName, d);
                     retDoc.add(d);
                 }
+            } else if(d.get("type").equals("cls")){
+                retDoc.add(d);
             }
 
         }

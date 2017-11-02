@@ -32,6 +32,7 @@ public class SentenceCreation {
     private static Lexicon lexicon;
     private static NLGFactory factory;
     private static Realiser realiser;
+    private static boolean wasLastQuestion = false;
 
     public static void InitializeRealiser() {
         lexicon = new XMLLexicon();
@@ -45,10 +46,15 @@ public class SentenceCreation {
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
+        output = GeneratePreferenceResponse(words);
         if (!isQuestion) {
-            output = GenerateQuestionResponse(words);
-        } else {
-            output = GeneratePreferenceResponse(words);
+            if (!wasLastQuestion) {
+                output = GenerateQuestionResponse(words);
+                wasLastQuestion = true;
+            } else {
+                output = "D'accord";
+                wasLastQuestion = false;
+            }
         }
 
         return output;
@@ -109,29 +115,35 @@ public class SentenceCreation {
         String verb = "";
         String subject = "";
         String object = "";
-        NPPhraseSpec obj = factory.createNounPhrase();
-        
-        
-        for (Document doc : words) {
-            if (doc.getString("type").equals("v")) {
-                verb = doc.getString("word");
-            } else if (doc.getString("type").equals("nc")) {
-                object = doc.getString("word");
-            }
 
-            String pronom = doc.getString("cls");
-            if (pronom != null) {
-                if (pronom.equals("je")) {
-                    subject = "tu";
-                } else if (pronom.equals("tu")) {
-                    subject = "je";
-                }
-                obj = factory.createNounPhrase("le", object);
-                obj.setPlural(true);
-            } else {
-                subject = "il";
+        for (Document doc : words) {
+            switch (doc.getString("type")) {
+                case "v":
+                    verb = doc.getString("word");
+                    break;
+                case "nc":
+                    object = doc.getString("word");
+                    break;
+                case "cls":
+                    switch (doc.getString("word")) {
+                        case "je":
+                            subject = "tu";
+                            break;
+                        case "tu":
+                            subject = "je";
+                            break;
+                        default:
+                            subject = "il";
+                            break;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
+
+        NPPhraseSpec obj = factory.createNounPhrase("le", object);
+        obj.setPlural(true);
 
         SPhraseSpec ret = factory.createClause();
         ret.setSubject(subject);

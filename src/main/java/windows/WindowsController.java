@@ -10,6 +10,7 @@ import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.*;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.*;
+import java.util.ArrayList;
 import java.util.List;
 import opennlp.tools.postag.POSSample;
 import org.bson.Document;
@@ -25,13 +26,11 @@ public class WindowsController {
     private String waitingDef;
     private boolean sendResponse;
     private List<String> missingDefs;
-    
-    
-    
+
     public WindowsController() {
         isWaitingDef = false;
         sendResponse = false;
-        missingDefs = null;
+        missingDefs = new ArrayList<>();
     }
 
     public String AiDecortication(String userInput, MongoDB db) {
@@ -44,50 +43,69 @@ public class WindowsController {
         POSSample parsed = Parse(userInput);
         List<Document> important = ExtractAll(parsed, isQuestion);
 
-        //Sending user input to LastConversation
-        important = db.InsertOrUpdate(important);
+        if (!isWaitingDef) {
 
-        output = CheckDef(important, db);
-        if (output.equals("")) {
-            output = GenerateResponse(important, isQuestion);
+            //Sending user input to LastConversation
+            important = db.InsertOrUpdate(important);
+            CheckDef(important, db);
+            if (!isWaitingDef) {
+                output = GenerateResponse(important, isQuestion);
+            } else {
+                output = AskDef(waitingDef);
+            }
+
+            setLastUserSentence(userInput);
+        } else {
+            output = InsertDef(important, db);
         }
-
-        if (sendResponse) {
-            sendResponse = false;
-            output += "\n" + AiDecortication(getLastSentence(), db);
-
-        }
-
-        setLastUserSentence(userInput);
 
         return output;
     }
 
-    private String CheckDef(List<Document> important, MongoDB db) {
+    private void CheckDef(List<Document> important, MongoDB db) {
         String output = "";
 
-        if (!isWaitingDef) {
-            for (Document d : important) {
-                int hasType = db.HaveDefinition(d.getString("word"), "nc");
-                if (hasType == 1) {
-                    isWaitingDef = true;
-                    output = "Peux-tu définir " + d.getString("word") + " dans une catégorie ?";
-                    waitingDef = d.getString("word");
-                }
+        for (Document d : important) {
+            int hasType = db.HaveDefinition(d.getString("word"), "nc");
+            if (hasType == 1) {
+                missingDefs.add(d.getString("word"));
+                isWaitingDef = true;
             }
-        } else {
-            for (Document d : important) {
-                if ("nc".equals(d.getString("type"))) {
+        }
+        if (!missingDefs.isEmpty()) {
+            waitingDef = missingDefs.get(0);
+        }
+    }
+
+    private String AskDef(String toDef) {
+        return "Peux-tu définir " + toDef + " dans une catégorie ?";
+    }
+
+    private String InsertDef(List<Document> important, MongoDB db) {
+        String output = "";
+        for (Document d : important) {
+            if ("nc".equals(d.getString("type"))) {
+                if (!d.getString("word").equals(waitingDef)) {
                     Document upd = new Document("desc", d.getString("word"));
                     Document toUpdate = new Document("word", waitingDef);
                     db.UpdateType(toUpdate, upd, "names");
                     output = GenerateDefinitionResponse(waitingDef, d.getString("word"));
-                    isWaitingDef = false;
-                    waitingDef = "";
-                    sendResponse = true;
+                    missingDefs.remove(0);
+                    if (missingDefs.isEmpty()) {
+                        isWaitingDef = false;
+                        waitingDef = "";
+                        sendResponse = true;
+                        output = AiDecortication(getLastSentence(), db);
+                    } else {
+                        waitingDef = missingDefs.get(0);
+                        output += "\n" + AskDef(waitingDef);
+                        
+                    }
+
                 }
             }
         }
+
         return output;
     }
 }
