@@ -5,63 +5,55 @@
  */
 package ConversationHandler;
 
+import org.bson.Document;
+
 /**
  *
  * @author Gildo Conte
  * @author Audrey Eugène
  */
 public enum Preference {
-    HATE("Beurk! Je déteste ", -20),
-    DISLIKE("Ouf... Je n'aime pas ", -10),
-    NEUTRAL("Hmmm. Je ne sais pas quoi penser sur ", 0),
-    LIKE("Oui! Moi j'aime ", 10),
-    LOVE("Ooooh! J'ADORE ", 20);
+    HATE("Beurk!", "je", "détester", "le", "", false, -20),
+    DISLIKE("Ouf...", "je", "aimer", "le", "", true, -10),
+    NEUTRAL("Hmmm.", " je", "savoir", "de", "quoi penser", true, 0),
+    LIKE("Oui!", "je", "aimer", "le", "", false, 10),
+    LOVE("Ooooh!", "je", "adorer", "le", "", false, 20);
 
-    public String pref;
-    public int scorePref;
+    private final String ono;
+    private final String subject;
+    private final String verb;
+    private final String det;
+    private final String complement;
+    private final boolean isNegative;
+    private final int scorePref;
 
-    public String getPref() {
-        return pref;
-    }
-
-    public int getScorePref() {
-        return scorePref;
-    }
-
-    public void setPref(int score) {
-        if (score >= 20) {
-            this.pref = Preference.LOVE.getPref();
-        } else if (score >= 10 && score < 20) {
-            this.pref = Preference.LIKE.getPref();
-        } else if (score < 10 && score > -10) {
-            this.pref = Preference.NEUTRAL.getPref();
-        } else if (score <= -10 && score > -20) {
-            this.pref = Preference.DISLIKE.getPref();
-        } else {
-            this.pref = Preference.HATE.getPref();
-        }
-    }
-
-    public void setScorePref(int score) {
+    Preference(String o, String s, String v, String det, String complement, boolean neg, int score) {
+        this.ono = o;
+        this.subject = s;
+        this.verb = v;
+        this.isNegative = neg;
         this.scorePref = score;
+        this.det = det;
+        this.complement = complement;
     }
 
-    Preference(String pref, int score) {
-        this.pref = pref;
-        this.scorePref = score;
+    private Document getAll() {
+        Document doc = new Document("ono", this.ono).append("subject", this.subject).append("verb", this.verb).append("det", this.det).append("comp", this.complement).append("neg", this.isNegative);
+
+        return doc;
     }
 
-    public static String ReturnPref(int score) {
-        if (score >= 20) {
-            return LOVE.getPref();
-        } else if (score >= 10 && score < 20) {
-            return LIKE.getPref();
-        } else if (score < 10 && score > -10) {
-            return NEUTRAL.getPref();
-        } else if (score <= -10 && score > -20) {
-            return DISLIKE.getPref();
+    public static Document ReturnPref(int score) {
+        if (score >= LOVE.scorePref) {
+            return LOVE.getAll();
+        } else if (score >= LIKE.scorePref && score < LOVE.scorePref) {
+            return LIKE.getAll();
+        } else if (score < LIKE.scorePref && score > DISLIKE.scorePref) {
+            return NEUTRAL.getAll();
+        } else if (score <= DISLIKE.scorePref && score > HATE.scorePref) {
+            return DISLIKE.getAll();
         } else {
-            return HATE.getPref();
+            return HATE.getAll();
         }
     }
 

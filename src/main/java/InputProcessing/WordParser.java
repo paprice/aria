@@ -6,11 +6,9 @@
 package InputProcessing;
 
 import static ConversationHandler.CurrentConversation.addSubjectsFromList;
-import static InputProcessing.SentenceParser.Chunker;
 import java.io.IOException;
 import opennlp.tools.postag.POSSample;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.bson.Document;
 import org.languagetool.AnalyzedSentence;
@@ -25,7 +23,7 @@ import org.languagetool.language.French;
  */
 public class WordParser {
 
-    public static List<Document> ExtractAll(POSSample userInput) throws IOException {
+    public static List<Document> ExtractAll(POSSample userInput, boolean question) throws IOException {
 
         int preference = 0;
         String[] words = userInput.getSentence();
@@ -61,10 +59,6 @@ public class WordParser {
         }
         addSubjectsFromList(wordList);
         
-
-        String chunk[] = Chunker(words, wordTags);
-
-        System.out.println(Arrays.toString(chunk));
 
         return wordList;
     }
@@ -113,6 +107,10 @@ public class WordParser {
         //Inverted sentence
         for (int j = words.length - 1; j > i; --j) {
             //Cases for decreasing preference
+            if(j == 1){
+                int k = 0;
+            }
+            
             if (wordTags[j].equals("V") && (words[j].equals("déplaire") || words[j].equals("dégoûter"))) {
                 return -1;
             }

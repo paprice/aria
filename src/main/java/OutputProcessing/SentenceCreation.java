@@ -6,12 +6,10 @@
 package OutputProcessing;
 
 import ConversationHandler.Preference;
-import DataBase.MongoDB;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import simplenlg.features.Feature;
+import simplenlg.features.InterrogativeType;
 
 /*Faire fonctionner les dépendance : 
 Aller  dans le dossier Dependencies et click droit sur la dépendance SimpleNLG-EnFr-1.1.jar
@@ -31,68 +29,75 @@ import simplenlg.realiser.*;
  */
 public class SentenceCreation {
 
-    public static String GenerateResponse(List<Document> words, MongoDB db) {
-        String verb = "";
-        String subject = "";
-        String object = "";
-        List<Document> def = new ArrayList<>();
-        Lexicon lexicon = new XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
-        
-        GeneratePreferenceResponse(words, db);
+    private static Lexicon lexicon;
+    private static NLGFactory factory;
+    private static Realiser realiser;
+
+    public static void InitializeRealiser() {
+        lexicon = new XMLLexicon();
+        factory = new NLGFactory(lexicon);
+        realiser = new Realiser();
+    }
+
+    public static String GenerateResponse(List<Document> words, boolean isQuestion) {
+        String output;
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
-        Document doc = words.get(words.size()-1);
-        
-        SPhraseSpec ret = factory.createClause();
-        ret.setSubject(subject);
-        ret.setObject(obj);
-        if (!doc.containsValue("?")){
-            ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
+        if (!isQuestion) {
+            output = GenerateQuestionResponse(words);
+        } else {
+            output = GeneratePreferenceResponse(words);
         }
-        
-        return realiser.realiseSentence(ret);
+
+        return output;
+
 
     }
 
-    public static String GeneratePreferenceResponse(List<Document> words, MongoDB db) {
+    public static String GeneratePreferenceResponse(List<Document> words) {
         String verb = "";
         String subject = "";
         String object = "";
-        List<Document> def = new ArrayList<>();
-
-        Lexicon lexicon = new XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
+        String ono = "";
+        String det = "";
+        String comp = "";
+        boolean neg = false;
 
         for (Document doc : words) {
             if (doc.getString("type").equals("nc")) {
-                subject = Preference.ReturnPref(doc.getInteger("preference"));
+                Document pref = Preference.ReturnPref(doc.getInteger("preference"));
                 object = doc.getString("word");
+                subject = pref.getString("subject");
+                verb = pref.getString("verb");
+                ono = pref.getString("ono");
+                det = pref.getString("det");
+                neg = pref.getBoolean("neg");
+                comp = pref.getString("comp");
             }
         }
 
-        NPPhraseSpec obj = factory.createNounPhrase("le", object);
+        NPPhraseSpec obj = factory.createNounPhrase(det, object);
         obj.setPlural(true);
-        
-        
+
+        VPPhraseSpec ve = factory.createVerbPhrase(verb);
+        ve.setFeature(Feature.NEGATED, neg);
+        AdvPhraseSpec adv = factory.createAdverbPhrase(comp);
+        ve.addComplement(comp);
+
         SPhraseSpec ret = factory.createClause();
+        ret.addFrontModifier(ono);
         ret.setSubject(subject);
+        ret.setVerb(ve);
         ret.setObject(obj);
 
         return realiser.realiseSentence(ret);
 
     }
-    
+
     public static String GenerateDefinitionResponse(String toDef, String def) {
         String output;
-
-        Lexicon lexicon = new XMLLexicon();
-        NLGFactory factory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser();
 
         NPPhraseSpec defi = factory.createNounPhrase("un", def);
         SPhraseSpec ret = factory.createClause("Merci, maitenant je sais que " + toDef, "être", defi);
@@ -100,6 +105,32 @@ public class SentenceCreation {
         output = realiser.realiseSentence(ret);
 
         return output;
+    }
+
+    private static String GenerateQuestionResponse(List<Document> words) {
+        String verb = "";
+        String subject = "tu";
+        String object = "";
+
+        for (Document doc : words) {
+            if (doc.getString("type").equals("v")) {
+                verb = doc.getString("word");
+            }
+            if (doc.getString("type").equals("nc")) {
+                object = doc.getString("word");
+            }
+        }
+
+        NPPhraseSpec obj = factory.createNounPhrase("le", object);
+        obj.setPlural(true);
+
+        SPhraseSpec ret = factory.createClause();
+        ret.setSubject(subject);
+        ret.setVerb(verb);
+        ret.setObject(obj);
+        ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+
+        return realiser.realiseSentence(ret);
     }
 
 }
