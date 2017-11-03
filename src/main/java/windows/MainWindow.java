@@ -26,6 +26,7 @@ public class MainWindow extends javax.swing.JFrame {
         Console.setLineWrap(true);
         Console.setWrapStyleWord(true);
         this.setVisible(true);
+        UserText.requestFocusInWindow();
     }
 
     /**
@@ -99,7 +100,7 @@ public class MainWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
@@ -137,7 +138,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void PrintLine() {
         // TODO add your handling code here:
         String userText = UserText.getText();
-        Console.setText(Console.getText() + "user > " + userText + "\n");
+        Console.setText(Console.getText() + "USER > " + userText + "\n");
         UserText.setText("");
 
         String output = wc.AiDecortication(userText, db);

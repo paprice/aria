@@ -15,7 +15,7 @@ import org.bson.Document;
 public enum Preference {
     HATE("Beurk!", "je", "détester", "le", "", false, -20),
     DISLIKE("Ouf...", "je", "aimer", "le", "", true, -10),
-    NEUTRAL("Hmmm.", " je", "savoir", "de", "quoi penser", true, 0),
+    NEUTRAL("Hmmm.", " je", "être", "le", "indécise sur", false, 0),
     LIKE("Oui!", "je", "aimer", "le", "", false, 10),
     LOVE("Ooooh!", "je", "adorer", "le", "", false, 20);
 
