@@ -5,8 +5,6 @@
  */
 package DataBase;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
@@ -43,27 +41,23 @@ public class MongoDB {
         adv = data.getCollection("adv");
     }
 
-    public void CloseConnection() {
-        client.close();
-    }
-
-    public void insertDocuments(MongoCollection collect, List<Document> doc) {
+    private void insertDocuments(MongoCollection collect, List<Document> doc) {
         collect.insertMany(doc);
     }
 
-    public void insertDocument(MongoCollection collect, Document doc) {
+    private void insertDocument(MongoCollection collect, Document doc) {
         collect.insertOne(doc);
     }
 
-    public void updateQuery(Document toUpdate, Document update, MongoCollection collect) {
+    private void updateQuery(Document toUpdate, Document update, MongoCollection collect) {
         collect.updateOne(toUpdate, new Document("$set", update));
     }
 
-    public void updateQueryInc(Document toUpdate, Document update, MongoCollection collect) {
+    private void updateQueryInc(Document toUpdate, Document update, MongoCollection collect) {
         collect.updateOne(toUpdate, new Document("$inc", update));
     }
 
-    public void removeDocument(MongoCollection collect, Document doc) {
+    private void removeDocument(MongoCollection collect, Document doc) {
         collect.deleteOne(doc);
     }
 
@@ -133,7 +127,7 @@ public class MongoDB {
                     this.insertDocument(properName, d);
                     retDoc.add(d);
                 }
-            } else if(d.get("type").equals("cls")){
+            } else if (d.get("type").equals("cls")) {
                 retDoc.add(d);
             }
 

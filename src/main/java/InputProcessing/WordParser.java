@@ -25,9 +25,9 @@ import org.languagetool.language.French;
  */
 public class WordParser {
 
-    public static List<Document> ExtractAll(POSSample userInput, boolean question){
+    public static List<Document> ExtractAll(POSSample userInput){
 
-        int preference = 0;
+        int preference;
         String[] words = userInput.getSentence();
         String[] wordTags = userInput.getTags();
         String[] lemmatize = LemmatizeWord(words);

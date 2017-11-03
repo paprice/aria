@@ -41,7 +41,7 @@ public class WindowsController {
         //Parsing the user input
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
-        List<Document> important = ExtractAll(parsed, isQuestion);
+        List<Document> important = ExtractAll(parsed);
 
         if (!isWaitingDef) {
 
