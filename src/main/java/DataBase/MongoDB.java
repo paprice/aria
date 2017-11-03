@@ -107,7 +107,7 @@ public class MongoDB {
             } else if (d.get("type").equals("adj")) {
                 Document isFind = (Document) adj.find(eq("word", d.get("word"))).first();
                 if (isFind != null) {
-
+                    retDoc.add(d);
                 } else {
                     this.insertDocument(adj, d);
                     retDoc.add(d);

@@ -9,7 +9,11 @@ import ConversationHandler.Preference;
 import java.util.List;
 import org.bson.Document;
 import simplenlg.features.Feature;
+import simplenlg.features.Gender;
 import simplenlg.features.InterrogativeType;
+import simplenlg.features.LexicalFeature;
+import simplenlg.features.NumberAgreement;
+import simplenlg.features.Person;
 
 /*Faire fonctionner les dépendance : 
 Aller  dans le dossier Dependencies et click droit sur la dépendance SimpleNLG-EnFr-1.1.jar
@@ -46,7 +50,6 @@ public class SentenceCreation {
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
-        output = GeneratePreferenceResponse(words);
         if (!isQuestion) {
             if (!wasLastQuestion) {
                 output = GenerateQuestionResponse(words);
@@ -55,6 +58,8 @@ public class SentenceCreation {
                 output = "D'accord";
                 wasLastQuestion = false;
             }
+        } else {
+            output = GeneratePreferenceResponse(words);
         }
 
         return output;
@@ -86,13 +91,19 @@ public class SentenceCreation {
         NPPhraseSpec obj = factory.createNounPhrase(det, object);
         obj.setPlural(true);
 
+        NPPhraseSpec sub = factory.createNounPhrase(subject);
+        sub.setFeature(Feature.PERSON, Person.FIRST);
+        sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+        sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+        sub.setFeature(Feature.PRONOMINAL, true);
+
         VPPhraseSpec ve = factory.createVerbPhrase(verb);
         ve.setFeature(Feature.NEGATED, neg);
         ve.addComplement(comp);
 
         SPhraseSpec ret = factory.createClause();
         ret.addFrontModifier(ono);
-        ret.setSubject(subject);
+        ret.setSubject(sub);
         ret.setVerb(ve);
         ret.setObject(obj);
 
@@ -115,6 +126,7 @@ public class SentenceCreation {
         String verb = "";
         String subject = "";
         String object = "";
+        String adj = "";
 
         for (Document doc : words) {
             switch (doc.getString("type")) {
@@ -137,14 +149,23 @@ public class SentenceCreation {
                             break;
                     }
                     break;
+                case "adj":
+                    adj = doc.getString("word");
                 default:
                     break;
             }
         }
+        
+        NPPhraseSpec obj;
+        
+        if (subject.equals("")) {
+            subject = "il";
+            obj = factory.createNounPhrase(adj);
+        } else {
 
-        NPPhraseSpec obj = factory.createNounPhrase("le", object);
-        obj.setPlural(true);
-
+            obj = factory.createNounPhrase("le", object);
+            obj.setPlural(true);
+        }
         SPhraseSpec ret = factory.createClause();
         ret.setSubject(subject);
         ret.setVerb(verb);
