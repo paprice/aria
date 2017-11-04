@@ -17,5 +17,5 @@ Dézipper le *models.zip* et mettre le dossier models au même niveau que l'arch
 
 # Question
 
-Pour toutes questions, vous pouvez communiquer avec Patrice Desrochers par courriel : despat-96@outlook.com
+Pour toutes questions, vous pouvez communiquer avec Patrice Desrochers : despat-96@outlook.com ou Gildo Conte : gcconte@gmail.com 
 
