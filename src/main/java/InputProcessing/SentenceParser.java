@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
-import opennlp.tools.cmdline.PerformanceMonitor;
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
@@ -34,7 +33,7 @@ public class SentenceParser {
 
     public static void LoadModel() throws FileNotFoundException, IOException {
         POSModel model = new POSModelLoader()
-                .load(new File("models/fr-pos.bin"));
+                .load(new File("models/fr-pos-ftb-morpho.bin"));
         tagger = new POSTaggerME(model);
         // Séparation des mots
         try (InputStream modelIn = new FileInputStream("models/fr-token.bin")) {

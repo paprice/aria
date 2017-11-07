@@ -5,6 +5,9 @@
  */
 package InputProcessing;
 
+import TypeWord.WordNoPref;
+import TypeWord.Noun;
+import TypeWord.Word;
 import static ConversationHandler.CurrentConversation.addSubjectsFromList;
 import java.io.IOException;
 import opennlp.tools.postag.POSSample;
@@ -12,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bson.Document;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.JLanguageTool;
@@ -25,19 +27,48 @@ import org.languagetool.language.French;
  */
 public class WordParser {
 
-    public static List<Document> ExtractAll(POSSample userInput){
+    public static List<Word> ExtractAll(POSSample userInput) {
 
         int preference;
         String[] words = userInput.getSentence();
         String[] wordTags = userInput.getTags();
         String[] lemmatize = LemmatizeWord(words);
 
-        List<Document> wordList = new ArrayList<>();
+        List<Word> wordList = new ArrayList<>();
 
         for (int i = 0; i < wordTags.length; i++) {
 
             preference = getPreferenceValue(i, lemmatize, wordTags);
+            String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
+            String number = wordTags[i].substring(wordTags[i].length() - 1);
 
+            if (wordTags[i].contains("NC")) {
+                // Common name
+                wordList.add(new Noun("nc",lemmatize[i],preference,genre,number));
+                //wordList.add(new Document("type", "nc").append("word", lemmatize[i]).append("preference", preference).append("genre", genre));
+            } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
+                // Verb
+                wordList.add(new Noun("v",lemmatize[i],preference,genre,number));
+                //wordList.add(new Document("type", "v").append("word", lemmatize[i]).append("preference", preference));
+            } else if (wordTags[i].contains("A") && !wordTags[i].contains("ADV")) {
+                // Adjectives
+                wordList.add(new WordNoPref("adj",lemmatize[i]));
+                //wordList.add(new Document("type", "adj").append("word", lemmatize[i]));
+            } else if (wordTags[i].contains("ADV")) {
+                // Adverb
+                wordList.add(new WordNoPref("adv",lemmatize[i]));
+                //wordList.add(new Document("type", "adv").append("word", lemmatize[i]));
+            } else if (wordTags[i].contains("NP")) {
+                // Proper nouns
+                wordList.add(new Noun("npp",lemmatize[i],preference,genre,number));
+                //wordList.add(new Document("type", "npp").append("word", lemmatize[i]).append("preference", preference));
+            } else if (wordTags[i].contains("CL")) {
+                // Pronouns
+                wordList.add(new WordNoPref("cls",lemmatize[i]));
+                //wordList.add(new Document("type", "cls").append("word", lemmatize[i]));
+            }
+            /*
+            
             switch (wordTags[i]) {
                 case "NC":
                     wordList.add(new Document("type", "nc").append("word", lemmatize[i]).append("preference", preference));
@@ -59,7 +90,7 @@ public class WordParser {
                     break;
                 default:
                     break;
-            }
+            }*/
         }
         addSubjectsFromList(wordList);
 

@@ -6,6 +6,7 @@
 package OutputProcessing;
 
 import ConversationHandler.Preference;
+import TypeWord.Word;
 import java.util.List;
 import org.bson.Document;
 import simplenlg.features.Feature;
@@ -44,7 +45,7 @@ public class SentenceCreation {
         realiser = new Realiser();
     }
 
-    public static String GenerateResponse(List<Document> words, boolean isQuestion) {
+    public static String GenerateResponse(List<Word> words, boolean isQuestion) {
         String output;
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
@@ -66,7 +67,7 @@ public class SentenceCreation {
 
     }
 
-    public static String GeneratePreferenceResponse(List<Document> words) {
+    public static String GeneratePreferenceResponse(List<Word> words) {
         String verb = "";
         String subject = "";
         String object = "";
@@ -75,10 +76,10 @@ public class SentenceCreation {
         String comp = "";
         boolean neg = false;
 
-        for (Document doc : words) {
-            if (doc.getString("type").equals("nc")) {
-                Document pref = Preference.ReturnPref(doc.getInteger("preference"));
-                object = doc.getString("word");
+        for (Word doc : words) {
+            if (doc.getType().equals("nc")) {
+                Document pref = Preference.ReturnPref(doc.getPreference());
+                object = doc.getWord();
                 subject = pref.getString("subject");
                 verb = pref.getString("verb");
                 ono = pref.getString("ono");
@@ -122,22 +123,22 @@ public class SentenceCreation {
         return output;
     }
 
-    private static String GenerateQuestionResponse(List<Document> words) {
+    private static String GenerateQuestionResponse(List<Word> words) {
         String verb = "";
         String subject = "";
         String object = "";
         String adj = "";
 
-        for (Document doc : words) {
-            switch (doc.getString("type")) {
+        for (Word doc : words) {
+            switch (doc.getType()) {
                 case "v":
-                    verb = doc.getString("word");
+                    verb = doc.getWord();
                     break;
                 case "nc":
-                    object = doc.getString("word");
+                    object = doc.getWord();
                     break;
                 case "cls":
-                    switch (doc.getString("word")) {
+                    switch (doc.getWord()) {
                         case "je":
                             subject = "tu";
                             break;
@@ -150,7 +151,7 @@ public class SentenceCreation {
                     }
                     break;
                 case "adj":
-                    adj = doc.getString("word");
+                    adj = doc.getWord();
                 default:
                     break;
             }

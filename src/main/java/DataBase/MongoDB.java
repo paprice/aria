@@ -5,6 +5,10 @@
  */
 package DataBase;
 
+import TypeWord.Word;
+import TypeWord.Noun;
+import TypeWord.ProperNoun;
+import TypeWord.Verb;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
@@ -63,72 +67,72 @@ public class MongoDB {
 
     /**
      *
-     * @param doc the list of document to insert
+     * @param words the list of document to insert
      * @return
      */
-    public List<Document> InsertOrUpdate(List<Document> doc) {
+    public List<Word> InsertOrUpdate(List<Word> words) {
 
-        List<Document> retDoc = new ArrayList<>();
+        List<Word> retDoc = new ArrayList<>();
 
-        for (Document d : doc) {
-            if (d.get("type").equals("nc")) {
-                Document isFind = (Document) nameCommun.find(eq("word", d.get("word"))).first();
+        for (Word word : words) {
+            if (word.getType().equals("nc")) {
+                Document isFind = (Document) nameCommun.find(eq("word", word.getWord())).first();
                 if (isFind != null) {
-                    Document upd = new Document("preference", d.get("preference"));
+                    Document upd = new Document("preference", word.getPreference());
                     updateQueryInc(isFind, upd, nameCommun);
-                    Document Find = (Document) nameCommun.find(eq("word", d.get("word"))).first();
+                    Document Find = (Document) nameCommun.find(eq("word", word.getWord())).first();
                     if (Find != null) {
-                        retDoc.add(Find);
+                        retDoc.add(new Noun(word.getType(),word.getWord(),Find.getInteger("preference"),word.getGenre(),word.getNumber()));   
                     }
 
                 } else {
-                    this.insertDocument(nameCommun, d);
-                    retDoc.add(d);
+                    this.insertDocument(nameCommun, word.CreateDoc());
+                    retDoc.add(word);
                 }
-            } else if (d.get("type").equals("v")) {
-                Document isFind = (Document) verb.find(eq("word", d.get("word"))).first();
+            } else if (word.getType().equals("v")) {
+                Document isFind = (Document) verb.find(eq("word", word.getWord())).first();
                 if (isFind != null) {
-                    Document upd = new Document("preference", d.get("preference"));
-                    updateQueryInc(d, upd, verb);
-                    Document Find = (Document) verb.find(eq("word", d.get("word"))).first();
+                    Document upd = new Document("preference", word.getPreference());
+                    updateQueryInc(isFind, upd, verb);
+                    Document Find = (Document) verb.find(eq("word", word.getWord())).first();
                     if (Find != null) {
-                        retDoc.add(Find);
+                        retDoc.add(new Verb(word.getType(),word.getWord(),Find.getInteger("preference")));  
                     }
                 } else {
-                    this.insertDocument(verb, d);
-                    retDoc.add(d);
+                    this.insertDocument(verb, word.CreateDoc());
+                    retDoc.add(word);  
                 }
-            } else if (d.get("type").equals("adj")) {
-                Document isFind = (Document) adj.find(eq("word", d.get("word"))).first();
+            } else if (word.getType().equals("adj")) {
+                Document isFind = (Document) adj.find(eq("word", word.getWord())).first();
                 if (isFind != null) {
-                    retDoc.add(d);
+                    retDoc.add(word);
                 } else {
-                    this.insertDocument(adj, d);
-                    retDoc.add(d);
+                    this.insertDocument(adj, word.CreateDoc());
+                    retDoc.add(word);
                 }
-            } else if (d.get("type").equals("adv")) {
-                Document isFind = (Document) adv.find(eq("word", d.get("word"))).first();
+            } else if (word.getType().equals("adv")) {
+                Document isFind = (Document) adv.find(eq("word", word.getWord())).first();
                 if (isFind != null) {
 
                 } else {
-                    this.insertDocument(adv, d);
-                    retDoc.add(d);
+                    this.insertDocument(adv, word.CreateDoc());
+                    retDoc.add(word);
                 }
-            } else if (d.get("type").equals("npp")) {
-                Document isFind = (Document) properName.find(eq("word", d.get("word"))).first();
+            } else if (word.getType().equals("npp")) {
+                Document isFind = (Document) properName.find(eq("word", word.getWord())).first();
                 if (isFind != null) {
-                    Document upd = new Document("preference", d.get("preference"));
-                    updateQueryInc(d, upd, properName);
-                    Document Find = (Document) properName.find(eq("word", d.get("word"))).first();
+                    Document upd = new Document("preference", word.getPreference());
+                    updateQueryInc(isFind, upd, properName);
+                    Document Find = (Document) properName.find(eq("word", word.getWord())).first();
                     if (Find != null) {
-                        retDoc.add(Find);
+                        retDoc.add(new ProperNoun(word.getType(),word.getWord(),Find.getInteger("preference")));
                     }
                 } else {
-                    this.insertDocument(properName, d);
-                    retDoc.add(d);
+                    this.insertDocument(properName, word.CreateDoc());
+                    retDoc.add(word);
                 }
-            } else if (d.get("type").equals("cls")) {
-                retDoc.add(d);
+            } else if (word.getType().equals("cls")) {
+                retDoc.add(word);
             }
 
         }

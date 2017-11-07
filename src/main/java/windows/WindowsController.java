@@ -8,6 +8,8 @@ package windows;
 import static ConversationHandler.CurrentConversation.*;
 import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.*;
+import TypeWord.Word;
+import TypeWord.WordNoPref;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.*;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class WindowsController {
         //Parsing the user input
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
-        List<Document> important = ExtractAll(parsed);
+        List<Word> important = ExtractAll(parsed);
 
         if (!isWaitingDef) {
 
@@ -62,13 +64,13 @@ public class WindowsController {
         return output;
     }
 
-    private void CheckDef(List<Document> important, MongoDB db) {
+    private void CheckDef(List<Word> important, MongoDB db) {
         String output = "";
 
-        for (Document d : important) {
-            int hasType = db.HaveDefinition(d.getString("word"), "nc");
+        for (Word d : important) {
+            int hasType = db.HaveDefinition(d.getWord(), "nc");
             if (hasType == 1) {
-                missingDefs.add(d.getString("word"));
+                missingDefs.add(d.getWord());
                 isWaitingDef = true;
             }
         }
@@ -81,15 +83,15 @@ public class WindowsController {
         return "Peux-tu définir " + toDef + " dans une catégorie ?";
     }
 
-    private String InsertDef(List<Document> important, MongoDB db) {
+    private String InsertDef(List<Word> important, MongoDB db) {
         String output = "";
-        for (Document d : important) {
-            if ("nc".equals(d.getString("type"))) {
-                if (!d.getString("word").equals(waitingDef)) {
-                    Document upd = new Document("desc", d.getString("word"));
+        for (Word d : important) {
+            if ("nc".equals(d.getType())) {
+                if (!d.getWord().equals(waitingDef)) {
+                    Document upd = new Document("desc", d.getWord());
                     Document toUpdate = new Document("word", waitingDef);
                     db.UpdateType(toUpdate, upd, "names");
-                    output = GenerateDefinitionResponse(waitingDef, d.getString("word"));
+                    output = GenerateDefinitionResponse(waitingDef, d.getWord());
                     missingDefs.remove(0);
                     if (missingDefs.isEmpty()) {
                         isWaitingDef = false;
