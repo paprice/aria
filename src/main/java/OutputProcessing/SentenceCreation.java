@@ -7,6 +7,7 @@ package OutputProcessing;
 
 import ConversationHandler.Preference;
 import TypeWord.Word;
+import TypeWord.WordNoPref;
 import java.util.List;
 import org.bson.Document;
 import simplenlg.features.Feature;
@@ -70,16 +71,16 @@ public class SentenceCreation {
     public static String GeneratePreferenceResponse(List<Word> words) {
         String verb = "";
         String subject = "";
-        String object = "";
+        Word object = new WordNoPref("test", "test");
         String ono = "";
         String det = "";
         String comp = "";
         boolean neg = false;
 
-        for (Word doc : words) {
-            if (doc.getType().equals("nc")) {
-                Document pref = Preference.ReturnPref(doc.getPreference());
-                object = doc.getWord();
+        for (Word word : words) {
+            if (word.getType().equals("nc")) {
+                Document pref = Preference.ReturnPref(word.getPreference());
+                object = word;
                 subject = pref.getString("subject");
                 verb = pref.getString("verb");
                 ono = pref.getString("ono");
@@ -89,8 +90,10 @@ public class SentenceCreation {
             }
         }
 
-        NPPhraseSpec obj = factory.createNounPhrase(det, object);
-        obj.setPlural(true);
+        NPPhraseSpec obj = factory.createNounPhrase(det, object.getWord());
+        if (object.getNumber().equals("p")) {
+            obj.setPlural(true);
+        }
 
         NPPhraseSpec sub = factory.createNounPhrase(subject);
         sub.setFeature(Feature.PERSON, Person.FIRST);
@@ -126,19 +129,19 @@ public class SentenceCreation {
     private static String GenerateQuestionResponse(List<Word> words) {
         String verb = "";
         String subject = "";
-        String object = "";
+        Word object = new WordNoPref("", "");
         String adj = "";
 
-        for (Word doc : words) {
-            switch (doc.getType()) {
+        for (Word word : words) {
+            switch (word.getType()) {
                 case "v":
-                    verb = doc.getWord();
+                    verb = word.getWord();
                     break;
                 case "nc":
-                    object = doc.getWord();
+                    object = word;
                     break;
                 case "cls":
-                    switch (doc.getWord()) {
+                    switch (word.getWord()) {
                         case "je":
                             subject = "tu";
                             break;
@@ -151,21 +154,23 @@ public class SentenceCreation {
                     }
                     break;
                 case "adj":
-                    adj = doc.getWord();
+                    adj = word.getWord();
                 default:
                     break;
             }
         }
-        
+
         NPPhraseSpec obj;
-        
+
         if (subject.equals("")) {
             subject = "il";
             obj = factory.createNounPhrase(adj);
         } else {
 
-            obj = factory.createNounPhrase("le", object);
-            obj.setPlural(true);
+            obj = factory.createNounPhrase("le", object.getWord());
+            if (object.getNumber().equals("p")) {
+                obj.setPlural(true);
+            }
         }
         SPhraseSpec ret = factory.createClause();
         ret.setSubject(subject);

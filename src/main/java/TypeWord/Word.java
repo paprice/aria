@@ -12,7 +12,7 @@ import org.bson.Document;
  * @author despa
  */
 public interface Word {
-
+    
     public Document CreateDoc();
 
     public String getType();
