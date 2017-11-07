@@ -166,7 +166,6 @@ public class SentenceCreation {
             subject = "il";
             obj = factory.createNounPhrase(adj);
         } else {
-
             obj = factory.createNounPhrase("le", object.getWord());
             if (object.getNumber().equals("p")) {
                 obj.setPlural(true);
