@@ -6,19 +6,11 @@
 package InputProcessing;
 
 import static OutputProcessing.SentenceCreation.InitializeRealiser;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import opennlp.tools.chunker.ChunkerME;
-import opennlp.tools.chunker.ChunkerModel;
+import java.io.*;
+import opennlp.tools.chunker.*;
 import opennlp.tools.cmdline.postag.POSModelLoader;
-import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSSample;
-import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
+import opennlp.tools.postag.*;
+import opennlp.tools.tokenize.*;
 
 /**
  *
@@ -47,7 +39,7 @@ public class SentenceParser {
         }
 
         InitializeRealiser();
-        
+
     }
 
     /**
@@ -72,7 +64,6 @@ public class SentenceParser {
         syntaxe complète des models : http://www.llf.cnrs.fr/Gens/Abeille/French-Treebank-fr.php
         ////////////////////////////////////////////////////////////*/
         // modèle de classes de mots
-
         // séparation de la phrase
         String tokens[] = tokenizer.tokenize(sentence);
         // Tagging des mots
@@ -80,15 +71,11 @@ public class SentenceParser {
         // Remise de tous les mots dans une string
         POSSample sample = new POSSample(tokens, tags);
 
-        
-        String tag[] = chunker.chunk(tokens,tags);
-        double probs[] = chunker.probs();
+        /*String tag[] = chunker.chunk(tokens,tags);
 
         for(int i = 0; i < tags.length;i++){
-            System.out.println(tokens[i] + " " + tag[i] + " " + probs[i] + " - ");
-        }
-        
-        
+            System.out.println(tokens[i] + " " + tags[i] + " " + tag[i] + " ");
+        }*/
         return sample;
     }
 
@@ -105,10 +92,32 @@ public class SentenceParser {
         return sentence;
     }
 
-    public static String[] Chunker(String sentence[], String pos[]) {
+    private String[] Chunker(POSSample pos) {
 
-        return chunker.chunk(sentence, pos);
+        return chunker.chunk(pos.getSentence(), pos.getTags());
 
+    }
+
+    private Sentence PartitionnateSentence(POSSample pos) {
+        Sentence sentence = new Sentence();
+        String chunks[] = Chunker(pos);
+
+        String words[] = pos.getSentence();
+        String tags[] = pos.getTags();
+        
+        boolean isAddingSubject = true;
+        boolean isAddingVerb = false;
+        boolean isAddingObject = false;
+        
+
+        for (int i = 0; i < words.length; i++) {
+            if(chunks[i].substring(0, 1).equals("B")){
+                
+            }
+            
+        }
+
+        return sentence;
     }
 
 }

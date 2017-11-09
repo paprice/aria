@@ -9,7 +9,6 @@ import static ConversationHandler.CurrentConversation.*;
 import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.*;
 import TypeWord.Word;
-import TypeWord.WordNoPref;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.*;
 import java.util.ArrayList;
@@ -45,6 +44,8 @@ public class WindowsController {
         POSSample parsed = Parse(userInput);
         List<Word> important = ExtractAll(parsed);
 
+        
+        
         if (!isWaitingDef) {
 
             //Sending user input to LastConversation
