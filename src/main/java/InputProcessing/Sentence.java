@@ -5,19 +5,22 @@
  */
 package InputProcessing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author despa
  */
-class Sentence {
+public class Sentence {
     List<String> subject;
     List<String> verb;
     List<String> object;
     
     public Sentence(){
-        
+        subject = new ArrayList<>();
+        verb = new ArrayList<>();
+        object = new ArrayList<>();
     }
 
     public List<String> getSubject() {

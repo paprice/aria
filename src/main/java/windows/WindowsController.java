@@ -8,6 +8,7 @@ package windows;
 import static ConversationHandler.CurrentConversation.*;
 import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.*;
+import InputProcessing.Sentence;
 import TypeWord.Word;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.*;
@@ -44,6 +45,7 @@ public class WindowsController {
         POSSample parsed = Parse(userInput);
         List<Word> important = ExtractAll(parsed);
 
+        Sentence s = PartitionnateSentence(parsed);
         
         
         if (!isWaitingDef) {

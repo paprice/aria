@@ -18,13 +18,15 @@ public class Noun implements Word {
     private int preference;
     private String genre;
     private String number;
+    private String det;
 
-    public Noun(String t, String w, int p, String g, String n) {
+    public Noun(String t, String w, int p, String g, String n, String d) {
         type = t;
         word = w;
         preference = p;
         genre = g;
         number = n;
+        det = d;
     }
 
     @Override
@@ -55,6 +57,11 @@ public class Noun implements Word {
     @Override
     public String getNumber() {
         return number;
+    }
+
+    @Override
+    public String getDet() {
+        return det;
     }
 
 }

@@ -52,4 +52,9 @@ public class Verb implements Word {
     public String getNumber() {
         return null;
     }
+
+    @Override
+    public String getDet() {
+        return null;
+    }
 }

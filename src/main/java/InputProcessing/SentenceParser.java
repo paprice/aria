@@ -92,29 +92,63 @@ public class SentenceParser {
         return sentence;
     }
 
-    private String[] Chunker(POSSample pos) {
+    private static String[] Chunker(POSSample pos) {
 
         return chunker.chunk(pos.getSentence(), pos.getTags());
 
     }
 
-    private Sentence PartitionnateSentence(POSSample pos) {
+    public static Sentence PartitionnateSentence(POSSample pos) {
         Sentence sentence = new Sentence();
         String chunks[] = Chunker(pos);
 
         String words[] = pos.getSentence();
         String tags[] = pos.getTags();
-        
+
         boolean isAddingSubject = true;
         boolean isAddingVerb = false;
-        boolean isAddingObject = false;
-        
 
+        boolean start = false;
         for (int i = 0; i < words.length; i++) {
-            if(chunks[i].substring(0, 1).equals("B")){
-                
+
+            if (chunks[i].substring(0, 1).equals("B")) {
+                if (start) {
+                    if (isAddingSubject) {
+                        if (tags[i].contains("V")) {
+                            isAddingSubject = false;
+                            isAddingVerb = true;
+                            sentence.addVerb(words[i]);
+                        } else {
+                            isAddingSubject = false;
+                            sentence.addObject(words[i]);
+                        }
+                    } else if (isAddingVerb) {
+                        isAddingVerb = false;
+                        sentence.addObject(words[i]);
+                    }
+                } else {
+                    if (isAddingSubject) {
+                        sentence.addSubject(words[i]);
+                        start = true;
+                    } else if (isAddingVerb) {
+                        sentence.addVerb(words[i]);
+                    } else {
+                        sentence.addObject(words[i]);
+                    }
+                }
+            } else {
+                if (isAddingSubject) {
+                    if (!tags[i].contains("V")) {
+                        sentence.addSubject(words[i]);
+                    } else {
+                        sentence.addVerb(words[i]);
+                    }
+                } else if (isAddingVerb) {
+                    sentence.addVerb(words[i]);
+                } else {
+                    sentence.addObject(words[i]);
+                }
             }
-            
         }
 
         return sentence;

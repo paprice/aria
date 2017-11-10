@@ -9,6 +9,8 @@ import TypeWord.WordNoPref;
 import TypeWord.Noun;
 import TypeWord.Word;
 import static ConversationHandler.CurrentConversation.addSubjectsFromList;
+import TypeWord.ProperNoun;
+import TypeWord.Verb;
 import java.io.IOException;
 import opennlp.tools.postag.POSSample;
 import java.util.ArrayList;
@@ -48,11 +50,11 @@ public class WordParser {
 
             if (wordTags[i].contains("NC")) {
                 // Common name
-                wordList.add(new Noun("nc", lemmatize[i], preference, genre, number));
+                wordList.add(new Noun("nc", lemmatize[i], preference, genre, number,lemmatize[i-1]));
                 //wordList.add(new Document("type", "nc").append("word", lemmatize[i]).append("preference", preference).append("genre", genre));
             } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
                 // Verb
-                wordList.add(new Noun("v", lemmatize[i], preference, genre, number));
+                wordList.add(new Verb("v", lemmatize[i], preference));
                 //wordList.add(new Document("type", "v").append("word", lemmatize[i]).append("preference", preference));
             } else if (wordTags[i].contains("A") && !wordTags[i].contains("ADV")) {
                 // Adjectives
@@ -64,7 +66,7 @@ public class WordParser {
                 //wordList.add(new Document("type", "adv").append("word", lemmatize[i]));
             } else if (wordTags[i].contains("NP")) {
                 // Proper nouns
-                wordList.add(new Noun("npp", lemmatize[i], preference, genre, number));
+                wordList.add(new ProperNoun("npp", lemmatize[i], preference));
                 //wordList.add(new Document("type", "npp").append("word", lemmatize[i]).append("preference", preference));
             } else if (wordTags[i].contains("CL")) {
                 // Pronouns
@@ -158,10 +160,10 @@ public class WordParser {
                 return -1;
             }
 
-            if (((words[j].equals("plaire") && words[j + 1].equals("pas")))
+            /*if (((words[j].equals("plaire") && words[j + 1].equals("pas")))
                     || (j < words.length - 2 && (words[j].equals("plaire") && words[j + 2].equals("pas")))) {
                 return -1;
-            }
+            }*/
 
             //Cases for raising preference
             if (wordTags[j].equals("V") && words[j].equals("plaire")) {

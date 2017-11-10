@@ -53,4 +53,9 @@ public class ProperNoun implements Word {
         return null;
     }
 
+    @Override
+    public String getDet() {
+        return null;
+    }
+
 }

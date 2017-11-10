@@ -20,5 +20,6 @@ public interface Word {
     public int getPreference();
     public String getGenre();
     public String getNumber();
-
+    public String getDet();
+    
 }

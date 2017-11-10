@@ -82,7 +82,7 @@ public class MongoDB {
                     updateQueryInc(isFind, upd, nameCommun);
                     Document Find = (Document) nameCommun.find(eq("word", word.getWord())).first();
                     if (Find != null) {
-                        retDoc.add(new Noun(word.getType(),word.getWord(),Find.getInteger("preference"),word.getGenre(),word.getNumber()));   
+                        retDoc.add(new Noun(word.getType(), word.getWord(), Find.getInteger("preference"), word.getGenre(), word.getNumber(), word.getDet()));
                     }
 
                 } else {
@@ -96,11 +96,11 @@ public class MongoDB {
                     updateQueryInc(isFind, upd, verb);
                     Document Find = (Document) verb.find(eq("word", word.getWord())).first();
                     if (Find != null) {
-                        retDoc.add(new Verb(word.getType(),word.getWord(),Find.getInteger("preference")));  
+                        retDoc.add(new Verb(word.getType(), word.getWord(), Find.getInteger("preference")));
                     }
                 } else {
                     this.insertDocument(verb, word.CreateDoc());
-                    retDoc.add(word);  
+                    retDoc.add(word);
                 }
             } else if (word.getType().equals("adj")) {
                 Document isFind = (Document) adj.find(eq("word", word.getWord())).first();
@@ -125,7 +125,7 @@ public class MongoDB {
                     updateQueryInc(isFind, upd, properName);
                     Document Find = (Document) properName.find(eq("word", word.getWord())).first();
                     if (Find != null) {
-                        retDoc.add(new ProperNoun(word.getType(),word.getWord(),Find.getInteger("preference")));
+                        retDoc.add(new ProperNoun(word.getType(), word.getWord(), Find.getInteger("preference")));
                     }
                 } else {
                     this.insertDocument(properName, word.CreateDoc());
