@@ -191,10 +191,8 @@ public class SentenceCreation {
                 obj.setPlural(true);
             }
         }*/
-        if (sent.getObject().get(0) != null) {
-            for (int i = 0; i < sent.getObject().size(); i++) {
-                obj += sent.getObject().get(i) + " ";
-            }
+        for (int i = 0; i < sent.getObject().size(); i++) {
+            obj += sent.getObject().get(i) + " ";
         }
 
         SPhraseSpec ret = factory.createClause();

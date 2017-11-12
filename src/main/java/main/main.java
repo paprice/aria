@@ -8,7 +8,7 @@ package main;
 import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.LoadModel;
 import java.io.IOException;
-import windows.MainWindow;
+import windows.UserLogin;
 
 /**
  *
@@ -20,7 +20,9 @@ public class main {
         // Prints "Hello, World" to the terminal window.
         MongoDB db = new MongoDB();
         LoadModel();
-        MainWindow win = new MainWindow(db);
+        
+        UserLogin log = new UserLogin();
+        //MainWindow win = new MainWindow(db);
 
     }
 

@@ -167,7 +167,22 @@ public class MongoDB {
     }
 
     public void UpdateType(Document toUpdate, Document upd, String collectionName) {
-        updateQuery(toUpdate, upd, nameCommun);
+        if (collectionName.equals("names")) {
+            updateQuery(toUpdate, upd, nameCommun);
+        } else if (collectionName.equals("verb")) {
+            updateQuery(toUpdate, upd, verb);
+        }
+    }
+
+    public Document GetDefinition(String word, String typeWord) {
+        if (typeWord.equals("nc")) {
+            Document isFind = (Document) nameCommun.find(eq("word", word)).first();
+            return isFind;
+        } else if (typeWord.equals("v")) {
+            Document isFind = (Document) verb.find(eq("word", word)).first();
+            return isFind;
+        }
+        return null;
     }
 
 }

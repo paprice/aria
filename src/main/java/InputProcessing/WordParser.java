@@ -40,38 +40,28 @@ public class WordParser {
 
         for (int i = 0; i < wordTags.length; i++) {
 
-            String genre = "";
-            String number = "";
             preference = getPreferenceValue(i, lemmatize, wordTags);
-            if (wordTags[i].length() > 2) {
-                genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
-                number = wordTags[i].substring(wordTags[i].length() - 1);
-            }
-
+            
             if (wordTags[i].contains("NC")) {
                 // Common name
-                wordList.add(new Noun("nc", lemmatize[i], preference, genre, number,lemmatize[i-1]));
-                //wordList.add(new Document("type", "nc").append("word", lemmatize[i]).append("preference", preference).append("genre", genre));
+                String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
+                String number = wordTags[i].substring(wordTags[i].length() - 1);
+                wordList.add(new Noun("nc", lemmatize[i], preference, genre, number, lemmatize[i - 1]));
             } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
                 // Verb
                 wordList.add(new Verb("v", lemmatize[i], preference));
-                //wordList.add(new Document("type", "v").append("word", lemmatize[i]).append("preference", preference));
             } else if (wordTags[i].contains("A") && !wordTags[i].contains("ADV")) {
                 // Adjectives
                 wordList.add(new WordNoPref("adj", lemmatize[i]));
-                //wordList.add(new Document("type", "adj").append("word", lemmatize[i]));
             } else if (wordTags[i].contains("ADV")) {
                 // Adverb
                 wordList.add(new WordNoPref("adv", lemmatize[i]));
-                //wordList.add(new Document("type", "adv").append("word", lemmatize[i]));
             } else if (wordTags[i].contains("NP")) {
                 // Proper nouns
                 wordList.add(new ProperNoun("npp", lemmatize[i], preference));
-                //wordList.add(new Document("type", "npp").append("word", lemmatize[i]).append("preference", preference));
             } else if (wordTags[i].contains("CL")) {
                 // Pronouns
                 wordList.add(new WordNoPref("cls", lemmatize[i]));
-                //wordList.add(new Document("type", "cls").append("word", lemmatize[i]));
             }
             /*
             
@@ -164,7 +154,6 @@ public class WordParser {
                     || (j < words.length - 2 && (words[j].equals("plaire") && words[j + 2].equals("pas")))) {
                 return -1;
             }*/
-
             //Cases for raising preference
             if (wordTags[j].equals("V") && words[j].equals("plaire")) {
                 return 1;
@@ -172,6 +161,5 @@ public class WordParser {
         }
         return 0;
     }
-
 
 }

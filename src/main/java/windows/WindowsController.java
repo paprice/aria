@@ -26,6 +26,7 @@ public class WindowsController {
 
     private boolean isWaitingDef;
     private String waitingDef;
+    private String verbDef;
     private boolean sendResponse;
     private List<String> missingDefs;
 
@@ -46,8 +47,7 @@ public class WindowsController {
         List<Word> important = ExtractAll(parsed);
 
         Sentence s = PartitionnateSentence(parsed);
-        
-        
+
         if (!isWaitingDef) {
 
             //Sending user input to LastConversation
@@ -71,10 +71,16 @@ public class WindowsController {
         String output = "";
 
         for (Word d : important) {
+            if (d.getType().equals("v")) {
+                verbDef = d.getWord();
+            }
             int hasType = db.HaveDefinition(d.getWord(), "nc");
             if (hasType == 1) {
                 missingDefs.add(d.getWord());
                 isWaitingDef = true;
+            } else if (d.getType().equals("nc") && verbDef != null) {
+                Document word = db.GetDefinition(d.getWord(), "nc");
+                AddDescToVerb(word.getString("desc"), db);
             }
         }
         if (!missingDefs.isEmpty()) {
@@ -94,6 +100,9 @@ public class WindowsController {
                     Document upd = new Document("desc", d.getWord());
                     Document toUpdate = new Document("word", waitingDef);
                     db.UpdateType(toUpdate, upd, "names");
+
+                    AddDescToVerb(d.getWord(), db);
+
                     output = GenerateDefinitionResponse(waitingDef, d.getWord());
                     missingDefs.remove(0);
                     if (missingDefs.isEmpty()) {
@@ -104,7 +113,6 @@ public class WindowsController {
                     } else {
                         waitingDef = missingDefs.get(0);
                         output += "\n" + AskDef(waitingDef);
-                        
                     }
 
                 }
@@ -113,4 +121,25 @@ public class WindowsController {
 
         return output;
     }
+
+    private void AddDescToVerb(String desc, MongoDB db) {
+
+        Document verb = db.GetDefinition(verbDef, "v");
+
+        List<String> descVerb = (List<String>) verb.get("desc");
+
+        if (descVerb == null) {
+            descVerb = new ArrayList<String>();
+        }
+
+        if (!descVerb.contains(desc)) {
+            descVerb.add(desc);
+            Document upd = new Document("desc", descVerb);
+            Document toUpdate = new Document("word", verbDef);
+
+            db.UpdateType(toUpdate, upd, "verb");
+        }
+
+    }
+
 }
