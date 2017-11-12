@@ -5,8 +5,12 @@
  */
 package DataBase;
 
-import java.util.ArrayList;
+import Files.LoadJson;
+import Files.WriteJson;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,12 +24,21 @@ public class LocalUser {
     
     public LocalUser(){
         nbUser = 0;
-        UserNames = new ArrayList<>();
+        try {
+            UserNames = LoadJson.GetUsers();
+        } catch (IOException ex) {
+            Logger.getLogger(LocalUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }
     
     public boolean CreateNewUser(String user){
         if(!UserNames.contains(user)){
+            nbUser++;
             UserNames.add(user);
+            WriteJson.WriteData(nbUser, UserNames);
             return true;
         }
         return false;
