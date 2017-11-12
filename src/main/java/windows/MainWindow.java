@@ -16,10 +16,11 @@ public class MainWindow extends javax.swing.JFrame {
     private final MongoDB db;
     WindowsController wc;
 
-    public MainWindow(MongoDB pdb) {
+    public MainWindow(MongoDB pdb, String user) {
         db = pdb;
         wc = new WindowsController();
         initComponents();
+        setTitle("A.R.I.A : " + user);
         Console.setLineWrap(true);
         Console.setWrapStyleWord(true);
         this.setVisible(true);

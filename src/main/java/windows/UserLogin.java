@@ -6,6 +6,8 @@
 package windows;
 
 import DataBase.MongoDB;
+import java.util.List;
+import javax.swing.JButton;
 
 /**
  *
@@ -14,23 +16,21 @@ import DataBase.MongoDB;
 public class UserLogin extends javax.swing.JFrame {
 
     UserController uc;
+    JButton buttons[];
+    String user;
 
     public UserLogin() {
         uc = new UserController();
         initComponents();
         this.setVisible(true);
-        
-        
-        
-        
+
+        userName.setVisible(false);
+        confirm.setVisible(false);
+        userText.setVisible(false);
+
+        CreateButton(uc.ListUser());
+
     }
-    
-    private void ListUser(){
-       
-    }
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,6 +42,13 @@ public class UserLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        CreateUser = new javax.swing.JButton();
+        userName = new javax.swing.JTextField();
+        confirm = new javax.swing.JButton();
+        userText = new javax.swing.JLabel();
+        UserSelect = new javax.swing.JLabel();
+        connect = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -55,15 +62,81 @@ public class UserLogin extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 750));
 
+        CreateUser.setText("Nouveau utilisateur");
+        CreateUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateUserActionPerformed(evt);
+            }
+        });
+
+        userName.setName(""); // NOI18N
+
+        confirm.setText("Confirmer la création");
+        confirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmActionPerformed(evt);
+            }
+        });
+
+        userText.setText("Nom d'utilisateur :");
+
+        UserSelect.setText("Utilisateur sélectionné : ");
+
+        connect.setText("Connexion");
+        connect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectActionPerformed(evt);
+            }
+        });
+
+        delete.setText("Supprimer");
+        delete.setMaximumSize(new java.awt.Dimension(85, 25));
+        delete.setMinimumSize(new java.awt.Dimension(85, 25));
+        delete.setPreferredSize(new java.awt.Dimension(85, 25));
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(503, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(UserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(confirm, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                    .addComponent(userName)
+                    .addComponent(CreateUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(userText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(100, 100, 100))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(186, 186, 186)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(CreateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(userText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72)
+                        .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(UserSelect)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(419, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Fichier");
@@ -88,11 +161,80 @@ public class UserLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void CreateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateUserActionPerformed
+        userName.setVisible(true);
+        userText.setVisible(true);
+        confirm.setVisible(true);
+    }//GEN-LAST:event_CreateUserActionPerformed
+
+    private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
+        userName.setVisible(false);
+        confirm.setVisible(false);
+        userText.setVisible(false);
+        uc.CreateUser(userName.getText());
+        DeleteButtons();
+        CreateButton(uc.ListUser());
+    }//GEN-LAST:event_confirmActionPerformed
+
+    private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
+        MongoDB db = new MongoDB();
+        MainWindow main = new MainWindow(db, user);
+        this.setVisible(false);
+    }//GEN-LAST:event_connectActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        uc.RemoveUser(user);
+        DeleteButtons();
+        CreateButton(uc.ListUser());
+    }//GEN-LAST:event_deleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CreateUser;
+    private javax.swing.JLabel UserSelect;
+    private javax.swing.JButton confirm;
+    private javax.swing.JButton connect;
+    private javax.swing.JButton delete;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField userName;
+    private javax.swing.JLabel userText;
     // End of variables declaration//GEN-END:variables
+
+    private void CreateButton(List<String> user) {
+        buttons = new JButton[user.size()];
+        for (int i = 0; i < buttons.length; ++i) {
+            JButton btn = new JButton(user.get(i));
+            btn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    UserActionPerformed(evt, btn.getText());
+                }
+            });
+
+            btn.setSize(500, 50);
+            btn.setLocation(25, 25 + i * 75);
+
+            btn.setText(user.get(i));
+            jPanel1.add(btn);
+            buttons[i] = btn;
+        }
+    }
+
+    private void DeleteButtons() {
+        for (int i = buttons.length - 1; i > 0; i--) {
+            jPanel1.remove(buttons[i]);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+            buttons[i] = null;
+        }
+        buttons = null;
+
+    }
+
+    private void UserActionPerformed(java.awt.event.ActionEvent evt, String name) {
+        UserSelect.setText("Utilisateur selectionné : " + name);
+        user = name;
+    }
 }

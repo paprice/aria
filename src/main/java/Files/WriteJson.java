@@ -25,7 +25,6 @@ public class WriteJson {
         for (String s : user) {
             JSONObject o = new JSONObject();
             o.accumulate("name", s);
-            o.accumulate("path", "./users/" + s + ".json");
             users.add(o);
         }
 

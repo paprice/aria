@@ -24,13 +24,18 @@ public class LoadJson {
 
         JSONObject root = GetRoot("./users/users.json");
 
-        JSONArray rootArray = root.getJSONArray("users");
+        if (root.size() > 0) {
+            JSONArray rootArray = root.getJSONArray("users");
 
-        for (int i = 0; i < rootArray.size(); i++) {
-            JSONObject doc = rootArray.getJSONObject(i);
-            users.add(doc.getString("name"));
+            for (int i = 0; i < rootArray.size(); i++) {
+                JSONObject doc = rootArray.getJSONObject(i);
+                users.add(doc.getString("name"));
+            }
+            return users;
+        } else {
+            return new ArrayList<>();
         }
-        return users;
+        
     }
 
     public static JSONObject GetRoot(String file) throws IOException {
