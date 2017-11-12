@@ -8,6 +8,7 @@ package DataBase;
 import Files.LoadJson;
 import Files.WriteJson;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public class LocalUser {
         try {
             UserNames = LoadJson.GetUsers();
         } catch (IOException ex) {
+            UserNames = new ArrayList<>();
             WriteJson.WriteData(nbUser, UserNames);
         }
 
