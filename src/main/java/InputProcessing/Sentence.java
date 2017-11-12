@@ -13,11 +13,12 @@ import java.util.List;
  * @author despa
  */
 public class Sentence {
+
     List<String> subject;
     List<String> verb;
     List<String> object;
-    
-    public Sentence(){
+
+    public Sentence() {
         subject = new ArrayList<>();
         verb = new ArrayList<>();
         object = new ArrayList<>();
@@ -28,7 +29,9 @@ public class Sentence {
     }
 
     public void addSubject(String subject) {
+
         this.subject.add(subject);
+
     }
 
     public List<String> getVerb() {
@@ -44,9 +47,10 @@ public class Sentence {
     }
 
     public void addObject(String object) {
-        this.object.add(object);
+        if (!object.contains(".")) {
+            this.object.add(object);
+        }
+
     }
-    
-    
-    
+
 }

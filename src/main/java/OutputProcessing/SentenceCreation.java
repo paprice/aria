@@ -6,6 +6,7 @@
 package OutputProcessing;
 
 import ConversationHandler.Preference;
+import InputProcessing.Sentence;
 import TypeWord.Word;
 import TypeWord.WordNoPref;
 import java.util.List;
@@ -46,7 +47,7 @@ public class SentenceCreation {
         realiser = new Realiser();
     }
 
-    public static String GenerateResponse(List<Word> words, boolean isQuestion) {
+    public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
         String output;
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
@@ -54,7 +55,7 @@ public class SentenceCreation {
         //selon le contenu de la dernière phrase. À Discuter.
         if (!isQuestion) {
             if (!wasLastQuestion) {
-                output = GenerateQuestionResponse(words);
+                output = GenerateQuestionResponse(words, sent);
                 wasLastQuestion = true;
             } else {
                 output = "D'accord";
@@ -126,13 +127,13 @@ public class SentenceCreation {
         return output;
     }
 
-    private static String GenerateQuestionResponse(List<Word> words) {
+    private static String GenerateQuestionResponse(List<Word> words, Sentence sent) {
         String verb = "";
         String subject = "";
-        Word object = new WordNoPref("", "");
+        String obj = "";
         String adj = "";
 
-        for (Word word : words) {
+        /*for (Word word : words) {
             switch (word.getType()) {
                 case "v":
                     verb = word.getWord();
@@ -149,7 +150,7 @@ public class SentenceCreation {
                             subject = "je";
                             break;
                         default:
-                            subject = "il";
+                            subject = sent.getSubject().toString();
                             break;
                     }
                     break;
@@ -158,11 +159,30 @@ public class SentenceCreation {
                 default:
                     break;
             }
+        }*/
+        switch (sent.getSubject().get(0).toLowerCase()) {
+            case "je":
+                subject = "tu";
+                break;
+            case "tu":
+                subject = "je";
+                break;
+            default:
+                for (int i = 0; i < sent.getSubject().size(); i++) {
+                    subject += sent.getSubject().get(i) + " ";
+                }
+                break;
         }
 
-        NPPhraseSpec obj;
+        for (int i = 0; i < sent.getVerb().size(); i++) {
+            if (i == 0) {
+                verb = sent.getVerb().get(i) + " ";
+            } else {
+                obj += sent.getVerb().get(i) + " ";
+            }
+        }
 
-        if (subject.equals("")) {
+        /*if (subject.equals("")) {
             subject = "il";
             obj = factory.createNounPhrase(adj);
         } else {
@@ -170,7 +190,13 @@ public class SentenceCreation {
             if (object.getNumber().equals("p")) {
                 obj.setPlural(true);
             }
+        }*/
+        if (sent.getObject().get(0) != null) {
+            for (int i = 0; i < sent.getObject().size(); i++) {
+                obj += sent.getObject().get(i) + " ";
+            }
         }
+
         SPhraseSpec ret = factory.createClause();
         ret.setSubject(subject);
         ret.setVerb(verb);

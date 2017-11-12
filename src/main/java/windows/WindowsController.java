@@ -54,7 +54,7 @@ public class WindowsController {
             important = db.InsertOrUpdate(important);
             CheckDef(important, db);
             if (!isWaitingDef) {
-                output = GenerateResponse(important, isQuestion);
+                output = GenerateResponse(important, isQuestion, s);
             } else {
                 output = AskDef(waitingDef);
             }

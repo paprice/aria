@@ -114,16 +114,15 @@ public class SentenceParser {
             if (chunks[i].substring(0, 1).equals("B")) {
                 if (start) {
                     if (isAddingSubject) {
-                        if (tags[i].contains("V")) {
-                            isAddingSubject = false;
-                            isAddingVerb = true;
-                            sentence.addVerb(words[i]);
-                        } else {
-                            isAddingSubject = false;
-                            sentence.addObject(words[i]);
-                        }
+                        isAddingSubject = false;
+                        isAddingVerb = true;
+                        sentence.addVerb(words[i]);
                     } else if (isAddingVerb) {
-                        isAddingVerb = false;
+                        if (!tags[i].contains("V")) {
+                            isAddingVerb = false;
+                        }
+                        sentence.addObject(words[i]);
+                    } else {
                         sentence.addObject(words[i]);
                     }
                 } else {
@@ -142,6 +141,8 @@ public class SentenceParser {
                         sentence.addSubject(words[i]);
                     } else {
                         sentence.addVerb(words[i]);
+                        isAddingSubject = false;
+                        isAddingVerb = true;
                     }
                 } else if (isAddingVerb) {
                     sentence.addVerb(words[i]);
