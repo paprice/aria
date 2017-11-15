@@ -184,5 +184,16 @@ public class MongoDB {
         }
         return null;
     }
+    
+    public int GetPreference(String word, String typeWord) {
+        if (typeWord.equals("nc")) {
+            Document isFind = (Document) nameCommun.find(eq("word", word)).first();
+            return isFind.getInteger("preference");
+        } else if (typeWord.equals("v")) {
+            Document isFind = (Document) verb.find(eq("word", word)).first();
+            return isFind.getInteger("preference");
+        }
+        return 0;
+    }
 
 }
