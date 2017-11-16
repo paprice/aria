@@ -49,7 +49,7 @@ public class CurrentConversation {
         return lastUserSentence;
     }
     
-    public static String getFavoredCurrentSubject() {
+    public static String getAIFavoredCurrentSubject() {
         int highest = 0;
         for (Integer i : preferenceList) {
             if (preferenceList.get(i) > highest) {
@@ -57,5 +57,10 @@ public class CurrentConversation {
             }
         }
         return currentSubjects.get(highest);
+    }
+    
+    public static String getUserFavoredCurrentSubject() {
+        //TBD
+        return null;
     }
 }
