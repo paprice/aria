@@ -37,6 +37,8 @@ import windows.WindowsController;
  */
 public class SentenceCreation {
 
+    public static String typeQuestion;
+
     private static Lexicon lexicon;
     private static NLGFactory factory;
     private static Realiser realiser;
@@ -133,33 +135,6 @@ public class SentenceCreation {
         String obj = "";
         String adj = "";
 
-        /*for (Word word : words) {
-            switch (word.getType()) {
-                case "v":
-                    verb = word.getWord();
-                    break;
-                case "nc":
-                    object = word;
-                    break;
-                case "cls":
-                    switch (word.getWord()) {
-                        case "je":
-                            subject = "tu";
-                            break;
-                        case "tu":
-                            subject = "je";
-                            break;
-                        default:
-                            subject = sent.getSubject().toString();
-                            break;
-                    }
-                    break;
-                case "adj":
-                    adj = word.getWord();
-                default:
-                    break;
-            }
-        }*/
         switch (sent.getSubject().get(0).toLowerCase()) {
             case "je":
                 subject = "tu";
@@ -182,15 +157,6 @@ public class SentenceCreation {
             }
         }
 
-        /*if (subject.equals("")) {
-            subject = "il";
-            obj = factory.createNounPhrase(adj);
-        } else {
-            obj = factory.createNounPhrase("le", object.getWord());
-            if (object.getNumber().equals("p")) {
-                obj.setPlural(true);
-            }
-        }*/
         for (int i = 0; i < sent.getObject().size(); i++) {
             obj += sent.getObject().get(i) + " ";
         }
@@ -199,7 +165,20 @@ public class SentenceCreation {
         ret.setSubject(subject);
         ret.setVerb(verb);
         ret.setObject(obj);
-        ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+
+        int ran = (int) (Math.random() * (6 - 1));
+
+        switch (ran) {
+            case 6:
+                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.HOW);
+                break;
+            case 5:
+                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHERE);
+                break;
+            default:
+                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+                break;
+        }
 
         return realiser.realiseSentence(ret);
     }
