@@ -28,6 +28,7 @@ import simplenlg.lexicon.Lexicon;
 import simplenlg.lexicon.french.XMLLexicon;
 import simplenlg.phrasespec.*;
 import simplenlg.realiser.*;
+import windows.WindowsController;
 
 /**
  *
@@ -39,7 +40,6 @@ public class SentenceCreation {
     private static Lexicon lexicon;
     private static NLGFactory factory;
     private static Realiser realiser;
-    private static boolean wasLastQuestion = false;
 
     public static void InitializeRealiser() {
         lexicon = new XMLLexicon();
@@ -54,12 +54,12 @@ public class SentenceCreation {
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
         if (!isQuestion) {
-            if (!wasLastQuestion) {
+            if (!WindowsController.wasLastQuestion) {
                 output = GenerateQuestionResponse(words, sent);
-                wasLastQuestion = true;
+                WindowsController.wasLastQuestion = true;
             } else {
                 output = "D'accord";
-                wasLastQuestion = false;
+                WindowsController.wasLastQuestion = false;
             }
         } else {
             output = GeneratePreferenceResponse(words);

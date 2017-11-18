@@ -27,9 +27,7 @@ public class LocalUser {
             UserNames = new ArrayList<>();
             WriteJson.WriteData(nbUser, UserNames);
         }
-
         nbUser = UserNames.size();
-
     }
 
     public List<String> getUserName() {

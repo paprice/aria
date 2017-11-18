@@ -29,6 +29,7 @@ public class WindowsController {
     private String verbDef;
     private boolean sendResponse;
     private List<String> missingDefs;
+    public static boolean wasLastQuestion = false;
 
     public WindowsController() {
         isWaitingDef = false;
@@ -53,6 +54,11 @@ public class WindowsController {
             //Sending user input to LastConversation
             important = db.InsertOrUpdate(important);
             CheckDef(important, db);
+            
+            if(wasLastQuestion){
+                
+            }
+            
             if (!isWaitingDef) {
                 output = GenerateResponse(important, isQuestion, s);
             } else {
