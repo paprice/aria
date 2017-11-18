@@ -6,6 +6,8 @@
 package windows;
 
 import DataBase.LocalUsers;
+import DataBase.User;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,17 +22,20 @@ public class UserController {
         users = new LocalUsers();
     }
 
-    public List<String> ListUser() {
-
-        return users.getUserName();
+    public List<String> getUserNamesList() {
+        List<String> userNames = new ArrayList<>();
+        for (User u : users.getUsers()){
+            userNames.add(u.getName());
+        }
+        return userNames;
     }
 
-    public void CreateUser(String user) {
-        users.CreateNewUser(user);
+    public void CreateUser(User u) {
+        users.CreateNewUser(u);
     }
 
     public void RemoveUser(String user) {
-        users.RemoveUser(user);
+        users.RemoveUserByName(user);
     }
 
 }

@@ -6,6 +6,8 @@
 package windows;
 
 import DataBase.MongoDB;
+import DataBase.User;
+
 import java.awt.Font;
 import java.util.List;
 import javax.swing.JButton;
@@ -31,7 +33,7 @@ public class UserLogin extends javax.swing.JFrame {
         //confirm.setVisible(false);
        // userText.setVisible(false);
 
-        CreateButton(uc.ListUser());
+        CreateButton(uc.getUserNamesList());
 
     }
 
@@ -50,7 +52,7 @@ public class UserLogin extends javax.swing.JFrame {
         connect = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        userName = new javax.swing.JTextField();
+        userNameBox = new javax.swing.JTextField();
         userText = new javax.swing.JLabel();
         confirm = new javax.swing.JButton();
         inscription = new javax.swing.JLabel();
@@ -120,7 +122,7 @@ public class UserLogin extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
 
-        userName.setName(""); // NOI18N
+        userNameBox.setName(""); // NOI18N
 
         userText.setText("Nom d'utilisateur :");
 
@@ -141,7 +143,7 @@ public class UserLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(userNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(inscription, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,7 +160,7 @@ public class UserLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(158, Short.MAX_VALUE))
         );
 
@@ -206,12 +208,12 @@ public class UserLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        
-        
-        uc.CreateUser(userName.getText());
+
+        uc.CreateUser(new User(userNameBox.getText()));
         DeleteButtons();
-        CreateButton(uc.ListUser());
-        userName.setText("");
+        CreateButton(uc.getUserNamesList());
+        userNameBox.setText("");
+
     }//GEN-LAST:event_confirmActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
@@ -223,7 +225,7 @@ public class UserLogin extends javax.swing.JFrame {
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         uc.RemoveUser(user);
         DeleteButtons();
-        CreateButton(uc.ListUser());
+        CreateButton(uc.getUserNamesList());
     }//GEN-LAST:event_deleteActionPerformed
 
 
@@ -239,7 +241,7 @@ public class UserLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField userName;
+    private javax.swing.JTextField userNameBox;
     private javax.swing.JLabel userText;
     // End of variables declaration//GEN-END:variables
 

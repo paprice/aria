@@ -9,6 +9,7 @@ package Files;
  *
  * @author despa
  */
+import DataBase.User;
 import java.io.IOException;
 import java.util.List;
 import net.sf.json.JSONArray;
@@ -16,19 +17,19 @@ import net.sf.json.JSONObject;
 
 public class WriteJson {
 
-    public static void WriteUserData(int nb, List<String> user) {
+    public static void WriteUserData(int nb, List<User> users) {
         JSONObject outputFile = new JSONObject();
-        JSONArray users = new JSONArray();
+        JSONArray jUsers = new JSONArray();
 
         outputFile.accumulate("number", nb);
 
-        for (String s : user) {
+        for (User u : users) {
             JSONObject o = new JSONObject();
-            o.accumulate("name", s);
-            users.add(o);
+            o.accumulate("name", u.getName());
+            jUsers.add(o);
         }
 
-        outputFile.accumulate("users", users);
+        outputFile.accumulate("users", jUsers);
 
         try {
             Utf8File.SaveStringIntoFile("./users/users.json", outputFile.toString(2));
