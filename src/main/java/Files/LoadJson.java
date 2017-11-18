@@ -37,6 +37,25 @@ public class LoadJson {
         }
         
     }
+    
+    public static List<String> GetUserPreferences(String userName) throws IOException {
+        List<String> preferences = new ArrayList<>();
+
+        JSONObject root = GetRoot("./users/" + userName + ".json");
+
+        if (root.size() > 0) {
+            JSONArray rootArray = root.getJSONArray(userName);
+
+            for (int i = 0; i < rootArray.size(); i++) {
+                JSONObject doc = rootArray.getJSONObject(i);
+                preferences.add(doc.getString("preference"));
+            }
+            return preferences;
+        } else {
+            return new ArrayList<>();
+        }
+        
+    }
 
     public static JSONObject GetRoot(String file) throws IOException {
         String jsonText = Utf8File.LoadFileIntoString(file);

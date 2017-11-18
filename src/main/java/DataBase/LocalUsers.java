@@ -15,17 +15,17 @@ import java.util.List;
  *
  * @author despa
  */
-public class LocalUser {
+public class LocalUsers {
 
     private int nbUser;
     private List<String> UserNames;
 
-    public LocalUser() {
+    public LocalUsers() {
         try {
             UserNames = LoadJson.GetUsers();
         } catch (IOException ex) {
             UserNames = new ArrayList<>();
-            WriteJson.WriteData(nbUser, UserNames);
+            WriteJson.WriteUserData(nbUser, UserNames);
         }
         nbUser = UserNames.size();
     }
@@ -38,7 +38,7 @@ public class LocalUser {
         if (!UserNames.contains(user)) {
             nbUser++;
             UserNames.add(user);
-            WriteJson.WriteData(nbUser, UserNames);
+            WriteJson.WriteUserData(nbUser, UserNames);
             return true;
         }
         return false;
@@ -48,7 +48,7 @@ public class LocalUser {
         boolean ret = UserNames.remove(user);
         if (ret) {
             nbUser--;
-            WriteJson.WriteData(nbUser, UserNames);
+            WriteJson.WriteUserData(nbUser, UserNames);
         }
         return ret;
     }

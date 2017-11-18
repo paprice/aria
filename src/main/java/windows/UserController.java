@@ -5,7 +5,7 @@
  */
 package windows;
 
-import DataBase.LocalUser;
+import DataBase.LocalUsers;
 import java.util.List;
 
 /**
@@ -14,10 +14,10 @@ import java.util.List;
  */
 public class UserController {
 
-    private LocalUser users;
+    private LocalUsers users;
 
     public UserController() {
-        users = new LocalUser();
+        users = new LocalUsers();
     }
 
     public List<String> ListUser() {

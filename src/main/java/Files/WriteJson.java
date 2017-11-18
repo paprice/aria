@@ -16,7 +16,7 @@ import net.sf.json.JSONObject;
 
 public class WriteJson {
 
-    public static void WriteData(int nb, List<String> user) {
+    public static void WriteUserData(int nb, List<String> user) {
         JSONObject outputFile = new JSONObject();
         JSONArray users = new JSONArray();
 
@@ -36,6 +36,27 @@ public class WriteJson {
 
         }
 
+    }
+    
+    public static void WritePreferenceData(int nb, String userName, List<String> preferences) {
+        JSONObject outputFile = new JSONObject();
+        JSONArray prefArray = new JSONArray();
+
+        outputFile.accumulate("number", nb);
+
+        for (String s : preferences) {
+            JSONObject o = new JSONObject();
+            o.accumulate("preference", s);
+            prefArray.add(o);
+        }
+
+        outputFile.accumulate(userName, prefArray);
+
+        try {
+            Utf8File.SaveStringIntoFile("./users/" + userName + ".json", outputFile.toString(2));
+        } catch (IOException ex) {
+
+        }
     }
 
 }
