@@ -15,12 +15,12 @@ import java.util.List;
  *
  * @author despa
  */
-public class LocalUser {
+public class LocalUsers {
 
     private int nbUser;
     private List<String> UserNames;
 
-    public LocalUser() {
+    public LocalUsers() {
         try {
             UserNames = LoadJson.GetUsers();
         } catch (IOException ex) {
