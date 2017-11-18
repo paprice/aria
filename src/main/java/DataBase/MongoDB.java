@@ -171,20 +171,23 @@ public class MongoDB {
             updateQuery(toUpdate, upd, nameCommun);
         } else if (collectionName.equals("verb")) {
             updateQuery(toUpdate, upd, verb);
+        } else if (collectionName.equals("adj")) {
+            updateQuery(toUpdate, upd, adj);
         }
     }
 
     public Document GetDefinition(String word, String typeWord) {
         if (typeWord.equals("nc")) {
-            Document isFind = (Document) nameCommun.find(eq("word", word)).first();
-            return isFind;
+            return (Document) nameCommun.find(eq("word", word)).first();
         } else if (typeWord.equals("v")) {
-            Document isFind = (Document) verb.find(eq("word", word)).first();
-            return isFind;
+            return (Document) verb.find(eq("word", word)).first();
+        } else if (typeWord.equals("adj")) {
+            return (Document) adj.find(eq("word", word)).first();
+        } else {
+            return null;
         }
-        return null;
     }
-    
+
     public int GetPreference(String word, String typeWord) {
         if (typeWord.equals("nc")) {
             Document isFind = (Document) nameCommun.find(eq("word", word)).first();

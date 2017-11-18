@@ -63,30 +63,6 @@ public class WordParser {
                 // Pronouns
                 wordList.add(new WordNoPref("cls", lemmatize[i]));
             }
-            /*
-            
-            switch (wordTags[i]) {
-                case "NC":
-                    wordList.add(new Document("type", "nc").append("word", lemmatize[i]).append("preference", preference));
-                    break;
-                case "V":
-                    wordList.add(new Document("type", "v").append("word", lemmatize[i]).append("preference", preference));
-                    break;
-                case "ADJ":
-                    wordList.add(new Document("type", "adj").append("word", lemmatize[i]));
-                    break;
-                case "ADV":
-                    wordList.add(new Document("type", "adv").append("word", lemmatize[i]));
-                    break;
-                case "NPP":
-                    wordList.add(new Document("type", "npp").append("word", lemmatize[i]).append("preference", preference));
-                    break;
-                case "CLS":
-                    wordList.add(new Document("type", "cls").append("word", lemmatize[i]));
-                    break;
-                default:
-                    break;
-            }*/
         }
         addSubjectsFromList(wordList);
 

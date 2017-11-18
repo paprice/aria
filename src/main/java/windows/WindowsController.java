@@ -27,6 +27,7 @@ public class WindowsController {
     private boolean isWaitingDef;
     private String waitingDef;
     private String verbDef;
+    private List<String> adjDef;
     private boolean sendResponse;
     private List<String> missingDefs;
     public static boolean wasLastQuestion = false;
@@ -35,6 +36,7 @@ public class WindowsController {
         isWaitingDef = false;
         sendResponse = false;
         missingDefs = new ArrayList<>();
+        adjDef = new ArrayList<>();
     }
 
     public String AiDecortication(String userInput, MongoDB db) {
@@ -54,11 +56,11 @@ public class WindowsController {
             //Sending user input to LastConversation
             important = db.InsertOrUpdate(important);
             CheckDef(important, db);
-            
-            if(wasLastQuestion){
-                
+
+            if (wasLastQuestion) {
+
             }
-            
+
             if (!isWaitingDef) {
                 output = GenerateResponse(important, isQuestion, s);
             } else {
@@ -74,19 +76,23 @@ public class WindowsController {
     }
 
     private void CheckDef(List<Word> important, MongoDB db) {
-        String output = "";
 
         for (Word d : important) {
             if (d.getType().equals("v")) {
                 verbDef = d.getWord();
             }
-            int hasType = db.HaveDefinition(d.getWord(), "nc");
-            if (hasType == 1) {
-                missingDefs.add(d.getWord());
-                isWaitingDef = true;
-            } else if (d.getType().equals("nc") && verbDef != null) {
-                Document word = db.GetDefinition(d.getWord(), "nc");
-                AddDescToVerb(word.getString("desc"), db);
+            if (d.getType().equals("adj")) {
+                adjDef.add(d.getWord());
+            } else {
+                int hasType = db.HaveDefinition(d.getWord(), "nc");
+                if (hasType == 1) {
+                    missingDefs.add(d.getWord());
+                    isWaitingDef = true;
+                } else if (d.getType().equals("nc") && verbDef != null) {
+                    Document word = db.GetDefinition(d.getWord(), "nc");
+                    AddDescToVerb(word.getString("desc"), db);
+                    //AddDescToAdj(word.getString("desc"), db);
+                }
             }
         }
         if (!missingDefs.isEmpty()) {
@@ -108,6 +114,7 @@ public class WindowsController {
                     db.UpdateType(toUpdate, upd, "names");
 
                     AddDescToVerb(d.getWord(), db);
+                    AddDescToAdj(d.getWord(), db);
 
                     output = GenerateDefinitionResponse(waitingDef, d.getWord());
                     missingDefs.remove(0);
@@ -144,6 +151,26 @@ public class WindowsController {
             Document toUpdate = new Document("word", verbDef);
 
             db.UpdateType(toUpdate, upd, "verb");
+        }
+
+    }
+
+    private void AddDescToAdj(String desc, MongoDB db) {
+
+        Document adj = db.GetDefinition(adjDef.get(0), "adj");
+
+        List<String> descAdj = (List<String>) adj.get("desc");
+
+        if (descAdj == null) {
+            descAdj = new ArrayList<String>();
+        }
+
+        if (!descAdj.contains(desc)) {
+            descAdj.add(desc);
+            Document upd = new Document("desc", descAdj);
+            Document toUpdate = new Document("word", verbDef);
+
+            db.UpdateType(toUpdate, upd, "adj");
         }
 
     }
