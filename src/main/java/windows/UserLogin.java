@@ -6,6 +6,7 @@
 package windows;
 
 import DataBase.MongoDB;
+import DataBase.User;
 import java.util.List;
 import javax.swing.JButton;
 
@@ -28,7 +29,7 @@ public class UserLogin extends javax.swing.JFrame {
         confirm.setVisible(false);
         userText.setVisible(false);
 
-        CreateButton(uc.ListUser());
+        CreateButton(uc.getUserNamesList());
 
     }
 
@@ -171,9 +172,9 @@ public class UserLogin extends javax.swing.JFrame {
         userName.setVisible(false);
         confirm.setVisible(false);
         userText.setVisible(false);
-        uc.CreateUser(userName.getText());
+        uc.CreateUser(new User(userName.getText()));
         DeleteButtons();
-        CreateButton(uc.ListUser());
+        CreateButton(uc.getUserNamesList());
     }//GEN-LAST:event_confirmActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
@@ -185,7 +186,7 @@ public class UserLogin extends javax.swing.JFrame {
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         uc.RemoveUser(user);
         DeleteButtons();
-        CreateButton(uc.ListUser());
+        CreateButton(uc.getUserNamesList());
     }//GEN-LAST:event_deleteActionPerformed
 
 

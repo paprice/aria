@@ -18,37 +18,43 @@ import java.util.List;
 public class LocalUsers {
 
     private int nbUser;
-    private List<String> UserNames;
+    private List<User> Users;
 
     public LocalUsers() {
         try {
-            UserNames = LoadJson.GetUsers();
+            Users = LoadJson.GetUsers();
         } catch (IOException ex) {
-            UserNames = new ArrayList<>();
-            WriteJson.WriteUserData(nbUser, UserNames);
+            Users = new ArrayList<>();
+            WriteJson.WriteUserData(nbUser, Users);
         }
-        nbUser = UserNames.size();
+        nbUser = Users.size();
     }
 
-    public List<String> getUserName() {
-        return UserNames;
+    public List<User> getUsers() {
+        return Users;
     }
 
-    public boolean CreateNewUser(String user) {
-        if (!UserNames.contains(user)) {
+    public boolean CreateNewUser(User u) {
+        if (!Users.contains(u)) {
             nbUser++;
-            UserNames.add(user);
-            WriteJson.WriteUserData(nbUser, UserNames);
+            Users.add(u);
+            WriteJson.WriteUserData(nbUser, Users);
             return true;
         }
         return false;
     }
 
-    public boolean RemoveUser(String user) {
-        boolean ret = UserNames.remove(user);
+    public boolean RemoveUserByName(String userName) {
+        boolean ret = false;
+        for (User u : Users){
+            if (u.getName() == userName){
+                Users.remove(u);
+                ret = true;
+            }
+        }
         if (ret) {
             nbUser--;
-            WriteJson.WriteUserData(nbUser, UserNames);
+            WriteJson.WriteUserData(nbUser, Users);
         }
         return ret;
     }
