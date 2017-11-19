@@ -5,6 +5,8 @@
  */
 package OutputProcessing;
 
+import DataBase.User;
+import DataBase.UserPreference;
 import ConversationHandler.Preference;
 import InputProcessing.Sentence;
 import TypeWord.Word;
@@ -49,19 +51,41 @@ public class SentenceCreation {
         realiser = new Realiser();
     }
 
+    //Il faudrait rajouter user dans les paramètres(?)
     public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
         String output;
+        boolean aimer = sent.getVerb().contains("aimer");
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
         if (!isQuestion) {
-            if (!WindowsController.wasLastQuestion) {
+            if (!WindowsController.wasLastQuestion && !aimer) {
                 output = GenerateQuestionResponse(words, sent);
                 WindowsController.wasLastQuestion = true;
-            } else {
+            } else if (WindowsController.wasLastQuestion) {
                 output = "D'accord";
                 WindowsController.wasLastQuestion = false;
+            } else {
+                int i =0;
+                for (Word word : words){
+                    if (word.getType().equals("nc")) {
+                        while (!word.getWord().equals(user.preferences[i].getWord())){
+                            i++;
+                        }
+                        int prefU = user.preferences[i].getValue();
+                        Document pref = Preference.ReturnPref(word.getPreference());
+                        int prefIA = pref.getInteger("scorePref");
+                        
+                        if (prefIA > 0 && prefU > 0) {
+                            output = "J'aime " + word.getWord() + " également!";
+                        } else if (prefIA <= 0 && prefU <= 0) {
+                            output = "Je n'aime pas spécialement " + word.getWord() + " non plus!";
+                        } else {
+                            output = "Je ne suis pas d'accord.";
+                        }
+                    }
+                }
             }
         } else {
             output = GeneratePreferenceResponse(words);
