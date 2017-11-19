@@ -5,6 +5,8 @@
  */
 package DataBase;
 
+import Files.LoadJson;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +25,16 @@ public class User {
         preferences = new ArrayList<>();
     }
     
-    public static User Create(String name){
+    public static User Create(String name) throws IOException{
         if (user == null){
             user = new User(name);
+            List<UserPreference> userPreferences = LoadJson.GetUserPreferences(name);
+            if (userPreferences.size() > 0)
+            {
+                for (UserPreference p : userPreferences){
+                    user.addPreference(p);
+                }
+            }
         }
         return user;
     }

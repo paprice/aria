@@ -6,6 +6,11 @@
 package windows;
 
 import DataBase.MongoDB;
+import DataBase.User;
+import DataBase.UserPreference;
+import Files.LoadJson;
+import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -16,7 +21,8 @@ public class MainWindow extends javax.swing.JFrame {
     private final MongoDB db = MongoDB.Instance();
     WindowsController wc;
 
-    public MainWindow(String user) {
+    public MainWindow(String user) throws IOException {
+        User.Create(user);
         wc = new WindowsController();
         initComponents();
         setTitle("A.R.I.A : " + user);
