@@ -217,8 +217,7 @@ public class UserLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
-        MongoDB db = MongoDB.Instance();
-        MainWindow main = new MainWindow(db, user);
+        MainWindow main = new MainWindow(user);
         this.setVisible(false);
     }//GEN-LAST:event_connectActionPerformed
 

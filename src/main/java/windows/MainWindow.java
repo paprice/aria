@@ -13,11 +13,10 @@ import DataBase.MongoDB;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    private final MongoDB db;
+    private final MongoDB db = MongoDB.Instance();
     WindowsController wc;
 
-    public MainWindow(MongoDB pdb, String user) {
-        db = pdb;
+    public MainWindow(String user) {
         wc = new WindowsController();
         initComponents();
         setTitle("A.R.I.A : " + user);
