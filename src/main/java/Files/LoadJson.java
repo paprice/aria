@@ -6,6 +6,7 @@
 package Files;
 
 import DataBase.User;
+import DataBase.UserPreference;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ import net.sf.json.JSONSerializer;
  */
 public class LoadJson {
 
-    public static List<User> GetUsers() throws IOException {
-        List<User> users = new ArrayList<>();
+    public static List<String> GetUsers() throws IOException {
+        List<String> users = new ArrayList<>();
 
         JSONObject root = GetRoot("./users/users.json");
 
@@ -30,7 +31,7 @@ public class LoadJson {
 
             for (int i = 0; i < rootArray.size(); i++) {
                 JSONObject doc = rootArray.getJSONObject(i);
-                users.add(User.Create(doc.getString("name")));
+                users.add(doc.getString("name"));
             }
             return users;
         } else {
@@ -40,8 +41,8 @@ public class LoadJson {
     }
     
     //To be modified heavily
-    public static List<String> GetUserPreferences(String userName) throws IOException {
-        List<String> preferences = new ArrayList<>();
+    public static List<UserPreference> GetUserPreferences(String userName) throws IOException {
+        List<UserPreference> preferences = new ArrayList<>();
 
         JSONObject root = GetRoot("./users/" + userName + ".json");
 
@@ -50,7 +51,7 @@ public class LoadJson {
 
             for (int i = 0; i < rootArray.size(); i++) {
                 JSONObject doc = rootArray.getJSONObject(i);
-                preferences.add(doc.getString("preference"));
+                preferences.add(new UserPreference(doc.getString("word"), doc.getInt("value")));
             }
             return preferences;
         } else {

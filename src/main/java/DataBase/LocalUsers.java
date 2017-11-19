@@ -18,7 +18,7 @@ import java.util.List;
 public class LocalUsers {
 
     private int nbUser;
-    private List<User> Users;
+    private List<String> Users;
 
     public LocalUsers() {
         try {
@@ -30,11 +30,11 @@ public class LocalUsers {
         nbUser = Users.size();
     }
 
-    public List<User> getUsers() {
+    public List<String> getUsers() {
         return Users;
     }
 
-    public boolean CreateNewUser(User u) {
+    public boolean CreateNewUser(String u) {
         if (!Users.contains(u)) {
             nbUser++;
             Users.add(u);
@@ -44,11 +44,11 @@ public class LocalUsers {
         return false;
     }
 
-    public boolean RemoveUserByName(String userName) {
+    public boolean RemoveUser(String userName) {
         boolean ret = false;
-        for (User u : Users){
-            if (u.getName() == userName){
-                Users.remove(u);
+        for (String s : Users){
+            if (s == userName){
+                Users.remove(s);
                 ret = true;
             }
         }

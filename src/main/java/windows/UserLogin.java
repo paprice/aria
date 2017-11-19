@@ -209,7 +209,7 @@ public class UserLogin extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
 
-        uc.CreateUser(User.Create(userNameBox.getText()));
+        uc.CreateUser(userNameBox.getText());
         DeleteButtons();
         CreateButton(uc.getUserNamesList());
         userNameBox.setText("");

@@ -24,18 +24,18 @@ public class UserController {
 
     public List<String> getUserNamesList() {
         List<String> userNames = new ArrayList<>();
-        for (User u : users.getUsers()){
-            userNames.add(u.getName());
+        for (String s : users.getUsers()){
+            userNames.add(s);
         }
         return userNames;
     }
 
-    public void CreateUser(User u) {
-        users.CreateNewUser(u);
+    public void CreateUser(String s) {
+        users.CreateNewUser(s);
     }
 
     public void RemoveUser(String user) {
-        users.RemoveUserByName(user);
+        users.RemoveUser(user);
     }
 
 }

@@ -10,6 +10,7 @@ package Files;
  * @author despa
  */
 import DataBase.User;
+import DataBase.UserPreference;
 import java.io.IOException;
 import java.util.List;
 import net.sf.json.JSONArray;
@@ -17,15 +18,15 @@ import net.sf.json.JSONObject;
 
 public class WriteJson {
 
-    public static void WriteUserData(int nb, List<User> users) {
+    public static void WriteUserData(int nb, List<String> users) {
         JSONObject outputFile = new JSONObject();
         JSONArray jUsers = new JSONArray();
 
         outputFile.accumulate("number", nb);
 
-        for (User u : users) {
+        for (String u : users) {
             JSONObject o = new JSONObject();
-            o.accumulate("name", u.getName());
+            o.accumulate("name", u);
             jUsers.add(o);
         }
 
@@ -39,15 +40,16 @@ public class WriteJson {
 
     }
     
-    public static void WritePreferenceData(int nb, String userName, List<String> preferences) {
+    public static void WritePreferenceData(int nb, String userName, List<UserPreference> preferences) {
         JSONObject outputFile = new JSONObject();
         JSONArray prefArray = new JSONArray();
 
         outputFile.accumulate("number", nb);
 
-        for (String s : preferences) {
+        for (UserPreference p : preferences) {
             JSONObject o = new JSONObject();
-            o.accumulate("preference", s);
+            o.accumulate("word", p.getWord());
+            o.accumulate("value", p.getValue());
             prefArray.add(o);
         }
 
