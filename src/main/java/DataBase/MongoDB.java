@@ -26,6 +26,7 @@ import org.bson.Document;
  */
 public class MongoDB {
 
+    private static MongoDB database;
     MongoClient client;
     MongoDatabase data;
     MongoCollection nameCommun;
@@ -34,7 +35,7 @@ public class MongoDB {
     MongoCollection verb;
     MongoCollection adv;
 
-    public MongoDB() {
+    private MongoDB() {
         MongoClientURI uri = new MongoClientURI("mongodb://user:user@ds161471.mlab.com:61471/dictionnaire");
         client = new MongoClient(uri);
         data = client.getDatabase("dictionnaire");
@@ -45,6 +46,13 @@ public class MongoDB {
         adv = data.getCollection("adv");
     }
 
+    public static MongoDB Instance(){
+        if (database == null){
+            return new MongoDB();
+        }
+        return database;
+    }
+    
     private void insertDocuments(MongoCollection collect, List<Document> doc) {
         collect.insertMany(doc);
     }

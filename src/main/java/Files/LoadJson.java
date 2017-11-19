@@ -30,7 +30,7 @@ public class LoadJson {
 
             for (int i = 0; i < rootArray.size(); i++) {
                 JSONObject doc = rootArray.getJSONObject(i);
-                users.add(new User(doc.getString("name")));
+                users.add(User.Create(doc.getString("name")));
             }
             return users;
         } else {

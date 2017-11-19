@@ -19,7 +19,7 @@ public class main {
 
     public static void main(String[] args) throws IOException {
         // Prints "Hello, World" to the terminal window.
-        MongoDB db = new MongoDB();
+        MongoDB db = MongoDB.Instance();
         LoadModel();
 
         if (args[0].equals("test")) {

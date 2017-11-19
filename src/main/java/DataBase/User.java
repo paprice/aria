@@ -16,10 +16,26 @@ public class User {
     
     private final String name;
     private List<UserPreference> preferences;
+    private static User user;
     
-    public User(String name){
+    private User(String name){
         this.name = name;
         preferences = new ArrayList<>();
+    }
+    
+    public static User Create(String name){
+        if (user == null){
+            user = new User(name);
+        }
+        return user;
+    }
+    
+    public static User Instance(){
+        if (user == null){
+            System.out.println("User instance not created!");
+            return null;
+        }
+        return user;
     }
     
     public String getName(){
@@ -48,6 +64,15 @@ public class User {
             }
         }
         return preferences.get(lowest).getWord();
+    }
+    
+    public int getCommonPreference(String word){
+        for (UserPreference p : preferences){
+            if (p.getWord().equals(word)){
+                return p.getValue();
+            }
+        }
+        return 0;
     }
     
     

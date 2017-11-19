@@ -35,7 +35,7 @@ public class CurrentConversation {
                 //There will be no dynamic updating of a word's preference value in the currentSubjects to save execution time
                 if (!currentSubjects.contains(item)) {
                     currentSubjects.add(item);
-                    preferenceList.add(new Integer(new MongoDB().GetPreference(item, type)));
+                    preferenceList.add(MongoDB.Instance().GetPreference(item, type));
                 }
             }
         }

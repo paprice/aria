@@ -209,7 +209,7 @@ public class UserLogin extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
 
-        uc.CreateUser(new User(userNameBox.getText()));
+        uc.CreateUser(User.Create(userNameBox.getText()));
         DeleteButtons();
         CreateButton(uc.getUserNamesList());
         userNameBox.setText("");
@@ -217,7 +217,7 @@ public class UserLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
-        MongoDB db = new MongoDB();
+        MongoDB db = MongoDB.Instance();
         MainWindow main = new MainWindow(db, user);
         this.setVisible(false);
     }//GEN-LAST:event_connectActionPerformed

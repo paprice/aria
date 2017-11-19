@@ -53,7 +53,8 @@ public class SentenceCreation {
 
     //Il faudrait rajouter user dans les paramètres(?)
     public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
-        String output;
+        String output = "";
+        User user = User.Instance();
         boolean aimer = sent.getVerb().contains("aimer");
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
@@ -67,13 +68,9 @@ public class SentenceCreation {
                 output = "D'accord";
                 WindowsController.wasLastQuestion = false;
             } else {
-                int i =0;
                 for (Word word : words){
                     if (word.getType().equals("nc")) {
-                        while (!word.getWord().equals(user.preferences[i].getWord())){
-                            i++;
-                        }
-                        int prefU = user.preferences[i].getValue();
+                        int prefU = user.getCommonPreference(word.getWord());
                         Document pref = Preference.ReturnPref(word.getPreference());
                         int prefIA = pref.getInteger("scorePref");
                         
