@@ -65,6 +65,23 @@ public class SentenceCreation {
                 WindowsController.wasLastQuestion = true;
             } else if (WindowsController.wasLastQuestion) {
                 output = "D'accord. Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
+                //Autre idée de réponse pour relancer la conversation (un sujet dont l'IA a une préférence et l'utilisateur non
+                /*
+                boolean newSubjectF = false;
+                String newSub = "";
+                for (String motIA : preferencesIA) {
+                    if (!user.preferences.contains(motIA) && !newSubjectF){
+                        newSub = motIA;
+                        newSubjectF = true;
+                        break;
+                    }
+                }
+                if (newSubjectF) {
+                    output = output.concat("Aimes-tu " + newSub + " ?");
+                } else {
+                    output = output.concat("Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?");
+                }
+                */
                 WindowsController.wasLastQuestion = false;
             } else {
                 output = GenerateComparativeResponse(words, user);
@@ -77,13 +94,17 @@ public class SentenceCreation {
 
     }
     
+    // Ajouter une section pour les verbes? (J'aime danser | faire du sport)
     public static String GenerateComparativeResponse(List<Word> words, User user){
         String output = "";
+        int prefU;
+        int prefIA;
+        
         for (Word word : words){
-            if (word.getType().equals("nc")) {
-                int prefU = user.getCommonPreference(word.getWord());
+            if (word.getType().equals("nc") /* || (word.getType().equals("verb") && !word.getWord.equals("aimer")) */) {
+                prefU = user.getCommonPreference(word.getWord());
                 Document pref = Preference.ReturnPref(word.getPreference());
-                int prefIA = pref.getInteger("scorePref");
+                prefIA = pref.getInteger("scorePref");
                         
                 if (prefIA > 0 && prefU > 0) {
                     output = "J'aime " + word.getWord() + " également!";
