@@ -39,7 +39,7 @@ public class WriteJson {
         }
 
     }
-    
+
     public static void WritePreferenceData(int nb, String userName, List<UserPreference> preferences) {
         JSONObject outputFile = new JSONObject();
         JSONArray prefArray = new JSONArray();

@@ -21,7 +21,7 @@ public class MainWindow extends javax.swing.JFrame {
     private final MongoDB db = MongoDB.Instance();
     WindowsController wc;
 
-    public MainWindow(String user) throws IOException {
+    public MainWindow(String user) {
         User.Create(user);
         wc = new WindowsController();
         initComponents();

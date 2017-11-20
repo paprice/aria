@@ -21,7 +21,7 @@ public class main {
         // Prints "Hello, World" to the terminal window.
         LoadModel();
 
-        if (args[0].equals("test")) {
+        if (args.length > 0 && args[0].equals("test")) {
             MainWindow win = new MainWindow("user");
         } else {
             UserLogin log = new UserLogin();
