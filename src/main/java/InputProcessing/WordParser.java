@@ -49,7 +49,7 @@ public class WordParser {
                 String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
                 String number = wordTags[i].substring(wordTags[i].length() - 1);
                 wordList.add(new Noun("nc", lemmatize[i], preference, genre, number, lemmatize[i - 1]));
-            } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
+            } else if (wordTags[i].contains("VP") && !wordTags[i].contains("ADV")) {
                 // Verb
                 wordList.add(new Verb("v", lemmatize[i], preference));
             } else if (wordTags[i].contains("A") && !wordTags[i].contains("ADV")) {
@@ -101,19 +101,19 @@ public class WordParser {
         //Normal sentence
         for (int j = 0; j < i; ++j) {
             //Cases for decreasing preference
-            if (wordTags[j].equals("V") && (words[j].equals("détester") || words[j].equals("haïr"))) {
+            if (wordTags[j].contains("VP") && (words[j].equals("détester") || words[j].equals("haïr"))) {
                 User.Instance().addPreference(new UserPreference(words[i], -1));
                 return -1;
             }
 
-            if (wordTags[j].equals("V") && ((j < words.length - 1 && words[j].equals("aimer") && words[j + 1].equals("pas"))
+            if (wordTags[j].contains("VP") && ((j < words.length - 1 && words[j].equals("aimer") && words[j + 1].equals("pas"))
                     || (j < words.length - 2 && words[j].equals("aimer") && words[j + 2].equals("pas")))) {
                 User.Instance().addPreference(new UserPreference(words[i], -1));
                 return -1;
             }
 
             //Cases for raising preference
-            if (wordTags[j].equals("V")
+            if (wordTags[j].contains("VP")
                     && (words[j].equals("aimer") || words[j].equals("adorer") || words[j].equals("préférer") || words[j].equals("idolâtrer"))) {
                 User.Instance().addPreference(new UserPreference(words[i], 1));
                 return 1;
@@ -127,7 +127,7 @@ public class WordParser {
                 int k = 0;
             }
 
-            if (wordTags[j].equals("V") && (words[j].equals("déplaire") || words[j].equals("dégoûter"))) {
+            if (wordTags[j].contains("VP") && (words[j].equals("déplaire") || words[j].equals("dégoûter"))) {
                 User.Instance().addPreference(new UserPreference(words[i], -1));
                 return -1;
             }
@@ -138,7 +138,7 @@ public class WordParser {
                 return -1;
             }*/
             //Cases for raising preference
-            if (wordTags[j].equals("V") && words[j].equals("plaire")) {
+            if (wordTags[j].contains("VP") && words[j].equals("plaire")) {
                 User.Instance().addPreference(new UserPreference(words[i], 1));
                 return 1;
             }
