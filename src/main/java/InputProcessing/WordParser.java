@@ -96,39 +96,42 @@ public class WordParser {
         return ret;
     }
 
-    private static int getPreferenceValue(int i, String[] words, String[] wordTags) {
+    private static int getPreferenceValue(int pos, String[] words, String[] wordTags) {
 
+        if (!wordTags[pos].contains("NC") && !wordTags[pos].contains("VP")){
+            return 0;
+        }
         //Normal sentence
-        for (int j = 0; j < i; ++j) {
+        for (int j = 0; j < pos; ++j) {
             //Cases for decreasing preference
             if (wordTags[j].contains("VP") && (words[j].equals("détester") || words[j].equals("haïr"))) {
-                User.Instance().addPreference(new UserPreference(words[i], -1));
+                User.Instance().addPreference(new UserPreference(words[pos], -1));
                 return -1;
             }
 
             if (wordTags[j].contains("VP") && ((j < words.length - 1 && words[j].equals("aimer") && words[j + 1].equals("pas"))
                     || (j < words.length - 2 && words[j].equals("aimer") && words[j + 2].equals("pas")))) {
-                User.Instance().addPreference(new UserPreference(words[i], -1));
+                User.Instance().addPreference(new UserPreference(words[pos], -1));
                 return -1;
             }
 
             //Cases for raising preference
             if (wordTags[j].contains("VP")
                     && (words[j].equals("aimer") || words[j].equals("adorer") || words[j].equals("préférer") || words[j].equals("idolâtrer"))) {
-                User.Instance().addPreference(new UserPreference(words[i], 1));
+                User.Instance().addPreference(new UserPreference(words[pos], 1));
                 return 1;
             }
         }
 
         //Inverted sentence
-        for (int j = words.length - 1; j > i; --j) {
+        for (int j = words.length - 1; j > pos; --j) {
             //Cases for decreasing preference
             if (j == 1) {
                 int k = 0;
             }
 
             if (wordTags[j].contains("VP") && (words[j].equals("déplaire") || words[j].equals("dégoûter"))) {
-                User.Instance().addPreference(new UserPreference(words[i], -1));
+                User.Instance().addPreference(new UserPreference(words[pos], -1));
                 return -1;
             }
 
@@ -139,7 +142,7 @@ public class WordParser {
             }*/
             //Cases for raising preference
             if (wordTags[j].contains("VP") && words[j].equals("plaire")) {
-                User.Instance().addPreference(new UserPreference(words[i], 1));
+                User.Instance().addPreference(new UserPreference(words[pos], 1));
                 return 1;
             }
         }
