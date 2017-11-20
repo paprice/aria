@@ -51,7 +51,6 @@ public class SentenceCreation {
         realiser = new Realiser();
     }
 
-    //Il faudrait rajouter user dans les paramètres(?)
     public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
         String output = "";
         User user = User.Instance();
@@ -65,24 +64,10 @@ public class SentenceCreation {
                 output = GenerateQuestionResponse(words, sent);
                 WindowsController.wasLastQuestion = true;
             } else if (WindowsController.wasLastQuestion) {
-                output = "D'accord";
+                output = "D'accord. Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
                 WindowsController.wasLastQuestion = false;
             } else {
-                for (Word word : words){
-                    if (word.getType().equals("nc")) {
-                        int prefU = user.getCommonPreference(word.getWord());
-                        Document pref = Preference.ReturnPref(word.getPreference());
-                        int prefIA = pref.getInteger("scorePref");
-                        
-                        if (prefIA > 0 && prefU > 0) {
-                            output = "J'aime " + word.getWord() + " également!";
-                        } else if (prefIA <= 0 && prefU <= 0) {
-                            output = "Je n'aime pas spécialement " + word.getWord() + " non plus!";
-                        } else {
-                            output = "Je ne suis pas d'accord.";
-                        }
-                    }
-                }
+                output = GenerateComparativeResponse(words, user);
             }
         } else {
             output = GeneratePreferenceResponse(words);
@@ -90,6 +75,26 @@ public class SentenceCreation {
 
         return output;
 
+    }
+    
+    public static String GenerateComparativeResponse(List<Word> words, User user){
+        String output = "";
+        for (Word word : words){
+            if (word.getType().equals("nc")) {
+                int prefU = user.getCommonPreference(word.getWord());
+                Document pref = Preference.ReturnPref(word.getPreference());
+                int prefIA = pref.getInteger("scorePref");
+                        
+                if (prefIA > 0 && prefU > 0) {
+                    output = "J'aime " + word.getWord() + " également!";
+                } else if (prefIA <= 0 && prefU <= 0) {
+                    output = "Je n'aime pas spécialement " + word.getWord() + " non plus!";
+                } else {
+                    output = "Sur ce coup, je dois dire que mon opinion est à l'inverse de la tienne.";
+                }
+            }
+        }
+        return output;
     }
 
     public static String GeneratePreferenceResponse(List<Word> words) {
