@@ -40,11 +40,9 @@ public class WriteJson {
 
     }
 
-    public static void WritePreferenceData(int nb, String userName, List<UserPreference> preferences) {
+    public static void WritePreferenceData(String userName, List<UserPreference> preferences) {
         JSONObject outputFile = new JSONObject();
         JSONArray prefArray = new JSONArray();
-
-        outputFile.accumulate("number", nb);
 
         for (UserPreference p : preferences) {
             JSONObject o = new JSONObject();

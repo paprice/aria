@@ -7,6 +7,8 @@ package windows;
 
 import static ConversationHandler.CurrentConversation.*;
 import DataBase.MongoDB;
+import DataBase.User;
+import Files.WriteJson;
 import static InputProcessing.SentenceParser.*;
 import InputProcessing.Sentence;
 import TypeWord.Word;
@@ -49,8 +51,10 @@ public class WindowsController {
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput);
         List<Word> important = ExtractAll(parsed);
-
         Sentence s = PartitionnateSentence(parsed);
+        
+        //Updating User Preferences
+        WriteJson.WritePreferenceData(User.Instance().getName(), User.Instance().getUserPreferences());
 
         if (!isWaitingDef) {
 

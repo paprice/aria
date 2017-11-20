@@ -35,7 +35,7 @@ public class User {
             try {
                 userPreferences = LoadJson.GetUserPreferences(name);
             } catch (IOException ex) {
-                WriteJson.WritePreferenceData(0, name, user.preferences);
+                WriteJson.WritePreferenceData(name, user.preferences);
                 userPreferences = new ArrayList<>();
             }
             if (userPreferences.size() > 0) {
@@ -57,6 +57,10 @@ public class User {
 
     public String getName() {
         return name;
+    }
+    
+    public List<UserPreference> getUserPreferences(){
+        return preferences;
     }
 
     public void addPreference(UserPreference preference) {
