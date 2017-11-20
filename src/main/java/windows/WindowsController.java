@@ -52,7 +52,7 @@ public class WindowsController {
         POSSample parsed = Parse(userInput);
         List<Word> important = ExtractAll(parsed);
         Sentence s = PartitionnateSentence(parsed);
-        
+
         //Updating User Preferences
         WriteJson.WritePreferenceData(User.Instance().getName(), User.Instance().getUserPreferences());
 
@@ -95,9 +95,9 @@ public class WindowsController {
                         Document word = db.GetDefinition(d.getWord(), "nc");
                         desc = word.getString("desc");
                         AddDescToVerb(desc, db);
-                        
-                        
-                    }   break;
+
+                    }
+                    break;
             }
         }
         AddDescToAdj(desc, db);
@@ -163,22 +163,24 @@ public class WindowsController {
 
     private void AddDescToAdj(String desc, MongoDB db) {
 
-        Document adj = db.GetDefinition(adjDef.get(0), "adj");
+        if (adjDef.size() > 0) {
+            Document adj = db.GetDefinition(adjDef.get(0), "adj");
 
-        List<String> descAdj = (List<String>) adj.get("desc");
+            List<String> descAdj = (List<String>) adj.get("desc");
 
-        if (descAdj == null) {
-            descAdj = new ArrayList<>();
+            if (descAdj == null) {
+                descAdj = new ArrayList<>();
+            }
+
+            if (!descAdj.contains(desc)) {
+                descAdj.add(desc);
+                Document upd = new Document("desc", descAdj);
+                Document toUpdate = new Document("word", adj.getString("word"));
+
+                db.UpdateType(toUpdate, upd, "adj");
+            }
+
         }
-
-        if (!descAdj.contains(desc)) {
-            descAdj.add(desc);
-            Document upd = new Document("desc", descAdj);
-            Document toUpdate = new Document("word", adj.getString("word"));
-
-            db.UpdateType(toUpdate, upd, "adj");
-        }
-
     }
 
 }
