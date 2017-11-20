@@ -23,11 +23,7 @@ public class UserController {
     }
 
     public List<String> getUserNamesList() {
-        List<String> userNames = new ArrayList<>();
-        for (String s : users.getUsers()){
-            userNames.add(s);
-        }
-        return userNames;
+        return users.getUsers();
     }
 
     public void CreateUser(String s) {

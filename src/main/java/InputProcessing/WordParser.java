@@ -9,6 +9,8 @@ import TypeWord.WordNoPref;
 import TypeWord.Noun;
 import TypeWord.Word;
 import static ConversationHandler.CurrentConversation.addSubjectsFromList;
+import DataBase.User;
+import DataBase.UserPreference;
 import TypeWord.ProperNoun;
 import TypeWord.Verb;
 import java.io.IOException;
@@ -100,17 +102,20 @@ public class WordParser {
         for (int j = 0; j < i; ++j) {
             //Cases for decreasing preference
             if (wordTags[j].equals("V") && (words[j].equals("détester") || words[j].equals("haïr"))) {
+                User.Instance().addPreference(new UserPreference(words[i], -1));
                 return -1;
             }
 
             if (wordTags[j].equals("V") && ((j < words.length - 1 && words[j].equals("aimer") && words[j + 1].equals("pas"))
                     || (j < words.length - 2 && words[j].equals("aimer") && words[j + 2].equals("pas")))) {
+                User.Instance().addPreference(new UserPreference(words[i], -1));
                 return -1;
             }
 
             //Cases for raising preference
             if (wordTags[j].equals("V")
                     && (words[j].equals("aimer") || words[j].equals("adorer") || words[j].equals("préférer") || words[j].equals("idolâtrer"))) {
+                User.Instance().addPreference(new UserPreference(words[i], 1));
                 return 1;
             }
         }
@@ -123,15 +128,18 @@ public class WordParser {
             }
 
             if (wordTags[j].equals("V") && (words[j].equals("déplaire") || words[j].equals("dégoûter"))) {
+                User.Instance().addPreference(new UserPreference(words[i], -1));
                 return -1;
             }
 
             /*if (((words[j].equals("plaire") && words[j + 1].equals("pas")))
                     || (j < words.length - 2 && (words[j].equals("plaire") && words[j + 2].equals("pas")))) {
+                User.Instance().addPreference(new UserPreference(words[i], -1));
                 return -1;
             }*/
             //Cases for raising preference
             if (wordTags[j].equals("V") && words[j].equals("plaire")) {
+                User.Instance().addPreference(new UserPreference(words[i], 1));
                 return 1;
             }
         }
