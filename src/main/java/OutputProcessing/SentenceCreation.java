@@ -11,6 +11,9 @@ import ConversationHandler.Preference;
 import InputProcessing.Sentence;
 import TypeWord.Word;
 import TypeWord.WordNoPref;
+import com.mongodb.Cursor;
+import com.mongodb.DBCursor;
+import com.mongodb.client.FindIterable;
 import java.util.List;
 import org.bson.Document;
 import simplenlg.features.Feature;
@@ -54,25 +57,43 @@ public class SentenceCreation {
     public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
         String output = "";
         User user = User.Instance();
-        boolean aimer = sent.getVerb().contains("aimer");
+        //boolean aimer =;
 
         //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
         //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
         //selon le contenu de la dernière phrase. À Discuter.
         if (!isQuestion) {
-            if (!WindowsController.wasLastQuestion && !aimer) {
+            if (!WindowsController.wasLastQuestion) {
                 output = GenerateQuestionResponse(words, sent);
                 WindowsController.wasLastQuestion = true;
             } else if (WindowsController.wasLastQuestion) {
-                output = "D'accord.";
+                //output = "D'accord.";
                 boolean find = false;
                 String newSub = "";
                 MongoDB mongo = MongoDB.Instance();
-                
-                String desc = "";
-                for (Word w : words) {
+
+                for (Word w : sent.getSubject()) {
+
+                    if (w.getType().contains("NC")) {
+                        String desc = mongo.GetSingleDefinition(w.getWord(), "nc");
+
+                        if (desc != null) {
+                            List<Document> docs = mongo.GetSameDesc(desc);
+
+                            int i = 0;
+                            while (i < docs.size() && !find) {
+                                if (!docs.get(i).getString("word").equals(w.getWord())) {
+                                    find = true;
+                                    newSub = docs.get(i).getString("word");
+                                }
+                                i++;
+                            }
+                        }
+                    }
+
+                    /*
                     if (w.getType().equals("nc")){
-                        Document d = mongo.GetDefinition(w.getWord(), "nc");
+                        Document d = mongo.GetSingleDefinition(w.getWord(), "nc");
                         desc = d.getString("desc");
                         
                         FindIterable<Document> isFind = nameCommun.find(eq("desc", desc));
@@ -83,13 +104,15 @@ public class SentenceCreation {
                                 break;
                             }
                         }
-                    }
-                    if (find) {
-                    output = output.concat("Aimes-tu " + newSub + " ?");
-                    } else {
-                    output = output.concat("Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?");
-                    }
+                    }*/
                 }
+
+                if (find) {
+                    output = output.concat("Aimes-tu " + newSub + " ?");
+                } else {
+                    output = output.concat("Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?");
+                }
+
                 WindowsController.wasLastQuestion = false;
             } else {
                 output = GenerateComparativeResponse(words, user);
@@ -103,23 +126,23 @@ public class SentenceCreation {
         } else if (sent.equals("Que fais-tu?")) {
             output = "Je ne fais rien de particulier à part discuter avec toi.";
         }
-        */
+         */
 
         return output;
 
     }
-    
-    public static String GenerateComparativeResponse(List<Word> words, User user){
+
+    public static String GenerateComparativeResponse(List<Word> words, User user) {
         String output = "";
         int prefU;
         int prefIA;
-        
-        for (Word word : words){
+
+        for (Word word : words) {
             if (word.getType().equals("nc") || (word.getType().equals("verb") && !word.getWord().equals("aimer"))) {
                 prefU = user.getCommonPreference(word.getWord());
                 Document pref = Preference.ReturnPref(word.getPreference());
                 prefIA = pref.getInteger("scorePref");
-                        
+
                 if (prefIA > 0 && prefU > 0) {
                     output = "J'aime " + word.getWord() + " également!";
                 } else if (prefIA <= 0 && prefU <= 0) {
@@ -196,30 +219,32 @@ public class SentenceCreation {
         String obj = "";
         String adj = "";
 
-        switch (sent.getSubject().get(0).toLowerCase()) {
-            case "je":
-                subject = "tu";
-                break;
-            case "tu":
-                subject = "je";
-                break;
-            default:
-                for (int i = 0; i < sent.getSubject().size(); i++) {
-                    subject += sent.getSubject().get(i) + " ";
-                }
-                break;
+        if (sent.getSubject().size() > 0) {
+            switch (sent.getSubject().get(0).getWord().toLowerCase()) {
+                case "je":
+                    subject = "tu";
+                    break;
+                case "tu":
+                    subject = "je";
+                    break;
+                default:
+                    for (int i = 0; i < sent.getSubject().size(); i++) {
+                        subject += sent.getSubject().get(i).getWord() + " ";
+                    }
+                    break;
+            }
         }
 
         for (int i = 0; i < sent.getVerb().size(); i++) {
             if (i == 0) {
-                verb = sent.getVerb().get(i) + " ";
+                verb = sent.getVerb().get(i).getWord() + " ";
             } else {
-                obj += sent.getVerb().get(i) + " ";
+                obj += sent.getVerb().get(i).getWord() + " ";
             }
         }
 
         for (int i = 0; i < sent.getObject().size(); i++) {
-            obj += sent.getObject().get(i) + " ";
+            obj += sent.getObject().get(i).getWord() + " ";
         }
 
         SPhraseSpec ret = factory.createClause();

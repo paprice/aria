@@ -91,15 +91,13 @@ public class WindowsController {
                     if (hasType == 1) {
                         missingDefs.add(d.getWord());
                         isWaitingDef = true;
-                    } else if (d.getType().equals("nc") && verbDef != null) {
-                        Document word = db.GetDefinition(d.getWord(), "nc");
-                        desc = word.getString("desc");
-                        AddDescToVerb(desc, db);
-
+                    } else if (d.getType().equals("nc")) {
+                        desc = db.GetSingleDefinition(d.getWord(), "nc");
                     }
                     break;
             }
         }
+        AddDescToVerb(desc, db);
         AddDescToAdj(desc, db);
         if (!missingDefs.isEmpty()) {
             waitingDef = missingDefs.get(0);
@@ -143,12 +141,12 @@ public class WindowsController {
 
     private void AddDescToVerb(String desc, MongoDB db) {
 
-        Document verb = db.GetDefinition(verbDef, "v");
+        Document verb = db.GetDocumentDefinition(verbDef, "v");
 
         List<String> descVerb = (List<String>) verb.get("desc");
 
         if (descVerb == null) {
-            descVerb = new ArrayList<String>();
+            descVerb = new ArrayList<>();
         }
 
         if (!descVerb.contains(desc)) {
@@ -158,13 +156,13 @@ public class WindowsController {
 
             db.UpdateType(toUpdate, upd, "verb");
         }
-
+        verbDef = "";
     }
 
     private void AddDescToAdj(String desc, MongoDB db) {
 
-        if (adjDef.size() > 0) {
-            Document adj = db.GetDefinition(adjDef.get(0), "adj");
+        for (String a : adjDef) {
+            Document adj = db.GetDocumentDefinition(a, "adj");
 
             List<String> descAdj = (List<String>) adj.get("desc");
 
@@ -181,6 +179,9 @@ public class WindowsController {
             }
 
         }
+
+        adjDef = new ArrayList<>();
+        
     }
 
 }

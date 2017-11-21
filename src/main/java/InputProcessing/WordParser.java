@@ -49,7 +49,7 @@ public class WordParser {
                 String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
                 String number = wordTags[i].substring(wordTags[i].length() - 1);
                 wordList.add(new Noun("nc", lemmatize[i], preference, genre, number, lemmatize[i - 1]));
-            } else if (wordTags[i].contains("VP") && !wordTags[i].contains("ADV")) {
+            } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
                 // Verb
                 wordList.add(new Verb("v", lemmatize[i], preference));
             } else if (wordTags[i].contains("A") && !wordTags[i].contains("ADV")) {

@@ -5,6 +5,7 @@
  */
 package InputProcessing;
 
+import TypeWord.Word;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public class Sentence {
 
-    List<String> subject;
-    List<String> verb;
-    List<String> object;
+    List<Word> subject;
+    List<Word> verb;
+    List<Word> object;
 
     public Sentence() {
         subject = new ArrayList<>();
@@ -24,30 +25,28 @@ public class Sentence {
         object = new ArrayList<>();
     }
 
-    public List<String> getSubject() {
+    public List<Word> getSubject() {
         return subject;
     }
 
-    public void addSubject(String subject) {
-
+    public void addSubject(Word subject) {
         this.subject.add(subject);
-
     }
 
-    public List<String> getVerb() {
+    public List<Word> getVerb() {
         return verb;
     }
 
-    public void addVerb(String verb) {
+    public void addVerb(Word verb) {
         this.verb.add(verb);
     }
 
-    public List<String> getObject() {
+    public List<Word> getObject() {
         return object;
     }
 
-    public void addObject(String object) {
-        if (!object.contains(".")) {
+    public void addObject(Word object) {
+        if (!object.getWord().contains(".")) {
             this.object.add(object);
         }
 

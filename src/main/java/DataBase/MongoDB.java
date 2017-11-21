@@ -9,10 +9,13 @@ import TypeWord.Word;
 import TypeWord.Noun;
 import TypeWord.ProperNoun;
 import TypeWord.Verb;
+import com.mongodb.Cursor;
+import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import java.util.ArrayList;
@@ -46,13 +49,13 @@ public class MongoDB {
         adv = data.getCollection("adv");
     }
 
-    public static MongoDB Instance(){
-        if (database == null){
+    public static MongoDB Instance() {
+        if (database == null) {
             return new MongoDB();
         }
         return database;
     }
-    
+
     private void insertDocuments(MongoCollection collect, List<Document> doc) {
         collect.insertMany(doc);
     }
@@ -184,16 +187,19 @@ public class MongoDB {
         }
     }
 
-    public Document GetDefinition(String word, String typeWord) {
-        if (typeWord.equals("nc")) {
-            return (Document) nameCommun.find(eq("word", word)).first();
-        } else if (typeWord.equals("v")) {
-            return (Document) verb.find(eq("word", word)).first();
-        } else if (typeWord.equals("adj")) {
-            return (Document) adj.find(eq("word", word)).first();
-        } else {
-            return null;
+    public String GetSingleDefinition(String word, String typeWord) {
+        Document d;
+        switch (typeWord) {
+            case "nc":
+                d = (Document) nameCommun.find(eq("word", word)).first();
+                break;
+            case "adj":
+                d = (Document) adj.find(eq("word", word)).first();
+                break;
+            default:
+                return null;
         }
+        return d.getString("desc");
     }
 
     public int GetPreference(String word, String typeWord) {
@@ -202,9 +208,38 @@ public class MongoDB {
             return isFind.getInteger("preference");
         } else if (typeWord.equals("v")) {
             Document isFind = (Document) verb.find(eq("word", word)).first();
-            return isFind.getInteger("preference");
+            if (isFind != null) {
+                return isFind.getInteger("preference");
+            }
         }
         return 0;
+    }
+
+    public Document GetDocumentDefinition(String word, String typeWord) {
+        switch (typeWord) {
+            case "nc":
+                return (Document) nameCommun.find(eq("word", word)).first();
+            case "v":
+                return (Document) verb.find(eq("word", word)).first();
+            case "adj":
+                return (Document) adj.find(eq("word", word)).first();
+
+            default:
+                return null;
+        }
+    }
+
+    public List<Document> GetSameDesc(String desc) {
+
+        List<Document> allSame = new ArrayList<>();
+
+        MongoCursor<Document> cursor = nameCommun.find(eq("desc", desc)).iterator();
+
+        while (cursor.hasNext()) {
+            allSame.add((Document) cursor.next());
+        }
+
+        return allSame;
     }
 
 }

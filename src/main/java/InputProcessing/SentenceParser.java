@@ -6,6 +6,7 @@
 package InputProcessing;
 
 import static OutputProcessing.SentenceCreation.InitializeRealiser;
+import TypeWord.WordNoPref;
 import java.io.*;
 import opennlp.tools.chunker.*;
 import opennlp.tools.cmdline.postag.POSModelLoader;
@@ -97,38 +98,42 @@ public class SentenceParser {
                     if (isAddingSubject) {
                         isAddingSubject = false;
                         isAddingVerb = true;
-                        sentence.addVerb(words[i]);
+                        sentence.addVerb(new WordNoPref(tags[i], words[i]));
                     } else if (isAddingVerb) {
                         if (!tags[i].contains("V")) {
                             isAddingVerb = false;
                         }
-                        sentence.addObject(words[i]);
+                        sentence.addObject(new WordNoPref(tags[i], words[i]));
                     } else {
-                        sentence.addObject(words[i]);
+                        sentence.addObject(new WordNoPref(tags[i], words[i]));
                     }
                 } else {
                     if (isAddingSubject) {
-                        sentence.addSubject(words[i]);
+                        sentence.addSubject(new WordNoPref(tags[i], words[i]));
                         start = true;
                     } else if (isAddingVerb) {
-                        sentence.addVerb(words[i]);
+                        sentence.addVerb(new WordNoPref(tags[i], words[i]));
                     } else {
-                        sentence.addObject(words[i]);
+                        sentence.addObject(new WordNoPref(tags[i], words[i]));
                     }
                 }
             } else {
                 if (isAddingSubject) {
                     if (!tags[i].contains("V")) {
-                        sentence.addSubject(words[i]);
+                        sentence.addSubject(new WordNoPref(tags[i], words[i]));
                     } else {
-                        sentence.addVerb(words[i]);
+                        sentence.addVerb(new WordNoPref(tags[i], words[i]));
                         isAddingSubject = false;
                         isAddingVerb = true;
                     }
                 } else if (isAddingVerb) {
-                    sentence.addVerb(words[i]);
+                    if (tags[i].contains("V")) {
+                        sentence.addVerb(new WordNoPref(tags[i], words[i]));
+                    } else {
+                        sentence.addObject(new WordNoPref(tags[i], words[i]));
+                    }
                 } else {
-                    sentence.addObject(words[i]);
+                    sentence.addObject(new WordNoPref(tags[i], words[i]));
                 }
             }
         }
