@@ -6,7 +6,7 @@
 package OutputProcessing;
 
 import DataBase.User;
-import DataBase.UserPreference;
+import DataBase.MongoDB;
 import ConversationHandler.Preference;
 import InputProcessing.Sentence;
 import TypeWord.Word;
@@ -64,24 +64,32 @@ public class SentenceCreation {
                 output = GenerateQuestionResponse(words, sent);
                 WindowsController.wasLastQuestion = true;
             } else if (WindowsController.wasLastQuestion) {
-                output = "D'accord. Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
-                //Autre idée de réponse pour relancer la conversation (un sujet dont l'IA a une préférence et l'utilisateur non
-                /*
-                boolean newSubjectF = false;
+                output = "D'accord.";
+                boolean find = false;
                 String newSub = "";
-                for (String motIA : preferencesIA) {
-                    if (!user.preferences.contains(motIA) && !newSubjectF){
-                        newSub = motIA;
-                        newSubjectF = true;
-                        break;
+                MongoDB mongo = MongoDB.Instance();
+                
+                String desc = "";
+                for (Word w : words) {
+                    if (w.getType().equals("nc")){
+                        Document d = mongo.GetDefinition(w.getWord(), "nc");
+                        desc = d.getString("desc");
+                        
+                        FindIterable<Document> isFind = nameCommun.find(eq("desc", desc));
+                        for (Document d : isFind) {
+                            if(d.getString("desc").equals(desc) && !d.getString("word").equals(w.getWord())){
+                                find = true;
+                                newSub = d.getString("word");
+                                break;
+                            }
+                        }
+                    }
+                    if (find) {
+                    output = output.concat("Aimes-tu " + newSub + " ?");
+                    } else {
+                    output = output.concat("Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?");
                     }
                 }
-                if (newSubjectF) {
-                    output = output.concat("Aimes-tu " + newSub + " ?");
-                } else {
-                    output = output.concat("Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?");
-                }
-                */
                 WindowsController.wasLastQuestion = false;
             } else {
                 output = GenerateComparativeResponse(words, user);
@@ -89,19 +97,25 @@ public class SentenceCreation {
         } else {
             output = GeneratePreferenceResponse(words);
         }
+        /*
+        if (sent.equals("Ça va?")) {
+            output = "Je vais bien merci.";
+        } else if (sent.equals("Que fais-tu?")) {
+            output = "Je ne fais rien de particulier à part discuter avec toi.";
+        }
+        */
 
         return output;
 
     }
     
-    // Ajouter une section pour les verbes? (J'aime danser | faire du sport)
     public static String GenerateComparativeResponse(List<Word> words, User user){
         String output = "";
         int prefU;
         int prefIA;
         
         for (Word word : words){
-            if (word.getType().equals("nc") /* || (word.getType().equals("verb") && !word.getWord.equals("aimer")) */) {
+            if (word.getType().equals("nc") || (word.getType().equals("verb") && !word.getWord().equals("aimer"))) {
                 prefU = user.getCommonPreference(word.getWord());
                 Document pref = Preference.ReturnPref(word.getPreference());
                 prefIA = pref.getInteger("scorePref");
