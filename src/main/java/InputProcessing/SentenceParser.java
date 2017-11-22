@@ -26,7 +26,7 @@ public class SentenceParser {
 
     public static void LoadModel() throws FileNotFoundException, IOException {
         POSModel model = new POSModelLoader()
-                .load(new File("models/fr-pos-ftb-morpho.bin"));
+                .load(new File("models/fr-pos.bin"));
         tagger = new POSTaggerME(model);
         // Séparation des mots
         try (InputStream modelIn = new FileInputStream("models/fr-token.bin")) {
