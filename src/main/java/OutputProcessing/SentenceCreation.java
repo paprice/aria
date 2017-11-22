@@ -55,9 +55,11 @@ public class SentenceCreation {
     public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
         String output = "";
         User user = User.Instance();
+        //boolean sujetP = false;
+        //boolean sujetD = false;
 
         if (!isQuestion) {
-            //Si l'utilisateur répond oui ou non à une question d'ARIA:
+            //Si l'utilisateur répond oui ou non à une question d'ARIA sur ses préférences:
             //Faire un systeme random pour générer une réponse différente(?)
             /* if (words.get(0).getWord("Oui") || words.get(0).getWord("Non")) {
                 output = "Dis m'en plus à ce sujet.";
@@ -67,13 +69,64 @@ public class SentenceCreation {
             
             //Si l'utilisateur n'a pas spécialement de sujet dont il aimerait parler:
             // Le relancer sur son sujet préféré ou détesté
+            // Si déjà fait, lui demander ce qu'il fait
             } else if (words.get(0).getWord("Non") && !find){
                 String sujet = user.getFavoriteSubject();
-                if (!lastUserSentence.contains(sujet){
-                    output = "";
+                if (!lastUserSentence.contains(sujet) && !sujetP){
+                    String verb = "aimer";
+                    String subject = "tu";
+                    String obj = sujet;
+
+                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                    sub.setFeature(Feature.PERSON, Person.SECOND);
+                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    sub.setFeature(Feature.PRONOMINAL, true);
+
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+                    sujetP = true;
+                } 
+                sujet = user.getDespisedSubject();
+                if (!lastUserSentence.contains(sujet) && !sujetD) {
+                    String verb = "déteste";
+                    String subject = "tu";
+                    String obj = sujet;
+
+                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                    sub.setFeature(Feature.PERSON, Person.SECOND);
+                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    sub.setFeature(Feature.PRONOMINAL, true);
+
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+                    sujetD = true;
                 } else {
-                    sujet = user.getDespisedSubject();
-                    output = "";
+                    String verb = "faire";
+                    String subject = "tu";
+                    String obj = "";
+            
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHAT);
                 }
                 WindowsController.wasLastQuestion = true;
             
