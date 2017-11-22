@@ -57,7 +57,27 @@ public class SentenceCreation {
         User user = User.Instance();
 
         if (!isQuestion) {
-            if (!WindowsController.wasLastQuestion) {
+            //Si l'utilisateur répond oui ou non à une question d'ARIA:
+            //Faire un systeme random pour générer une réponse différente(?)
+            /* if (words.get(0).getWord("Oui") || words.get(0).getWord("Non")) {
+                output = "Dis m'en plus à ce sujet.";
+                output = "Donc qu'en penses-tu?";
+                output = "Pourquoi?";
+                WindowsController.wasLastQuestion = true;
+            
+            //Si l'utilisateur n'a pas spécialement de sujet dont il aimerait parler:
+            // Le relancer sur son sujet préféré ou détesté
+            } else if (words.get(0).getWord("Non") && !find){
+                String sujet = user.getFavoriteSubject();
+                if (!lastUserSentence.contains(sujet){
+                    output = "";
+                } else {
+                    sujet = user.getDespisedSubject();
+                    output = "";
+                }
+                WindowsController.wasLastQuestion = true;
+            
+            } else */if (!WindowsController.wasLastQuestion) {
                 boolean aime = false;
                 for (Word v : sent.getVerb()) {
                     if (v.getWord().contains("aime")) {
