@@ -142,21 +142,22 @@ public class WindowsController {
     private void AddDescToVerb(String desc, MongoDB db) {
 
         Document verb = db.GetDocumentDefinition(verbDef, "v");
+        if (verb != null) {
+            List<String> descVerb = (List<String>) verb.get("desc");
 
-        List<String> descVerb = (List<String>) verb.get("desc");
+            if (descVerb == null) {
+                descVerb = new ArrayList<>();
+            }
 
-        if (descVerb == null) {
-            descVerb = new ArrayList<>();
+            if (!descVerb.contains(desc)) {
+                descVerb.add(desc);
+                Document upd = new Document("desc", descVerb);
+                Document toUpdate = new Document("word", verbDef);
+
+                db.UpdateType(toUpdate, upd, "verb");
+            }
+            verbDef = "";
         }
-
-        if (!descVerb.contains(desc)) {
-            descVerb.add(desc);
-            Document upd = new Document("desc", descVerb);
-            Document toUpdate = new Document("word", verbDef);
-
-            db.UpdateType(toUpdate, upd, "verb");
-        }
-        verbDef = "";
     }
 
     private void AddDescToAdj(String desc, MongoDB db) {
@@ -181,7 +182,7 @@ public class WindowsController {
         }
 
         adjDef = new ArrayList<>();
-        
+
     }
 
 }

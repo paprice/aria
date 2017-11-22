@@ -11,9 +11,6 @@ import ConversationHandler.Preference;
 import InputProcessing.Sentence;
 import TypeWord.Word;
 import TypeWord.WordNoPref;
-import com.mongodb.Cursor;
-import com.mongodb.DBCursor;
-import com.mongodb.client.FindIterable;
 import java.util.List;
 import org.bson.Document;
 import simplenlg.features.Feature;
@@ -69,7 +66,7 @@ public class SentenceCreation {
             } else if (WindowsController.wasLastQuestion) {
                 //output = "D'accord.";
                 boolean find = false;
-                String newSub = "";
+                Document newSub = new Document();
                 MongoDB mongo = MongoDB.Instance();
 
                 for (Word w : sent.getSubject()) {
@@ -84,7 +81,7 @@ public class SentenceCreation {
                             while (i < docs.size() && !find) {
                                 if (!docs.get(i).getString("word").equals(w.getWord())) {
                                     find = true;
-                                    newSub = docs.get(i).getString("word");
+                                    newSub = docs.get(i);
                                 }
                                 i++;
                             }
@@ -108,7 +105,8 @@ public class SentenceCreation {
                 }
 
                 if (find) {
-                    output = output.concat("Aimes-tu " + newSub + " ?");
+                    NPPhraseSpec obj = factory.createNounPhrase("le", newSub.getString("word"));
+                    output = output.concat("Aimes-tu " + realiser.realise(obj) + " ? (" + newSub.getString("desc") + ") ");
                 } else {
                     output = output.concat("Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?");
                 }

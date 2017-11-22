@@ -7,11 +7,6 @@ package windows;
 
 import DataBase.MongoDB;
 import DataBase.User;
-import DataBase.UserPreference;
-import Files.LoadJson;
-import java.io.IOException;
-import java.util.List;
-
 /**
  *
  * @author Patrice Desrochers
