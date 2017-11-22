@@ -58,31 +58,31 @@ public class User {
     public String getName() {
         return name;
     }
-    
-    public List<UserPreference> getUserPreferences(){
+
+    public List<UserPreference> getUserPreferences() {
         return preferences;
     }
 
     public void addPreference(UserPreference preference) {
         int key = 0;
-        for (UserPreference p : preferences){
-            if (p.getWord().equals(preference.getWord())){
+        for (UserPreference p : preferences) {
+            if (p.getWord().equals(preference.getWord())) {
                 break;
             }
             ++key;
         }
-        if (key == preferences.size()){
+        if (key == preferences.size()) {
             preferences.add(preference);
         } else {
             UserPreference newPref = preferences.remove(key);
-            if (preference.getValue() == 1){
+            if (preference.getValue() == 1) {
                 newPref.increment();
             } else {
                 newPref.decrement();
             }
             preferences.add(newPref);
         }
-        
+
     }
 
     public String getFavoriteSubject() {
@@ -112,6 +112,15 @@ public class User {
             }
         }
         return 0;
+    }
+
+    public boolean contains(String word) {
+        for (UserPreference u : preferences) {
+            if (u.getWord().equals(word)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -9,6 +9,7 @@ import DataBase.User;
 import DataBase.MongoDB;
 import ConversationHandler.Preference;
 import InputProcessing.Sentence;
+import TypeWord.Verb;
 import TypeWord.Word;
 import TypeWord.WordNoPref;
 import java.util.List;
@@ -54,14 +55,22 @@ public class SentenceCreation {
     public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
         String output = "";
         User user = User.Instance();
-        //boolean aimer =;
 
-        //ICI il faudrait faire des IF qui font la sélection de la bonne réponse à donner.
-        //GenerateResponse devrait être notre fonction maîtresse qui pointe vers la bonne fonction pour générer la bonne réponse
-        //selon le contenu de la dernière phrase. À Discuter.
         if (!isQuestion) {
             if (!WindowsController.wasLastQuestion) {
-                output = GenerateQuestionResponse(words, sent);
+                boolean aime = false;
+                for (Word v : sent.getVerb()) {
+                    if (v.getWord().contains("aime")) {
+                        aime = true;
+                    }
+                }
+                if (aime) {
+
+                    output = GenerateComparativeResponse(words, user);
+
+                } else {
+                    output = GenerateQuestionResponse(words, sent);
+                }
                 WindowsController.wasLastQuestion = true;
             } else if (WindowsController.wasLastQuestion) {
                 //output = "D'accord.";
@@ -80,54 +89,50 @@ public class SentenceCreation {
                             int i = 0;
                             while (i < docs.size() && !find) {
                                 if (!docs.get(i).getString("word").equals(w.getWord())) {
-                                    find = true;
-                                    newSub = docs.get(i);
+                                    if (!user.contains(docs.get(i).getString("word"))) {
+                                        find = true;
+                                        newSub = docs.get(i);
+                                    }
                                 }
                                 i++;
                             }
                         }
                     }
-
-                    /*
-                    if (w.getType().equals("nc")){
-                        Document d = mongo.GetSingleDefinition(w.getWord(), "nc");
-                        desc = d.getString("desc");
-                        
-                        FindIterable<Document> isFind = nameCommun.find(eq("desc", desc));
-                        for (Document d : isFind) {
-                            if(d.getString("desc").equals(desc) && !d.getString("word").equals(w.getWord())){
-                                find = true;
-                                newSub = d.getString("word");
-                                break;
-                            }
-                        }
-                    }*/
                 }
 
                 if (find) {
-                    NPPhraseSpec obj = factory.createNounPhrase("le", newSub.getString("word"));
-                    output = output.concat("Aimes-tu " + realiser.realise(obj) + " ? (" + newSub.getString("desc") + ") ");
+                    String verb = "aimer";
+                    String subject = "tu";
+                    String obj = newSub.getString("word") + "(" + newSub.getString("desc") + ")";
+
+                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                    sub.setFeature(Feature.PERSON, Person.SECOND);
+                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    sub.setFeature(Feature.PRONOMINAL, true);
+
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
+
+                    //NPPhraseSpec o = factory.createNounPhrase("le", newSub.getString("word"));
+                    output += realiser.realiseSentence(ret);
                 } else {
-                    output = output.concat("Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?");
+                    output += "Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
                 }
 
                 WindowsController.wasLastQuestion = false;
-            } else {
-                output = GenerateComparativeResponse(words, user);
+
             }
         } else {
             output = GeneratePreferenceResponse(words);
         }
-        /*
-        if (sent.equals("Ça va?")) {
-            output = "Je vais bien merci.";
-        } else if (sent.equals("Que fais-tu?")) {
-            output = "Je ne fais rien de particulier à part discuter avec toi.";
-        }
-         */
-
         return output;
-
     }
 
     public static String GenerateComparativeResponse(List<Word> words, User user) {
@@ -138,8 +143,7 @@ public class SentenceCreation {
         for (Word word : words) {
             if (word.getType().equals("nc") || (word.getType().equals("verb") && !word.getWord().equals("aimer"))) {
                 prefU = user.getCommonPreference(word.getWord());
-                Document pref = Preference.ReturnPref(word.getPreference());
-                prefIA = pref.getInteger("scorePref");
+                prefIA = word.getPreference();
 
                 if (prefIA > 0 && prefU > 0) {
                     output = "J'aime " + word.getWord() + " également!";
@@ -206,7 +210,7 @@ public class SentenceCreation {
         NPPhraseSpec defi = factory.createNounPhrase("un", def);
         SPhraseSpec ret = factory.createClause("Merci, maitenant je sais que " + toDef, "être", defi);
 
-        output = realiser.realiseSentence(ret);
+        output = realiser.realiseSentence(ret) + "\n";
 
         return output;
     }
@@ -220,6 +224,9 @@ public class SentenceCreation {
         if (sent.getSubject().size() > 0) {
             switch (sent.getSubject().get(0).getWord().toLowerCase()) {
                 case "je":
+                    subject = "tu";
+                    break;
+                case "j\\":
                     subject = "tu";
                     break;
                 case "tu":
@@ -250,13 +257,13 @@ public class SentenceCreation {
         ret.setVerb(verb);
         ret.setObject(obj);
 
-        int ran = (int) (Math.random() * (6 - 1));
+        int ran = (int) (Math.random() * (3 - 1));
 
         switch (ran) {
-            case 6:
+            case 3:
                 ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.HOW);
                 break;
-            case 5:
+            case 2:
                 ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHERE);
                 break;
             default:

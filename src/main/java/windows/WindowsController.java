@@ -120,13 +120,13 @@ public class WindowsController {
                     AddDescToVerb(d.getWord(), db);
                     AddDescToAdj(d.getWord(), db);
 
-                    output = GenerateDefinitionResponse(waitingDef, d.getWord());
+                    output += GenerateDefinitionResponse(waitingDef, d.getWord());
                     missingDefs.remove(0);
                     if (missingDefs.isEmpty()) {
                         isWaitingDef = false;
                         waitingDef = "";
                         sendResponse = true;
-                        output = AiDecortication(getLastSentence(), db);
+                        output += AiDecortication(getLastSentence(), db);
                     } else {
                         waitingDef = missingDefs.get(0);
                         output += "\n" + AskDef(waitingDef);
