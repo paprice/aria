@@ -180,9 +180,9 @@ public class SentenceCreation {
         }
 
         NPPhraseSpec obj = factory.createNounPhrase(det, object.getWord());
-        if (object.getNumber().equals("p")) {
+        /*if (object.getNumber().equals("p")) {
             obj.setPlural(true);
-        }
+        }*/
 
         NPPhraseSpec sub = factory.createNounPhrase(subject);
         sub.setFeature(Feature.PERSON, Person.FIRST);

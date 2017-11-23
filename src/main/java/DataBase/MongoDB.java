@@ -93,7 +93,7 @@ public class MongoDB {
                     updateQueryInc(isFind, upd, nameCommun);
                     Document Find = (Document) nameCommun.find(eq("word", word.getWord())).first();
                     if (Find != null) {
-                        retDoc.add(new Noun(word.getType(), word.getWord(), Find.getInteger("preference"), word.getGenre(), word.getNumber(), word.getDet()));
+                        retDoc.add(new Noun(word.getType(), word.getWord(), Find.getInteger("preference"), word.getDet()));
                     }
 
                 } else {

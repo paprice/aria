@@ -46,9 +46,9 @@ public class WordParser {
             
             if (wordTags[i].contains("NC") && !wordTags[i].contains("PONCT")) {
                 // Common name
-                String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
-                String number = wordTags[i].substring(wordTags[i].length() - 1);
-                wordList.add(new Noun("nc", lemmatize[i], preference, genre, number, lemmatize[i - 1]));
+                //String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
+                //String number = wordTags[i].substring(wordTags[i].length() - 1);
+                wordList.add(new Noun("nc", lemmatize[i], preference, lemmatize[i - 1]));
             } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
                 // Verb
                 wordList.add(new Verb("v", lemmatize[i], preference));

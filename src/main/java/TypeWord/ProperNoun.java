@@ -44,16 +44,6 @@ public class ProperNoun implements Word {
     }
 
     @Override
-    public String getGenre() {
-        return null;
-    }
-
-    @Override
-    public String getNumber() {
-        return null;
-    }
-
-    @Override
     public String getDet() {
         return null;
     }

@@ -18,8 +18,6 @@ public interface Word {
     public String getType();
     public String getWord();
     public int getPreference();
-    public String getGenre();
-    public String getNumber();
     public String getDet();
     
 }
