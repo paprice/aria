@@ -9,7 +9,7 @@ package Files;
  *
  * @author despa
  */
-import DataBase.User;
+
 import DataBase.UserPreference;
 import java.io.IOException;
 import java.util.List;

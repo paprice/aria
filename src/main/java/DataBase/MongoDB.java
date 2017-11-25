@@ -5,12 +5,7 @@
  */
 package DataBase;
 
-import TypeWord.Word;
-import TypeWord.Noun;
-import TypeWord.ProperNoun;
-import TypeWord.Verb;
-import com.mongodb.Cursor;
-import com.mongodb.DBCursor;
+import TypeWord.*;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;

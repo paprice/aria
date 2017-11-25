@@ -5,7 +5,6 @@
  */
 package Files;
 
-import DataBase.User;
 import DataBase.UserPreference;
 import java.io.IOException;
 import java.util.ArrayList;
