@@ -5,15 +5,14 @@
  */
 package windows;
 
-import static ConversationHandler.CurrentConversation.*;
-import DataBase.MongoDB;
-import DataBase.User;
-import Files.WriteJson;
-import static InputProcessing.SentenceParser.*;
-import InputProcessing.Sentence;
-import TypeWord.Word;
 import static InputProcessing.WordParser.ExtractAll;
 import static OutputProcessing.SentenceCreation.*;
+import static ConversationHandler.CurrentConversation.*;
+import static InputProcessing.SentenceParser.*;
+import DataBase.*;
+import Files.WriteJson;
+import InputProcessing.Sentence;
+import TypeWord.Word;
 import java.util.ArrayList;
 import java.util.List;
 import opennlp.tools.postag.POSSample;

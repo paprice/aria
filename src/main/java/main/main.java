@@ -5,7 +5,6 @@
  */
 package main;
 
-import DataBase.MongoDB;
 import static InputProcessing.SentenceParser.LoadModel;
 import java.io.IOException;
 import windows.MainWindow;

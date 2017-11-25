@@ -5,9 +5,6 @@
  */
 package windows;
 
-import DataBase.MongoDB;
-import DataBase.User;
-
 import java.awt.Font;
 import java.util.List;
 import javax.swing.JButton;

@@ -5,14 +5,9 @@
  */
 package InputProcessing;
 
-import TypeWord.WordNoPref;
-import TypeWord.Noun;
-import TypeWord.Word;
 import static ConversationHandler.CurrentConversation.addSubjectsFromList;
-import DataBase.User;
-import DataBase.UserPreference;
-import TypeWord.ProperNoun;
-import TypeWord.Verb;
+import DataBase.*;
+import TypeWord.*;
 import java.io.IOException;
 import opennlp.tools.postag.POSSample;
 import java.util.ArrayList;

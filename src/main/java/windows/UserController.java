@@ -6,8 +6,6 @@
 package windows;
 
 import DataBase.LocalUsers;
-import DataBase.User;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -9,7 +9,6 @@ import java.util.List;
 import org.bson.Document;
 import TypeWord.Word;
 import DataBase.MongoDB;
-import static edu.berkeley.nlp.lm.util.Logger.i;
 
 /**
  *
