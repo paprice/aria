@@ -22,12 +22,16 @@ public class SentenceParser {
 
     private static TokenizerME tokenizer;
     private static POSTaggerME tagger;
+    private static POSTaggerME taggerNoun;
     private static ChunkerME chunker;
 
     public static void LoadModel() throws FileNotFoundException, IOException {
         POSModel model = new POSModelLoader()
                 .load(new File("models/fr-pos.bin"));
         tagger = new POSTaggerME(model);
+        POSModel modelNoun = new POSModelLoader()
+                .load(new File("models/fr-pos-ftb-morpho.bin"));
+        taggerNoun = new POSTaggerME(model);
         // Séparation des mots
         try (InputStream modelIn = new FileInputStream("models/fr-token.bin")) {
             TokenizerModel TokModel;

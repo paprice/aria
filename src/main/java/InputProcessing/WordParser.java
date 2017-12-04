@@ -38,7 +38,7 @@ public class WordParser {
         for (int i = 0; i < wordTags.length; i++) {
 
             preference = getPreferenceValue(i, lemmatize, wordTags);
-            
+
             if (wordTags[i].contains("NC") && !wordTags[i].contains("PONCT")) {
                 // Common name
                 //String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
@@ -72,28 +72,28 @@ public class WordParser {
         JLanguageTool lt = new JLanguageTool(new French());
 
         for (int i = 0; i < word.length; i++) {
-            List<AnalyzedSentence> analyzedSentences = null;
-            try {
-                analyzedSentences = lt.analyzeText(word[i]);
-            } catch (IOException ex) {
-                Logger.getLogger(WordParser.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            for (AnalyzedSentence analyzedSentence : analyzedSentences) {
-                for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
-                    if (analyzedTokens.getReadings().size() > 0) {
-                        if (analyzedTokens.getReadings().get(0).getLemma() != null) {
-                            ret[i] = analyzedTokens.getReadings().get(0).getLemma();
-                        }
+        List<AnalyzedSentence> analyzedSentences = null;
+        try {
+            analyzedSentences = lt.analyzeText(word[i]);
+        } catch (IOException ex) {
+            Logger.getLogger(WordParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (AnalyzedSentence analyzedSentence : analyzedSentences) {
+            for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
+                if (analyzedTokens.getReadings().size() > 0) {
+                    if (analyzedTokens.getReadings().get(0).getLemma() != null) {
+                        ret[i] = analyzedTokens.getReadings().get(0).getLemma();
                     }
                 }
             }
+        }
         }
         return ret;
     }
 
     private static int getPreferenceValue(int pos, String[] words, String[] wordTags) {
 
-        if (!wordTags[pos].equals("NC") && !wordTags[pos].equals("V")){
+        if (!wordTags[pos].equals("NC") && !wordTags[pos].equals("V")) {
             return 0;
         }
         //Normal sentence
