@@ -7,6 +7,11 @@ package windows;
 
 import DataBase.MongoDB;
 import DataBase.User;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Patrice Desrochers
@@ -15,16 +20,42 @@ public class MainWindow extends javax.swing.JFrame {
 
     private final MongoDB db = MongoDB.Instance();
     WindowsController wc;
+    private final int size = 60;
+
+    private ImageIcon AiImage;
 
     public MainWindow(String user) {
+
         User.Create(user);
         wc = new WindowsController();
+        AiImage = loadIconFromFile("images/face.png", 0.6);
         initComponents();
         setTitle("A.R.I.A : " + user);
         Console.setLineWrap(true);
         Console.setWrapStyleWord(true);
         this.setVisible(true);
         UserText.requestFocusInWindow();
+        LabelImage.setIcon(AiImage);
+        LabelImage.setVisible(true);
+
+    }
+
+    private ImageIcon loadIconFromFile(String file, double scale) {
+        URL url = getClass().getClassLoader().getResource(file);
+        if (url == null) {
+            System.out.println("Incapable de lire un fichier d'image");
+
+        }
+        ImageIcon imageIcon = new ImageIcon(url);
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(275, 250, java.awt.Image.SCALE_SMOOTH); // scale
+        // it
+        // the
+        // smooth
+        // way
+        imageIcon = new ImageIcon(newimg);
+        return imageIcon;
+
     }
 
     /**
@@ -41,6 +72,7 @@ public class MainWindow extends javax.swing.JFrame {
         UserText = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Console = new javax.swing.JTextArea();
+        LabelImage = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -89,18 +121,27 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(LabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(UserText, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(181, Short.MAX_VALUE))
+                        .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(LabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 554, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                     .addComponent(UserText))
@@ -162,6 +203,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Console;
+    private javax.swing.JLabel LabelImage;
     private javax.swing.JButton Send;
     private javax.swing.JTextField UserText;
     private javax.swing.JMenu jMenu1;
