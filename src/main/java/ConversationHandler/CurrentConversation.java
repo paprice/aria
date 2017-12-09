@@ -25,10 +25,15 @@ public class CurrentConversation {
     
     //Contains critical information pertaining to the last user sentence
     private static Context context;
+    private static Time time;
 
     public static void addSubjectsFromList(List<Word> wordList) {
         String item;
         String type;
+        
+        //Null/Empty verification
+        if (wordList == null || wordList.isEmpty()){return;}
+        
         for (int i = 0; i < wordList.size(); ++i) {
             Document d = wordList.get(i).CreateDoc();
             if (d.containsValue("nc") || d.containsValue("v")) {
@@ -42,6 +47,7 @@ public class CurrentConversation {
             }
         }
         setContextFromList(wordList);
+        setTimeFromList(wordList);
     }
 
     public static void setLastUserSentence(String sentence) {
@@ -50,6 +56,14 @@ public class CurrentConversation {
 
     public static String getLastSentence() {
         return lastUserSentence;
+    }
+    
+    public static Context getContext(){
+        return context;
+    }
+    
+    public static Time getTime(){
+        return time;
     }
     
     public static String getAIFavoredCurrentSubject() {
@@ -70,9 +84,6 @@ public class CurrentConversation {
     public static void setContextFromList(List<Word> wordList) {
         Document doc;
         boolean verb = false;
-        
-        //Empty verification
-        if (wordList.isEmpty()){return;}
         
         //Question
         doc = wordList.get(wordList.size() - 1).CreateDoc();
@@ -102,11 +113,51 @@ public class CurrentConversation {
         
     }
     
-    /*public static Context Instance() {
-        if (context == null) {
-            System.out.println("Context instance not created!");
-            return null;
+    public static void setTimeFromList(List<Word> wordList) {
+        Document doc;
+        
+        //Context synchronization
+        if (context == Context.HISTOIRE){
+            time = Time.PASSE;
+            return;
         }
-        return context;
-    }*/
+        
+        for (int i = 0; i < wordList.size(); ++i) {
+            doc = wordList.get(i).CreateDoc();
+            //Past
+            if (doc.containsValue("hier")) {
+                time = Time.PASSE;
+                return;
+            }
+            else if (i < wordList.size() - 4){
+                if (doc.containsValue("il") && wordList.get(i + 1).CreateDoc().containsValue("y") &&
+                        wordList.get(i + 2).CreateDoc().containsValue("avoir") &&
+                        wordList.get(i + 3).CreateDoc().containsValue("longtemps")){
+                    time = Time.PASSE;
+                    return;
+                }
+            }
+            else if (i < wordList.size() - 5){
+                if (doc.containsValue("il") && wordList.get(i + 1).CreateDoc().containsValue("y") &&
+                        wordList.get(i + 2).CreateDoc().containsValue("avoir") &&
+                        (wordList.get(i + 4).CreateDoc().containsValue("longtemps") ||
+                        wordList.get(i + 4).CreateDoc().containsValue("jour") ||
+                        wordList.get(i + 4).CreateDoc().containsValue("mois") ||
+                        wordList.get(i + 4).CreateDoc().containsValue("année"))){
+                    time = Time.PASSE;
+                    return;
+                }
+            }
+            
+            //Future
+            if (doc.containsValue("demain")) {
+                time = Time.FUTUR;
+                return;
+            }
+        }
+        
+        //Present
+        time = Time.PRESENT;
+        
+    }
 }
