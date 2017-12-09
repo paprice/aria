@@ -47,9 +47,10 @@ public class LocalUsers {
     public boolean RemoveUser(String userName) {
         boolean ret = false;
         for (String s : Users){
-            if (s == userName){
+            if (s.equals(userName)){
                 Users.remove(s);
                 ret = true;
+                break;
             }
         }
         if (ret) {

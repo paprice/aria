@@ -22,6 +22,9 @@ public class CurrentConversation {
 
     //Contains the very last sentence sent by the user.
     private static String lastUserSentence = "";
+    
+    //Contains critical information pertaining to the last user sentence
+    private static Context context;
 
     public static void addSubjectsFromList(List<Word> wordList) {
         String item;
@@ -38,6 +41,7 @@ public class CurrentConversation {
                 }
             }
         }
+        setContextFromList(wordList);
     }
 
     public static void setLastUserSentence(String sentence) {
@@ -61,5 +65,40 @@ public class CurrentConversation {
     public static String getUserFavoredCurrentSubject() {
         //TBD
         return null;
+    }
+    
+    public static void setContextFromList(List<Word> wordList) {
+        Document doc;
+        boolean verb = false;
+        
+        //Empty verification
+        if (wordList.isEmpty()){return;}
+        
+        //Question
+        doc = wordList.get(wordList.size() - 1).CreateDoc();
+        if (doc.containsValue("?")) {
+            context = Context.QUESTION;
+            return;
+        }
+        
+        //Answer
+        for (int i = 0; i < wordList.size(); ++i) {
+            doc = wordList.get(i).CreateDoc();
+            if (doc.containsValue("oui") || doc.containsValue("non")) {
+                context = Context.REPONSE;
+                return;
+            }
+            if (!verb && doc.containsValue("v")) {
+                verb = true;
+            }
+        }
+        if (!verb){
+            context = Context.REPONSE;
+            return;
+        }
+        
+        //Statement
+        context = Context.AFFIRMATION;
+        
     }
 }
