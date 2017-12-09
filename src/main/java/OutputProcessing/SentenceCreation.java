@@ -5,9 +5,11 @@
  */
 package OutputProcessing;
 
+import ConversationHandler.Context;
 import DataBase.User;
 import DataBase.MongoDB;
 import ConversationHandler.Preference;
+import ConversationHandler.CurrentConversation;
 import InputProcessing.Sentence;
 import TypeWord.*;
 import java.util.List;
@@ -133,6 +135,171 @@ public class SentenceCreation {
         return output;
     }
 
+    /*
+    public static String GenerateResponse(List<Word> words, Sentence sent) {
+        String output = "";
+        User user = User.Instance();
+        Context context = CurrentConversation.Instance();
+        boolean sujetP = false; //sujet pas encore discuté
+        boolean sujetD = false; //sujet discuté
+    
+        //Si Affirmation -> Question
+        if (context==Context.AFFIRMATION){
+             else if (WindowsController.wasLastQuestion) {
+                boolean find = false;
+                Document newSub = new Document();
+                MongoDB mongo = MongoDB.Instance();
+
+                for (Word w : sent.getSubject()) {
+
+                    if (w.getType().contains("NC")) {
+                        String desc = mongo.GetSingleDefinition(w.getWord(), "nc");
+
+                        if (desc != null) {
+                            List<Document> docs = mongo.GetSameDesc(desc);
+
+                            int i = 0;
+                            while (i < docs.size() && !find) {
+                                if (!docs.get(i).getString("word").equals(w.getWord())) {
+                                    if (!user.contains(docs.get(i).getString("word"))) {
+                                        find = true;
+                                        newSub = docs.get(i);
+                                    }
+                                }
+                                i++;
+                            }
+                        }
+                    }
+                }
+
+                if (find) {
+                    String verb = "aimer";
+                    String subject = "tu";
+                    String obj = newSub.getString("word") + "(" + newSub.getString("desc") + ")";
+
+                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                    sub.setFeature(Feature.PERSON, Person.SECOND);
+                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    sub.setFeature(Feature.PRONOMINAL, true);
+
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
+
+                    //NPPhraseSpec o = factory.createNounPhrase("le", newSub.getString("word"));
+                    output += realiser.realiseSentence(ret);
+                } else {
+                    output += "Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
+                }
+
+                WindowsController.wasLastQuestion = false;
+            }
+    
+        //Si Histoire -> Question sur Histoire
+        } else if (context==Context.HISTOIRE){
+            output = GenerateQuestionResponse(words, sent);
+    
+        //Si Question -> Réponse
+        } else if (context==context.QUESTION){
+            output = GeneratePreferenceResponse(words);
+    
+        //Si Réponse -> Relancement ou Question
+        } else {
+            //Si l'utilisateur répond oui ou non à une question d'ARIA sur ses préférences:
+            if (words.get(0).getWord("oui") || words.get(0).getWord("non")) {
+                //Faire un systeme random pour générer une réponse différente(?)
+                output = "Dis m'en plus à ce sujet.";
+                output = "Donc qu'en penses-tu?";
+                output = "Pourquoi?";
+            
+            //Si l'utilisateur n'a pas spécialement de sujet dont il aimerait parler:
+            // Le relancer sur son sujet préféré ou détesté
+            // Si déjà fait, lui demander ce qu'il fait
+            } else if (words.get(0).getWord("Non") && !find){
+                String sujet = user.getFavoriteSubject();
+                if (!lastUserSentence.contains(sujet) && !sujetP){
+                    String verb = "aimer";
+                    String subject = "tu";
+                    String obj = sujet;
+
+                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                    sub.setFeature(Feature.PERSON, Person.SECOND);
+                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    sub.setFeature(Feature.PRONOMINAL, true);
+
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+                    sujetP = true;
+                } 
+                sujet = user.getDespisedSubject();
+                if (!lastUserSentence.contains(sujet) && !sujetD) {
+                    String verb = "déteste";
+                    String subject = "tu";
+                    String obj = sujet;
+
+                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                    sub.setFeature(Feature.PERSON, Person.SECOND);
+                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    sub.setFeature(Feature.PRONOMINAL, true);
+
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+                    sujetD = true;
+                } else {
+                    String verb = "faire";
+                    String subject = "tu";
+                    String obj = "";
+            
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(sub);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+
+                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHAT);
+                }
+            } else if (!WindowsController.wasLastQuestion) {
+                boolean aime = false;
+                for (Word v : sent.getVerb()) {
+                    if (v.getWord().contains("aime")) {
+                        aime = true;
+                    }
+                }
+                if (aime) {
+
+                    output = GenerateComparativeResponse(words, user);
+
+                } else {
+                    output = GenerateQuestionResponse(words, sent);
+                }
+            }
+            WindowsController.wasLastQuestion = true;
+        }
+        return output;
+    }
+    */
+    
     public static String GenerateComparativeResponse(List<Word> words, User user) {
         String output = "";
         int prefU;

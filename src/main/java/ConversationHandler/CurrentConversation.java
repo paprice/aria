@@ -101,4 +101,12 @@ public class CurrentConversation {
         context = Context.AFFIRMATION;
         
     }
+    
+    /*public static Context Instance() {
+        if (context == null) {
+            System.out.println("Context instance not created!");
+            return null;
+        }
+        return context;
+    }*/
 }
