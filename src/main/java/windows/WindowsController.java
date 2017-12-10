@@ -58,17 +58,19 @@ public class WindowsController {
 
         if (!isWaitingDef) {
 
+            setLastUserSentence(s);
+            
             //Sending user input to LastConversation
             important = db.InsertOrUpdate(important);
             CheckDef(important, db);
 
             if (!isWaitingDef) {
-                output = GenerateResponse(important, isQuestion, s);
+                output = GenerateResponse(important, isQuestion);
             } else {
                 output = AskDef(waitingDef);
             }
 
-            setLastUserSentence(userInput);
+            
         } else {
             output = InsertDef(important, db);
         }
@@ -126,7 +128,7 @@ public class WindowsController {
                         isWaitingDef = false;
                         waitingDef = "";
                         sendResponse = true;
-                        output += AiDecortication(getLastSentence(), db);
+                        output += AiDecortication(getLastSentence().toString(), db);
                     } else {
                         waitingDef = missingDefs.get(0);
                         output += "\n" + AskDef(waitingDef);

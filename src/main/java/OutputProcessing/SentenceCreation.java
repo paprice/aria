@@ -52,7 +52,8 @@ public class SentenceCreation {
         realiser = new Realiser();
     }
 
-    public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
+    public static String GenerateResponse(List<Word> words, boolean isQuestion/*, Sentence sent*/) {
+        Sentence sent = CurrentConversation.getLastSentence();
         String output = "";
         User user = User.Instance();
 
@@ -65,9 +66,7 @@ public class SentenceCreation {
                     }
                 }
                 if (aime) {
-
                     output = GenerateComparativeResponse(words, user);
-
                 } else {
                     output = GenerateQuestionResponse(words, sent);
                 }
@@ -82,10 +81,8 @@ public class SentenceCreation {
 
                     if (w.getType().contains("NC")) {
                         String desc = mongo.GetSingleDefinition(w.getWord(), "nc");
-
                         if (desc != null) {
                             List<Document> docs = mongo.GetSameDesc(desc);
-
                             int i = 0;
                             while (i < docs.size() && !find) {
                                 if (!docs.get(i).getString("word").equals(w.getWord())) {
@@ -99,7 +96,6 @@ public class SentenceCreation {
                         }
                     }
                 }
-
                 if (find) {
                     String verb = "aimer";
                     String subject = "tu";

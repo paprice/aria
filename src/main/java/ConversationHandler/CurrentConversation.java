@@ -9,6 +9,7 @@ import java.util.List;
 import org.bson.Document;
 import TypeWord.Word;
 import DataBase.MongoDB;
+import InputProcessing.Sentence;
 
 /**
  *
@@ -21,7 +22,7 @@ public class CurrentConversation {
     private static List<Integer> preferenceList = new ArrayList<>();
 
     //Contains the very last sentence sent by the user.
-    private static String lastUserSentence = "";
+    private static Sentence lastUserSentence = new Sentence();
     
     //Contains critical information pertaining to the last user sentence
     private static Context context;
@@ -50,11 +51,11 @@ public class CurrentConversation {
         setTimeFromList(wordList);
     }
 
-    public static void setLastUserSentence(String sentence) {
+    public static void setLastUserSentence(Sentence sentence) {
         lastUserSentence = sentence;
     }
 
-    public static String getLastSentence() {
+    public static Sentence getLastSentence() {
         return lastUserSentence;
     }
     

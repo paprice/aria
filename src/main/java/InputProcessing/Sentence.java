@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class Sentence {
 
-    List<Word> subject;
-    List<Word> verb;
-    List<Word> object;
+    ArrayList<Word> subject;
+    ArrayList<Word> verb;
+    ArrayList<Word> object;
 
     public Sentence() {
         subject = new ArrayList<>();
@@ -50,6 +50,21 @@ public class Sentence {
             this.object.add(object);
         }
 
+    }
+
+    public String toString() {
+        String output = "";
+        for (Word w : subject) {
+            output += w.getWord() + " ";
+        }
+        for (Word w : verb) {
+            output += w.getWord() + " ";
+        }
+        for (Word w : object) {
+            output += w.getWord() + " ";
+        }
+        
+        return output;
     }
 
 }
