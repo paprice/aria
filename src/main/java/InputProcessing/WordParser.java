@@ -26,12 +26,14 @@ import org.languagetool.language.French;
  */
 public class WordParser {
 
-    public static List<Word> ExtractAll(POSSample userInput) {
+    public static List<Word> ExtractAll(POSSample userInput, POSSample withNumber) {
 
         int preference;
         String[] words = userInput.getSentence();
         String[] wordTags = userInput.getTags();
         String[] lemmatize = LemmatizeWord(words);
+        String[] wordTagsWithNumber = withNumber.getTags();
+        
 
         List<Word> wordList = new ArrayList<>();
 
@@ -41,9 +43,9 @@ public class WordParser {
 
             if (wordTags[i].contains("NC") && !wordTags[i].contains("PONCT")) {
                 // Common name
-                //String genre = wordTags[i].substring(wordTags[i].length() - 2, wordTags[i].length() - 1);
-                //String number = wordTags[i].substring(wordTags[i].length() - 1);
-                wordList.add(new Noun("nc", lemmatize[i], preference, lemmatize[i - 1]));
+                String genre = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 2, wordTagsWithNumber[i].length() - 1);
+                String number = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 1);
+                wordList.add(new Noun("nc", lemmatize[i], preference, lemmatize[i - 1],genre,number));
             } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
                 // Verb
                 wordList.add(new Verb("v", lemmatize[i], preference));

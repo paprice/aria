@@ -31,7 +31,7 @@ public class SentenceParser {
         tagger = new POSTaggerME(model);
         POSModel modelNoun = new POSModelLoader()
                 .load(new File("models/fr-pos-ftb-morpho.bin"));
-        taggerNoun = new POSTaggerME(model);
+        taggerNoun = new POSTaggerME(modelNoun);
         // Séparation des mots
         try (InputStream modelIn = new FileInputStream("models/fr-token.bin")) {
             TokenizerModel TokModel;
@@ -53,12 +53,17 @@ public class SentenceParser {
      * @return the sentence with all the type of the word
      *
      */
-    public static POSSample Parse(String sentence) {
+    public static POSSample Parse(String sentence, boolean withNumber) {
 
         // séparation de la phrase
         String tokens[] = tokenizer.tokenize(sentence);
+        String[] tags;
         // Tagging des mots
-        String[] tags = tagger.tag(tokens);
+        if (withNumber) {
+            tags = taggerNoun.tag(tokens);
+        } else {
+            tags = tagger.tag(tokens);
+        }
         // Remise de tous les mots dans une string
         POSSample sample = new POSSample(tokens, tags);
 
@@ -90,6 +95,15 @@ public class SentenceParser {
 
         String words[] = pos.getSentence();
         String tags[] = pos.getTags();
+
+        String sent = "";
+        for (String s : words) {
+            sent += s + " ";
+        }
+
+        String tokens[] = tokenizer.tokenize(sent);
+        // Tagging des mots
+        String[] tagsNouns = tagger.tag(tokens);
 
         boolean isAddingSubject = true;
         boolean isAddingVerb = false;

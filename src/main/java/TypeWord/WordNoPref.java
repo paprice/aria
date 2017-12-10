@@ -46,4 +46,13 @@ public class WordNoPref implements Word {
         return null;
     }
 
+    @Override
+    public String getKind() {
+        return null;
+    }
+
+    @Override
+    public String getNumber() {
+        return null;
+    }
 }

@@ -48,8 +48,9 @@ public class WindowsController {
 
         //Parsing the user input
         userInput = PreParse(userInput);
-        POSSample parsed = Parse(userInput);
-        List<Word> important = ExtractAll(parsed);
+        POSSample parsed = Parse(userInput,false);
+        POSSample withNumber = Parse(userInput, true);
+        List<Word> important = ExtractAll(parsed,withNumber);
         Sentence s = PartitionnateSentence(parsed);
 
         //Updating User Preferences

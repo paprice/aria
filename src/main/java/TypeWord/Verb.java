@@ -47,4 +47,14 @@ public class Verb implements Word {
     public String getDet() {
         return null;
     }
+
+    @Override
+    public String getKind() {
+        return null;
+    }
+
+    @Override
+    public String getNumber() {
+        return null;
+    }
 }

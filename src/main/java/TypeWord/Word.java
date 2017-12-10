@@ -19,5 +19,8 @@ public interface Word {
     public String getWord();
     public int getPreference();
     public String getDet();
+    public String getKind();
+    public String getNumber();
+    
     
 }
