@@ -44,7 +44,7 @@ public class WindowsController {
     public String AiDecortication(String userInput, MongoDB db) {
 
         String output;
-        boolean isQuestion = userInput.contains("?");
+        //boolean isQuestion = userInput.contains("?");
 
         //Parsing the user input
         userInput = PreParse(userInput);
@@ -65,7 +65,7 @@ public class WindowsController {
             CheckDef(important, db);
 
             if (!isWaitingDef) {
-                output = GenerateResponse(important, isQuestion);
+                output = GenerateResponse(important/*, isQuestion*/);
             } else {
                 output = AskDef(waitingDef);
             }
