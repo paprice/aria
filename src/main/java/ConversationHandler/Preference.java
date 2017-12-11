@@ -56,5 +56,12 @@ public enum Preference {
             return HATE.getAll();
         }
     }
-
+    
+    /*public static String getFavoriteSubject(){
+        return "";
+    }
+    
+    public static String getDespiteSubject(){
+        return "";
+    }*/
 }

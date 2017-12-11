@@ -212,7 +212,19 @@ public class SentenceCreation {
 
                 ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
                 subjD = true;
-    
+            /*
+            } else if(subjD){
+                //Sujet préféré ARIA
+                if (true && subjP){
+                    String sujet = Preference.getFavoriteSubject();
+                    //Créer output
+                    
+                //Sujet détesté d'ARIA
+                } else {
+                    String sujet = Preference.getDespiteSubject();
+                    //Créer output
+                }
+            */
             //Sujet "aléatoire" ou question
             } else {
                 boolean find = false;
