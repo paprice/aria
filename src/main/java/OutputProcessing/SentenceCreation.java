@@ -146,16 +146,14 @@ public class SentenceCreation {
                 }
             }
             if (aime) {
-
                 output = GenerateComparativeResponse(words, user);
-
             } else {
-                output = GenerateQuestionResponse(words, sent);
+                output = GenerateQuestionResponse(sent);
             }
     
         //Si Histoire -> Question sur Histoire
         } else if (context==Context.HISTOIRE){
-            output = GenerateQuestionResponse(words, sent);
+            output = GenerateQuestionResponse(sent);
     
         //Si Question -> Réponse
         } else if (context==context.QUESTION){
@@ -294,9 +292,9 @@ public class SentenceCreation {
                 prefIA = word.getPreference();
 
                 if (prefIA > 0 && prefU > 0) {
-                    output = "J'aime " + word.getWord() + " également!";
+                    output = "J'aime " + word.getDet() + word.getWord() + " également!";
                 } else if (prefIA <= 0 && prefU <= 0) {
-                    output = "Je n'aime pas spécialement " + word.getWord() + " non plus!";
+                    output = "Je n'aime pas spécialement " + word.getDet() + word.getWord() + " non plus!";
                 } else {
                     output = "Sur ce coup, je dois dire que mon opinion est à l'inverse de la tienne.";
                 }
@@ -363,7 +361,7 @@ public class SentenceCreation {
         return output;
     }
 
-    private static String GenerateQuestionResponse(List<Word> words, Sentence sent) {
+    private static String GenerateQuestionResponse(Sentence sent) {
         String verb = "";
         String subject = "";
         String obj = "";
