@@ -147,9 +147,8 @@ public class SentenceCreation {
             }
             if (aime) {
                 output = GenerateComparativeResponse(words, user);
-            } else {
-                output = GenerateQuestionResponse(sent);
             }
+            output = output.concat(GenerateQuestionResponse(sent));
     
         //Si Histoire -> Question sur Histoire
         } else if (context==Context.HISTOIRE){
@@ -292,11 +291,11 @@ public class SentenceCreation {
                 prefIA = word.getPreference();
 
                 if (prefIA > 0 && prefU > 0) {
-                    output = "J'aime " + word.getDet() + word.getWord() + " également!";
+                    output = "J'aime " + word.getDet() + word.getWord() + " également!\n";
                 } else if (prefIA <= 0 && prefU <= 0) {
-                    output = "Je n'aime pas spécialement " + word.getDet() + word.getWord() + " non plus!";
+                    output = "Je n'aime pas spécialement " + word.getDet() + word.getWord() + " non plus!\n";
                 } else {
-                    output = "Sur ce coup, je dois dire que mon opinion est à l'inverse de la tienne.";
+                    output = "Sur ce coup, je dois dire que mon opinion est à l'inverse de la tienne.\n";
                 }
             }
         }
