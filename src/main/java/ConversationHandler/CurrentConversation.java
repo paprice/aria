@@ -54,6 +54,10 @@ public class CurrentConversation {
     public static void setLastUserSentence(Sentence sentence) {
         lastUserSentence = sentence;
     }
+    
+    public static void setContext(Context c){
+        context = c;
+    }
 
     public static Sentence getLastSentence() {
         return lastUserSentence;
@@ -94,6 +98,11 @@ public class CurrentConversation {
         }
         
         //Answer
+        if (context == Context.REPONSEFORCEE){
+            context = Context.REPONSE;
+            return;
+        }
+        
         for (int i = 0; i < wordList.size(); ++i) {
             doc = wordList.get(i).CreateDoc();
             if (doc.containsValue("oui") || doc.containsValue("non")) {
