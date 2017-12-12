@@ -367,6 +367,8 @@ public class SentenceCreation {
         String obj = "";
         String adj = "";
 
+        CurrentConversation.setContext(Context.REPONSEFORCEE);
+        
         if (sent.getSubject().size() > 0) {
             switch (sent.getSubject().get(0).getWord().toLowerCase()) {
                 case "je":

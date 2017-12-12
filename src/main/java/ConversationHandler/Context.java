@@ -13,5 +13,6 @@ public enum Context {
     AFFIRMATION,
     HISTOIRE,
     QUESTION,
-    REPONSE;
+    REPONSE,
+    REPONSEFORCEE;
 }
