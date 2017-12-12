@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class Sentence {
 
-    ArrayList<Word> subject;
-    ArrayList<Word> verb;
-    ArrayList<Word> object;
+    private ArrayList<Word> subject;
+    private ArrayList<Word> verb;
+    private ArrayList<Word> object;
 
     public Sentence() {
         subject = new ArrayList<>();

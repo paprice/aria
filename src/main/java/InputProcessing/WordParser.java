@@ -5,6 +5,7 @@
  */
 package InputProcessing;
 
+import ConversationHandler.CurrentConversation;
 import static ConversationHandler.CurrentConversation.addSubjectsFromList;
 import DataBase.*;
 import TypeWord.*;
@@ -33,7 +34,6 @@ public class WordParser {
         String[] wordTags = userInput.getTags();
         String[] lemmatize = LemmatizeWord(words);
         String[] wordTagsWithNumber = withNumber.getTags();
-        
 
         List<Word> wordList = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class WordParser {
                 // Common name
                 String genre = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 2, wordTagsWithNumber[i].length() - 1);
                 String number = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 1);
-                wordList.add(new Noun("nc", lemmatize[i], preference, lemmatize[i - 1],genre,number));
+                wordList.add(new Noun("nc", lemmatize[i], preference, lemmatize[i - 1], genre, number));
             } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
                 // Verb
                 wordList.add(new Verb("v", lemmatize[i], preference));
@@ -59,8 +59,29 @@ public class WordParser {
                 // Proper nouns
                 wordList.add(new ProperNoun("npp", lemmatize[i], preference));
             } else if (wordTags[i].contains("CL")) {
-                // Pronouns
-                wordList.add(new WordNoPref("cls", lemmatize[i]));
+                Word replace = null;
+                String genre = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 2, wordTagsWithNumber[i].length() - 1);
+                String number = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 1);
+
+                Sentence sent = CurrentConversation.getLastSentence();
+
+                for (Word w : sent.getSubject()) {
+                    if (w.getKind() == genre && w.getNumber() == number) {
+                        replace = w;
+                    }
+                }
+                if (replace == null) {
+                    for (Word w : sent.getObject()) {
+                        if (w.getKind() == genre && w.getNumber() == number) {
+                            replace = w;
+                        }
+                    }
+                }
+                if (replace == null) {
+                    wordList.add(new WordNoPref("cls", lemmatize[i]));
+                } else {
+                    wordList.add(new Noun(replace.getType(), replace.getWord(), replace.getPreference(), replace.getDet(), replace.getKind(), replace.getNumber()));
+                }
             }
         }
         addSubjectsFromList(wordList);
@@ -74,21 +95,21 @@ public class WordParser {
         JLanguageTool lt = new JLanguageTool(new French());
 
         for (int i = 0; i < word.length; i++) {
-        List<AnalyzedSentence> analyzedSentences = null;
-        try {
-            analyzedSentences = lt.analyzeText(word[i]);
-        } catch (IOException ex) {
-            Logger.getLogger(WordParser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for (AnalyzedSentence analyzedSentence : analyzedSentences) {
-            for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
-                if (analyzedTokens.getReadings().size() > 0) {
-                    if (analyzedTokens.getReadings().get(0).getLemma() != null) {
-                        ret[i] = analyzedTokens.getReadings().get(0).getLemma();
+            List<AnalyzedSentence> analyzedSentences = null;
+            try {
+                analyzedSentences = lt.analyzeText(word[i]);
+            } catch (IOException ex) {
+                Logger.getLogger(WordParser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for (AnalyzedSentence analyzedSentence : analyzedSentences) {
+                for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {
+                    if (analyzedTokens.getReadings().size() > 0) {
+                        if (analyzedTokens.getReadings().get(0).getLemma() != null) {
+                            ret[i] = analyzedTokens.getReadings().get(0).getLemma();
+                        }
                     }
                 }
             }
-        }
         }
         return ret;
     }
