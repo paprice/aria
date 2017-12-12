@@ -292,7 +292,33 @@ public class SentenceCreation {
                 prefIA = word.getPreference();
 
                 if (prefIA > 0 && prefU > 0) {
-                    output = "J'aime " + word.getDet() + word.getWord() + " également!";
+                     String verb = "aimer";
+                    String subject = "je";
+
+                    NPPhraseSpec obj = factory.createNounPhrase(word.getDet(), word.getWord());
+                    if(word.getNumber() == "s"){
+                    obj.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    } else {
+                        obj.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+                    }
+                    if(word.getKind() == "f"){
+                        obj.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    } else{
+                        obj.setFeature(LexicalFeature.GENDER, Gender.MASCULINE);
+                    }
+
+                    obj.addPostModifier("également");
+                    
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(subject);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+                    //output = "J'aime " + word.getDet() + " " + word.getWord() + " également!";
+                    
+                    output = realiser.realiseSentence(ret);
+                    
                 } else if (prefIA <= 0 && prefU <= 0) {
                     output = "Je n'aime pas spécialement " + word.getDet() + word.getWord() + " non plus!";
                 } else {

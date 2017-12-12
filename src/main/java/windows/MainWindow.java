@@ -178,7 +178,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void PrintLine() {
         // TODO add your handling code here:
         String userText = UserText.getText();
-        Console.setText(Console.getText() + "USER > " + userText + "\n");
+        Console.setText(Console.getText() + userText + "\n");
         UserText.setText("");
 
         String output = wc.AiDecortication(userText, db);
@@ -198,7 +198,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_UserTextKeyPressed
 
     private void ShowAIResponse(String resp) {
-        Console.setText(Console.getText() + "ARIA > " + resp + "\n");
+        Console.setText(Console.getText() + "ARIA > " + resp + "\nUSER > ");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

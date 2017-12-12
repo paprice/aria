@@ -51,6 +51,11 @@ public class WindowsController {
         POSSample parsed = Parse(userInput,false);
         POSSample withNumber = Parse(userInput, true);
         List<Word> important = ExtractAll(parsed,withNumber);
+        
+        for(Word w : important){
+            System.out.println(w.getWord());
+        }
+        
         Sentence s = PartitionnateSentence(parsed);
 
         //Updating User Preferences
