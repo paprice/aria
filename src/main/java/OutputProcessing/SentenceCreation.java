@@ -135,7 +135,7 @@ public class SentenceCreation {
         String output = "";
         User user = User.Instance();
         Context context = CurrentConversation.getContext();
-
+        
         //Si Affirmation -> Question || Comparaison des goûts
         if (context == Context.AFFIRMATION) {
             boolean aime = false;
@@ -149,131 +149,68 @@ public class SentenceCreation {
             }
             output = output.concat(GenerateQuestionResponse(sent));
 
-            //Si Histoire -> Question sur Histoire
+        //Si Histoire -> Question sur Histoire
         } else if (context == Context.HISTOIRE) {
             output = GenerateQuestionResponse(sent);
 
-            //Si Question -> Réponse
+        //Si Question -> Réponse
         } else if (context == context.QUESTION) {
             output = GeneratePreferenceResponse(words);
 
-            //Si Réponse -> Relancement ou Question
+        //Si Réponse -> Relancement ou Question
         } else {
             String sujet;
-            boolean subjP = false; //Sujet préféré de l'utilisateur abordé
-            boolean subjD = false; //Sujet détesté de l'utilisateur abordé
 
             // Le relancer sur son sujet préféré
-            if (subjP) {
-                sujet = user.getFavoriteSubject();
-                String verb = "aimer";
-                String subject = "tu";
-                String obj = sujet;
-
-                NPPhraseSpec sub = factory.createNounPhrase("le", subject);
-                sub.setFeature(Feature.PERSON, Person.SECOND);
-                sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
-                sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
-                sub.setFeature(Feature.PRONOMINAL, true);
-
-                VPPhraseSpec ve = factory.createVerbPhrase(verb);
-
-                SPhraseSpec ret = factory.createClause();
-                ret.setSubject(sub);
-                ret.setVerb(ve);
-                ret.setObject(obj);
-
-                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
-                subjP = true;
-
-                // Le relancer sur son sujet détesté
-            } else if (subjD) {
-                sujet = user.getDespisedSubject();
-                String verb = "détester";
-                String subject = "tu";
-                String obj = sujet;
-
-                NPPhraseSpec sub = factory.createNounPhrase("le", subject);
-                sub.setFeature(Feature.PERSON, Person.SECOND);
-                sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
-                sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
-                sub.setFeature(Feature.PRONOMINAL, true);
-
-                VPPhraseSpec ve = factory.createVerbPhrase(verb);
-
-                SPhraseSpec ret = factory.createClause();
-                ret.setSubject(sub);
-                ret.setVerb(ve);
-                ret.setObject(obj);
-
-                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
-                subjD = true;
-                /*
-            } else if(subjD){
-                //Sujet préféré ARIA
-                if (true && subjP){
-                    String sujet = Preference.getFavoriteSubject();
-                    //Créer output
-                    
-                //Sujet détesté d'ARIA
-                } else {
-                    String sujet = Preference.getDespiteSubject();
-                    //Créer output
-                }
-                 */
-                //Sujet "aléatoire" ou question
-            } else {
-                boolean find = false;
-                Document newSub = new Document();
-                MongoDB mongo = MongoDB.Instance();
-
-                for (Word w : sent.getSubject()) {
-
-                    if (w.getType().contains("NC")) {
-                        String desc = mongo.GetSingleDefinition(w.getWord(), "nc");
-
-                        if (desc != null) {
-                            List<Document> docs = mongo.GetSameDesc(desc);
-
-                            int i = 0;
-                            while (i < docs.size() && !find) {
-                                if (!docs.get(i).getString("word").equals(w.getWord())) {
-                                    if (!user.contains(docs.get(i).getString("word"))) {
-                                        find = true;
-                                        newSub = docs.get(i);
-                                    }
-                                }
-                                i++;
-                            }
-                        }
+            sujet = user.getFavoriteSubject();
+            if (!CurrentConversation.getCurrentSubjects().contains(sujet)) {
+                return GenerateConversationUserPref(sujet);
+            }
+            
+            // Le relancer sur son sujet détesté
+            sujet = user.getDespisedSubject();
+            if (!CurrentConversation.getCurrentSubjects().contains(sujet)) {
+                return GenerateConversationUserDesp(sujet);
+                
+            /*
+            }
+                
+            //Sujet aimé d'ARIA
+            //MongoDB mongo = MongoDB.Instance();
+            //int score =  mongo.GetPreference("pomme", "nc");
+            for (Word word : words) {
+                if (word.getType().equals("nc") || (word.getType().equals("verb") && !word.getWord().equals("aimer"))) {
+                    if (word.getPreference() >= 20) {
+                        sujet = word.getWord();
+                        break;
                     }
                 }
+            }
+            if(!CurrentConversation.getCurrentSubjects().contains(sujet)){
+                String verb = "penser";
+                String subject = "tu";
+                String obj = sujet;
 
-                if (find) {
-                    String verb = "aimer";
-                    String subject = "tu";
-                    String obj = newSub.getString("word") + "(" + newSub.getString("desc") + ")";
+                NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                sub.setFeature(Feature.PERSON, Person.SECOND);
+                sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                sub.setFeature(Feature.PRONOMINAL, true);
 
-                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
-                    sub.setFeature(Feature.PERSON, Person.SECOND);
-                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
-                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
-                    sub.setFeature(Feature.PRONOMINAL, true);
+                VPPhraseSpec ve = factory.createVerbPhrase(verb);
 
-                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+                SPhraseSpec ret = factory.createClause();
+                ret.setSubject(sub);
+                ret.setVerb(ve);
+                ret.setObject(obj);
 
-                    SPhraseSpec ret = factory.createClause();
-                    ret.setSubject(sub);
-                    ret.setVerb(ve);
-                    ret.setObject(obj);
-
-                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
-
-                    //NPPhraseSpec o = factory.createNounPhrase("le", newSub.getString("word"));
-                    output += realiser.realiseSentence(ret);
-                } else {
-                    output += "Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
-                }
+                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHAT_OBJECT);
+                output = realiser.realiseSentence(ret);
+                    
+                */
+            //Sujet "aléatoire" ou question
+            } else {
+                output = GenerateRandomSubject(sent, user);
             }
         }
         return output;
@@ -473,4 +410,103 @@ public class SentenceCreation {
         return realiser.realiseSentence(ret);
     }
 
+    private static String GenerateConversationUserPref(String sujet) {
+        String verb = "aimer";
+        String subject = "tu";
+        String obj = sujet;
+
+        NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+        sub.setFeature(Feature.PERSON, Person.SECOND);
+        sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+        sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+        sub.setFeature(Feature.PRONOMINAL, true);
+
+        VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+        SPhraseSpec ret = factory.createClause();
+        ret.setSubject(sub);
+        ret.setVerb(ve);
+        ret.setObject(obj);
+
+        ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+        return realiser.realiseSentence(ret);
+    }
+    
+    private static String GenerateConversationUserDesp(String sujet) {
+        String verb = "détester";
+        String subject = "tu";
+        String obj = sujet;
+
+        NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+        sub.setFeature(Feature.PERSON, Person.SECOND);
+        sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+        sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+        sub.setFeature(Feature.PRONOMINAL, true);
+
+        VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+        SPhraseSpec ret = factory.createClause();
+        ret.setSubject(sub);
+        ret.setVerb(ve);
+        ret.setObject(obj);
+
+        ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
+        return realiser.realiseSentence(ret);
+    }
+    
+    private static String GenerateRandomSubject(Sentence sent, User user) {
+        boolean find = false;
+        String output = "";
+        Document newSub = new Document();
+        MongoDB mongo = MongoDB.Instance();
+
+        for (Word w : sent.getSubject()) {
+
+            if (w.getType().contains("NC")) {
+            String desc = mongo.GetSingleDefinition(w.getWord(), "nc");
+
+                if (desc != null) {
+                    List<Document> docs = mongo.GetSameDesc(desc);
+
+                    int i = 0;
+                    while (i < docs.size() && !find) {
+                        if (!docs.get(i).getString("word").equals(w.getWord())) {
+                            if (!user.contains(docs.get(i).getString("word"))) {
+                                find = true;
+                                newSub = docs.get(i);
+                            }
+                        }
+                        i++;
+                    }
+                }
+            }
+        }
+
+        if (find) {
+            String verb = "aimer";
+            String subject = "tu";
+            String obj = newSub.getString("word") + "(" + newSub.getString("desc") + ")";
+
+            NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+            sub.setFeature(Feature.PERSON, Person.SECOND);
+            sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+            sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+            sub.setFeature(Feature.PRONOMINAL, true);
+
+            VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+            SPhraseSpec ret = factory.createClause();
+            ret.setSubject(sub);
+            ret.setVerb(ve);
+            ret.setObject(obj);
+
+            ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
+
+            //NPPhraseSpec o = factory.createNounPhrase("le", newSub.getString("word"));
+            output += realiser.realiseSentence(ret);
+        } else {
+            output += "Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
+        }
+        return output;
+    }
 }

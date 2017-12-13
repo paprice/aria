@@ -170,4 +170,8 @@ public class CurrentConversation {
         time = Time.PRESENT;
         
     }
+    
+    public static List<String> getCurrentSubjects(){
+        return currentSubjects;
+    }
 }

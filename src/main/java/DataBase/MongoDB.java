@@ -238,5 +238,4 @@ public class MongoDB {
 
         return allSame;
     }
-
 }
