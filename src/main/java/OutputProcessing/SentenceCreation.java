@@ -130,15 +130,14 @@ public class SentenceCreation {
         }
         return output;
     }*/
-
     public static String GenerateResponse(List<Word> words/*, Sentence sent*/) {
         Sentence sent = CurrentConversation.getLastSentence();
         String output = "";
         User user = User.Instance();
         Context context = CurrentConversation.getContext();
-    
+
         //Si Affirmation -> Question || Comparaison des goûts
-        if (context==Context.AFFIRMATION){
+        if (context == Context.AFFIRMATION) {
             boolean aime = false;
             for (Word v : sent.getVerb()) {
                 if (v.getWord().contains("aime")) {
@@ -149,23 +148,23 @@ public class SentenceCreation {
                 output = GenerateComparativeResponse(words, user);
             }
             output = output.concat(GenerateQuestionResponse(sent));
-    
-        //Si Histoire -> Question sur Histoire
-        } else if (context==Context.HISTOIRE){
+
+            //Si Histoire -> Question sur Histoire
+        } else if (context == Context.HISTOIRE) {
             output = GenerateQuestionResponse(sent);
-    
-        //Si Question -> Réponse
-        } else if (context==context.QUESTION){
+
+            //Si Question -> Réponse
+        } else if (context == context.QUESTION) {
             output = GeneratePreferenceResponse(words);
-    
-        //Si Réponse -> Relancement ou Question
+
+            //Si Réponse -> Relancement ou Question
         } else {
             String sujet;
             boolean subjP = false; //Sujet préféré de l'utilisateur abordé
             boolean subjD = false; //Sujet détesté de l'utilisateur abordé
-            
+
             // Le relancer sur son sujet préféré
-            if (subjP){
+            if (subjP) {
                 sujet = user.getFavoriteSubject();
                 String verb = "aimer";
                 String subject = "tu";
@@ -186,8 +185,8 @@ public class SentenceCreation {
 
                 ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
                 subjP = true;
-    
-            // Le relancer sur son sujet détesté
+
+                // Le relancer sur son sujet détesté
             } else if (subjD) {
                 sujet = user.getDespisedSubject();
                 String verb = "détester";
@@ -209,7 +208,7 @@ public class SentenceCreation {
 
                 ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHY);
                 subjD = true;
-            /*
+                /*
             } else if(subjD){
                 //Sujet préféré ARIA
                 if (true && subjP){
@@ -221,8 +220,8 @@ public class SentenceCreation {
                     String sujet = Preference.getDespiteSubject();
                     //Créer output
                 }
-            */
-            //Sujet "aléatoire" ou question
+                 */
+                //Sujet "aléatoire" ou question
             } else {
                 boolean find = false;
                 Document newSub = new Document();
@@ -279,7 +278,7 @@ public class SentenceCreation {
         }
         return output;
     }
-    
+
     public static String GenerateComparativeResponse(List<Word> words, User user) {
         String output = "";
         int prefU;
@@ -291,23 +290,23 @@ public class SentenceCreation {
                 prefIA = word.getPreference();
 
                 if (prefIA > 0 && prefU > 0) {
-                     String verb = "aimer";
+                    String verb = "aimer";
                     String subject = "je";
 
                     NPPhraseSpec obj = factory.createNounPhrase(word.getDet(), word.getWord());
-                    if(word.getNumber() == "s"){
-                    obj.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    if (word.getNumber().equals("s")) {
+                        obj.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
                     } else {
                         obj.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
                     }
-                    if(word.getKind() == "f"){
+                    if (word.getKind().equals("f")) {
                         obj.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
-                    } else{
+                    } else {
                         obj.setFeature(LexicalFeature.GENDER, Gender.MASCULINE);
                     }
 
                     obj.addPostModifier("également");
-                    
+
                     VPPhraseSpec ve = factory.createVerbPhrase(verb);
 
                     SPhraseSpec ret = factory.createClause();
@@ -315,11 +314,38 @@ public class SentenceCreation {
                     ret.setVerb(ve);
                     ret.setObject(obj);
                     //output = "J'aime " + word.getDet() + " " + word.getWord() + " également!";
-                    
+
                     output = realiser.realiseSentence(ret);
-                    
+
                 } else if (prefIA <= 0 && prefU <= 0) {
-                    output = "Je n'aime pas spécialement " + word.getDet() + word.getWord() + " non plus!\n";
+                    String verb = "aimer";
+                    String subject = "je";
+
+                    NPPhraseSpec obj = factory.createNounPhrase(word.getDet(), word.getWord());
+                    if (word.getNumber().equals("s")) {
+                        obj.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                    } else {
+                        obj.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+                    }
+                    if (word.getKind().equals("f")) {
+                        obj.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                    } else {
+                        obj.setFeature(LexicalFeature.GENDER, Gender.MASCULINE);
+                    }
+
+                    obj.addPostModifier("non plus");
+
+                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                    SPhraseSpec ret = factory.createClause();
+                    ret.setSubject(subject);
+                    ret.setVerb(ve);
+                    ret.setObject(obj);
+                 
+
+                    output = realiser.realiseSentence(ret);
+
+                    //output = "Je n'aime pas spécialement " + word.getDet() + word.getWord() + " non plus!\n";
                 } else {
                     output = "Sur ce coup, je dois dire que mon opinion est à l'inverse de la tienne.\n";
                 }
@@ -331,7 +357,7 @@ public class SentenceCreation {
     public static String GeneratePreferenceResponse(List<Word> words) {
         String verb = "";
         String subject = "";
-        Word object = new WordNoPref("test", "test");
+        Word object = null;
         String ono = "";
         String det = "";
         String comp = "";
@@ -393,7 +419,7 @@ public class SentenceCreation {
         String adj = "";
 
         CurrentConversation.setContext(Context.REPONSEFORCEE);
-        
+
         if (sent.getSubject().size() > 0) {
             switch (sent.getSubject().get(0).getWord().toLowerCase()) {
                 case "je":

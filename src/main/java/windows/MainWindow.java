@@ -110,6 +110,8 @@ public class MainWindow extends javax.swing.JFrame {
         Console.setColumns(20);
         Console.setForeground(new java.awt.Color(255, 255, 255));
         Console.setRows(5);
+        Console.setText("User >");
+        Console.setToolTipText("");
         Console.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(Console);
 

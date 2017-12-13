@@ -27,34 +27,44 @@ import org.languagetool.language.French;
  */
 public class WordParser {
 
-    public static List<Word> ExtractAll(POSSample userInput, POSSample withNumber) {
+    public static List<Word> ExtractAll(POSSample userInput, POSSample withNumber, Sentence sentence) {
 
         int preference;
         String[] words = userInput.getSentence();
         String[] wordTags = userInput.getTags();
         String[] lemmatize = LemmatizeWord(words);
         String[] wordTagsWithNumber = withNumber.getTags();
+        String chunks[] = SentenceParser.Chunker(userInput);
 
         List<Word> wordList = new ArrayList<>();
+
+        boolean isAddingSubject = true;
+        boolean isAddingVerb = false;
+
+        boolean start = false;
 
         for (int i = 0; i < wordTags.length; i++) {
 
             preference = getPreferenceValue(i, lemmatize, wordTags);
-
+            Word temp = null;
             if (wordTags[i].contains("NC") && !wordTags[i].contains("PONCT")) {
                 // Common name
                 String genre = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 2, wordTagsWithNumber[i].length() - 1);
                 String number = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 1);
-                wordList.add(new Noun("nc", lemmatize[i], preference, lemmatize[i - 1], genre, number));
+                temp = new Noun("nc", lemmatize[i], preference, lemmatize[i - 1], genre, number);
+                wordList.add(temp);
             } else if (wordTags[i].contains("V") && !wordTags[i].contains("ADV")) {
                 // Verb
-                wordList.add(new Verb("v", lemmatize[i], preference));
+                temp = new Verb("v", lemmatize[i], preference);
+                wordList.add(temp);
             } else if (wordTags[i].contains("A") && !wordTags[i].contains("ADV")) {
                 // Adjectives
-                wordList.add(new WordNoPref("adj", lemmatize[i]));
+                temp = new WordNoPref("adj", lemmatize[i]);
+                wordList.add(temp);
             } else if (wordTags[i].contains("ADV")) {
                 // Adverb
-                wordList.add(new WordNoPref("adv", lemmatize[i]));
+                temp = new WordNoPref("adv", lemmatize[i]);
+                wordList.add(temp);
             } else if (wordTags[i].contains("NP")) {
                 // Proper nouns
                 wordList.add(new ProperNoun("npp", lemmatize[i], preference));
@@ -66,24 +76,78 @@ public class WordParser {
                 Sentence sent = CurrentConversation.getLastSentence();
 
                 for (Word w : sent.getSubject()) {
-                    if (w.getKind() == genre && w.getNumber() == number) {
-                        replace = w;
-                    }
-                }
-                if (replace == null) {
-                    for (Word w : sent.getObject()) {
-                        if (w.getKind() == genre && w.getNumber() == number) {
+                    if (w.getType().equals("nc")) {
+                        if (/*w.getKind() == genre &&*/w.getNumber().equals(number)) {
                             replace = w;
                         }
                     }
                 }
                 if (replace == null) {
-                    wordList.add(new WordNoPref("cls", lemmatize[i]));
+                    for (Word w : sent.getObject()) {
+                        if (w.getType().equals("nc")) {
+                            if (/*w.getKind() == genre &&*/w.getNumber().equals(number)) {
+                                replace = w;
+                            }
+                        }
+                    }
+                }
+                if (replace == null) {
+                    temp = new WordNoPref("cls", lemmatize[i]);
+                    wordList.add(temp);
                 } else {
-                    wordList.add(new Noun(replace.getType(), replace.getWord(), replace.getPreference(), replace.getDet(), replace.getKind(), replace.getNumber()));
+                    temp = new Noun(replace.getType(), replace.getWord(), replace.getPreference(), replace.getDet(), replace.getKind(), replace.getNumber());
+                    wordList.add(temp);
+                }
+
+            } else {
+                temp = new WordNoPref("det", words[i]);
+            }
+
+            if (chunks[i].substring(0, 1).equals("B")) {
+                if (start) {
+                    if (isAddingSubject) {
+                        isAddingSubject = false;
+                        isAddingVerb = true;
+                        sentence.addVerb(temp.clone());
+                    } else if (isAddingVerb) {
+                        if (!wordTags[i].contains("V")) {
+                            isAddingVerb = false;
+                        }
+                        sentence.addObject(temp.clone());
+                    } else {
+                        sentence.addObject(temp.clone());
+                    }
+                } else {
+                    if (isAddingSubject) {
+                        sentence.addSubject(temp.clone());
+                        start = true;
+                    } else if (isAddingVerb) {
+                        sentence.addVerb(temp.clone());
+                    } else {
+                        sentence.addObject(temp.clone());
+                    }
+                }
+            } else {
+                if (isAddingSubject) {
+                    if (!wordTags[i].contains("V")) {
+                        sentence.addSubject(temp.clone());
+                    } else {
+                        sentence.addVerb(temp.clone());
+                        isAddingSubject = false;
+                        isAddingVerb = true;
+                    }
+                } else if (isAddingVerb) {
+                    if (wordTags[i].contains("V")) {
+                        sentence.addVerb(temp.clone());
+                    } else {
+                        sentence.addObject(temp.clone());
+                    }
+                } else {
+                    sentence.addObject(temp.clone());
                 }
             }
         }
+
         addSubjectsFromList(wordList);
 
         return wordList;
@@ -98,8 +162,10 @@ public class WordParser {
             List<AnalyzedSentence> analyzedSentences = null;
             try {
                 analyzedSentences = lt.analyzeText(word[i]);
+
             } catch (IOException ex) {
-                Logger.getLogger(WordParser.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(WordParser.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             for (AnalyzedSentence analyzedSentence : analyzedSentences) {
                 for (AnalyzedTokenReadings analyzedTokens : analyzedSentence.getTokensWithoutWhitespace()) {

@@ -57,4 +57,20 @@ public class ProperNoun implements Word {
     public String getNumber() {
         return null;
     }
+
+    @Override
+    public ProperNoun clone() {
+        ProperNoun n = null;
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la 
+            // méthode super.clone()
+            n = (ProperNoun) super.clone();
+        } catch (CloneNotSupportedException cnse) {
+            // Ne devrait jamais arriver car nous implémentons 
+            // l'interface Cloneable
+            cnse.printStackTrace(System.err);
+        }
+
+        return n;
+    }
 }

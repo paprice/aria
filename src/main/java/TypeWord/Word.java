@@ -11,16 +11,23 @@ import org.bson.Document;
  *
  * @author despa
  */
-public interface Word {
-    
+public interface Word  extends Cloneable{
+
     public Document CreateDoc();
 
     public String getType();
+
     public String getWord();
+
     public int getPreference();
+
     public String getDet();
+
     public String getKind();
+
     public String getNumber();
-    
+
+    public Word clone();
+            
     
 }

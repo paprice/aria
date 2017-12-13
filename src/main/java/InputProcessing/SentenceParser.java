@@ -6,8 +6,10 @@
 package InputProcessing;
 
 import static OutputProcessing.SentenceCreation.InitializeRealiser;
+import TypeWord.Word;
 import TypeWord.WordNoPref;
 import java.io.*;
+import java.util.List;
 import opennlp.tools.chunker.*;
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.*;
@@ -83,13 +85,13 @@ public class SentenceParser {
         return sentence;
     }
 
-    private static String[] Chunker(POSSample pos) {
+    public static String[] Chunker(POSSample pos) {
 
         return chunker.chunk(pos.getSentence(), pos.getTags());
 
     }
 
-    public static Sentence PartitionnateSentence(POSSample pos) {
+    public static Sentence PartitionnateSentence(POSSample pos, List<Word> ws) {
         Sentence sentence = new Sentence();
         String chunks[] = Chunker(pos);
 

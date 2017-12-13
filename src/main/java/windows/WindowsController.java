@@ -50,13 +50,15 @@ public class WindowsController {
         userInput = PreParse(userInput);
         POSSample parsed = Parse(userInput,false);
         POSSample withNumber = Parse(userInput, true);
-        List<Word> important = ExtractAll(parsed,withNumber);
+        Sentence s = new Sentence();
+        
+        List<Word> important = ExtractAll(parsed,withNumber, s);
         
         for(Word w : important){
             System.out.println(w.getWord());
         }
         
-        Sentence s = PartitionnateSentence(parsed);
+        //Sentence s = PartitionnateSentence(parsed);
 
         //Updating User Preferences
         WriteJson.WritePreferenceData(User.Instance().getName(), User.Instance().getUserPreferences());
