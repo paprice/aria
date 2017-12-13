@@ -69,33 +69,38 @@ public class WordParser {
                 // Proper nouns
                 wordList.add(new ProperNoun("npp", lemmatize[i], preference));
             } else if (wordTags[i].contains("CL")) {
-                Word replace = null;
-                String genre = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 2, wordTagsWithNumber[i].length() - 1);
-                String number = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 1);
+                if (words[i].equals("ils") || words[i].equals("il") || words[i].equals("elle") || words[i].equals("elles")) {
+                    Word replace = null;
+                    String genre = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 2, wordTagsWithNumber[i].length() - 1);
+                    String number = wordTagsWithNumber[i].substring(wordTagsWithNumber[i].length() - 1);
 
-                Sentence sent = CurrentConversation.getLastSentence();
+                    Sentence sent = CurrentConversation.getLastSentence();
 
-                for (Word w : sent.getSubject()) {
-                    if (w.getType().equals("nc")) {
-                        if (/*w.getKind() == genre &&*/w.getNumber().equals(number)) {
-                            replace = w;
-                        }
-                    }
-                }
-                if (replace == null) {
-                    for (Word w : sent.getObject()) {
+                    for (Word w : sent.getSubject()) {
                         if (w.getType().equals("nc")) {
                             if (/*w.getKind() == genre &&*/w.getNumber().equals(number)) {
                                 replace = w;
                             }
                         }
                     }
-                }
-                if (replace == null) {
-                    temp = new WordNoPref("cls", lemmatize[i]);
-                    wordList.add(temp);
+                    if (replace == null) {
+                        for (Word w : sent.getObject()) {
+                            if (w.getType().equals("nc")) {
+                                if (/*w.getKind() == genre &&*/w.getNumber().equals(number)) {
+                                    replace = w;
+                                }
+                            }
+                        }
+                    }
+                    if (replace == null) {
+                        temp = new WordNoPref("cls", lemmatize[i]);
+                        wordList.add(temp);
+                    } else {
+                        temp = new Noun(replace.getType(), replace.getWord(), replace.getPreference(), replace.getDet(), replace.getKind(), replace.getNumber());
+                        wordList.add(temp);
+                    }
                 } else {
-                    temp = new Noun(replace.getType(), replace.getWord(), replace.getPreference(), replace.getDet(), replace.getKind(), replace.getNumber());
+                    temp = new WordNoPref("cls", lemmatize[i]);
                     wordList.add(temp);
                 }
 
