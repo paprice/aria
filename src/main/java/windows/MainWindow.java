@@ -12,8 +12,13 @@ import DataBase.User;
 import OutputProcessing.SentenceCreation;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.net.URL;
+import javafx.beans.value.ChangeListener;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -24,6 +29,8 @@ public class MainWindow extends javax.swing.JFrame {
     private final MongoDB db = MongoDB.Instance();
     WindowsController wc;
     private final int size = 60;
+    private int sec = 0;
+    private Timer t;
 
     private ImageIcon AiImage;
 
@@ -40,6 +47,9 @@ public class MainWindow extends javax.swing.JFrame {
         UserText.requestFocusInWindow();
         LabelImage.setIcon(AiImage);
         LabelImage.setVisible(true);
+        t = new Timer(30000, (ActionEvent e) -> {
+            if(sec <= 30) {relaunchProgressBar.setValue(++sec);}
+        });
 
     }
 
@@ -77,6 +87,7 @@ public class MainWindow extends javax.swing.JFrame {
         Console = new javax.swing.JTextArea();
         LabelImage = new javax.swing.JLabel();
         RelaunchConvo = new javax.swing.JButton();
+        relaunchProgressBar = new javax.swing.JProgressBar();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -126,6 +137,15 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        relaunchProgressBar.setMaximum(30);
+        relaunchProgressBar.setToolTipText("");
+        relaunchProgressBar.setName("relaunchTimer"); // NOI18N
+        relaunchProgressBar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                relaunchProgressBarStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,14 +159,17 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(LabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(LabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 31, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                                .addComponent(RelaunchConvo, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(120, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(relaunchProgressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(RelaunchConvo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))))))
+                .addGap(120, 120, 120))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +184,9 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(LabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
                         .addComponent(RelaunchConvo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142)))
+                        .addGap(32, 32, 32)
+                        .addComponent(relaunchProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(98, 98, 98)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                     .addComponent(UserText))
@@ -219,9 +244,19 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void RelaunchConvoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelaunchConvoActionPerformed
         CurrentConversation.setContext(Context.RELANCE);
+        relaunchProgressBar.setValue(0);
         SentenceCreation.GenerateResponse(null);
     }//GEN-LAST:event_RelaunchConvoActionPerformed
 
+    private void relaunchProgressBarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_relaunchProgressBarStateChanged
+        if (relaunchProgressBar.getValue() == 30){
+            CurrentConversation.setContext(Context.RELANCE);
+            relaunchProgressBar.setValue(0);
+            SentenceCreation.GenerateResponse(null);
+        }
+    }//GEN-LAST:event_relaunchProgressBarStateChanged
+
+    
     private void ShowAIResponse(String resp) {
         Console.setText(Console.getText() + "ARIA > " + resp + "\nUSER > ");
     }
@@ -237,5 +272,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JProgressBar relaunchProgressBar;
     // End of variables declaration//GEN-END:variables
 }
