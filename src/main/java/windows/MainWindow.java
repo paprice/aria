@@ -13,6 +13,7 @@ import OutputProcessing.SentenceCreation;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import javafx.beans.value.ChangeListener;
 import javax.swing.JLabel;
@@ -30,7 +31,14 @@ public class MainWindow extends javax.swing.JFrame {
     WindowsController wc;
     private final int size = 60;
     private int sec = 0;
-    private Timer t;
+    private Timer t = new Timer(30000, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(sec <= 30) {
+                relaunchProgressBar.setValue(++sec);
+            } else {}
+        }
+    });
 
     private ImageIcon AiImage;
 
@@ -47,9 +55,6 @@ public class MainWindow extends javax.swing.JFrame {
         UserText.requestFocusInWindow();
         LabelImage.setIcon(AiImage);
         LabelImage.setVisible(true);
-        t = new Timer(30000, (ActionEvent e) -> {
-            if(sec <= 30) {relaunchProgressBar.setValue(++sec);}
-        });
 
     }
 
