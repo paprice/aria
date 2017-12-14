@@ -154,11 +154,11 @@ public class SentenceCreation {
             output = GenerateQuestionResponse(sent);
 
         //Si Question -> Réponse
-        } else if (context == context.QUESTION) {
+        } else if (context == Context.QUESTION) {
             output = GeneratePreferenceResponse(words);
 
-        //Si Réponse -> Relancement ou Question
-        } else {
+        //Si Relance -> Relancement ou Question
+        } else if (context == Context.RELANCE) {
             String sujet;
 
             // Le relancer sur son sujet préféré
@@ -212,8 +212,12 @@ public class SentenceCreation {
                     }
                 }
             }
-               
             //Sujet "aléatoire" ou question
+            output = GenerateRandomSubject(sent, user);
+            return output;
+            
+        //Si Réponse -> Relancement ou Question
+        } else {
             output = GenerateRandomSubject(sent, user);
         }
         return output;
