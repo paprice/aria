@@ -172,46 +172,49 @@ public class SentenceCreation {
             if (!CurrentConversation.getCurrentSubjects().contains(sujet)) {
                 return GenerateConversationUserDesp(sujet);
                 
-            /*
+            
             }
                 
-            //Sujet aimé d'ARIA
-            //MongoDB mongo = MongoDB.Instance();
-            //int score =  mongo.GetPreference("pomme", "nc");
-            for (Word word : words) {
-                if (word.getType().equals("nc") || (word.getType().equals("verb") && !word.getWord().equals("aimer"))) {
-                    if (word.getPreference() >= 20) {
-                        sujet = word.getWord();
-                        break;
+            // Le relancer sur le sujet aimé d'ARIA
+            MongoDB mongo = MongoDB.Instance();
+            for (Word w : sent.getSubject()) {
+                if (w.getType().contains("NC")) {
+                    String desc = mongo.GetSingleDefinition(w.getWord(), "nc");
+                    if (desc != null) {
+                        List<Document> docs = mongo.GetSameDesc(desc);
+                        int i = 0;
+                        while (i < docs.size()) {
+                            sujet = docs.get(i).getString("word");
+                            if (mongo.GetPreference(sujet, "nc") >= 20 &&
+                                        (!CurrentConversation.getCurrentSubjects().contains(sujet))) {
+                                String verb = "penser";
+                                String subject = "tu";
+                                String obj = sujet;
+
+                                NPPhraseSpec sub = factory.createNounPhrase("le", subject);
+                                sub.setFeature(Feature.PERSON, Person.SECOND);
+                                sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+                                sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
+                                sub.setFeature(Feature.PRONOMINAL, true);
+                
+                                VPPhraseSpec ve = factory.createVerbPhrase(verb);
+
+                                SPhraseSpec ret = factory.createClause();
+                                ret.setSubject(sub);
+                                ret.setVerb(ve);
+                                ret.setObject(obj);
+
+                                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHAT_OBJECT);
+                                output = realiser.realiseSentence(ret);
+                                return output;
+                            }
+                        }
                     }
                 }
             }
-            if(!CurrentConversation.getCurrentSubjects().contains(sujet)){
-                String verb = "penser";
-                String subject = "tu";
-                String obj = sujet;
-
-                NPPhraseSpec sub = factory.createNounPhrase("le", subject);
-                sub.setFeature(Feature.PERSON, Person.SECOND);
-                sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
-                sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
-                sub.setFeature(Feature.PRONOMINAL, true);
-
-                VPPhraseSpec ve = factory.createVerbPhrase(verb);
-
-                SPhraseSpec ret = factory.createClause();
-                ret.setSubject(sub);
-                ret.setVerb(ve);
-                ret.setObject(obj);
-
-                ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.WHAT_OBJECT);
-                output = realiser.realiseSentence(ret);
-                    
-                */
+               
             //Sujet "aléatoire" ou question
-            } else {
-                output = GenerateRandomSubject(sent, user);
-            }
+            output = GenerateRandomSubject(sent, user);
         }
         return output;
     }
