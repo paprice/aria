@@ -26,7 +26,6 @@ public class CurrentConversation {
     
     //Contains critical information pertaining to the last user sentence
     private static Context context;
-    private static Time time;
 
     public static void addSubjectsFromList(List<Word> wordList) {
         String item;
@@ -48,7 +47,6 @@ public class CurrentConversation {
             }
         }
         setContextFromList(wordList);
-        setTimeFromList(wordList);
     }
 
     public static void setLastUserSentence(Sentence sentence) {
@@ -65,10 +63,6 @@ public class CurrentConversation {
     
     public static Context getContext(){
         return context;
-    }
-    
-    public static Time getTime(){
-        return time;
     }
     
     public static String getAIFavoredCurrentSubject() {
@@ -120,54 +114,6 @@ public class CurrentConversation {
         
         //Statement
         context = Context.AFFIRMATION;
-        
-    }
-    
-    public static void setTimeFromList(List<Word> wordList) {
-        Document doc;
-        
-        //Context synchronization
-        if (context == Context.HISTOIRE){
-            time = Time.PASSE;
-            return;
-        }
-        
-        for (int i = 0; i < wordList.size(); ++i) {
-            doc = wordList.get(i).CreateDoc();
-            //Past
-            if (doc.containsValue("hier")) {
-                time = Time.PASSE;
-                return;
-            }
-            else if (i < wordList.size() - 4){
-                if (doc.containsValue("il") && wordList.get(i + 1).CreateDoc().containsValue("y") &&
-                        wordList.get(i + 2).CreateDoc().containsValue("avoir") &&
-                        wordList.get(i + 3).CreateDoc().containsValue("longtemps")){
-                    time = Time.PASSE;
-                    return;
-                }
-            }
-            else if (i < wordList.size() - 5){
-                if (doc.containsValue("il") && wordList.get(i + 1).CreateDoc().containsValue("y") &&
-                        wordList.get(i + 2).CreateDoc().containsValue("avoir") &&
-                        (wordList.get(i + 4).CreateDoc().containsValue("longtemps") ||
-                        wordList.get(i + 4).CreateDoc().containsValue("jour") ||
-                        wordList.get(i + 4).CreateDoc().containsValue("mois") ||
-                        wordList.get(i + 4).CreateDoc().containsValue("année"))){
-                    time = Time.PASSE;
-                    return;
-                }
-            }
-            
-            //Future
-            if (doc.containsValue("demain")) {
-                time = Time.FUTUR;
-                return;
-            }
-        }
-        
-        //Present
-        time = Time.PRESENT;
         
     }
     

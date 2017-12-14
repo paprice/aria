@@ -149,10 +149,6 @@ public class SentenceCreation {
             }
             output = output.concat(GenerateQuestionResponse(sent));
 
-        //Si Histoire -> Question sur Histoire
-        } else if (context == Context.HISTOIRE) {
-            output = GenerateQuestionResponse(sent);
-
         //Si Question -> Réponse
         } else if (context == Context.QUESTION) {
             output = GeneratePreferenceResponse(words);
@@ -171,8 +167,6 @@ public class SentenceCreation {
             sujet = user.getDespisedSubject();
             if (!CurrentConversation.getCurrentSubjects().contains(sujet)) {
                 return GenerateConversationUserDesp(sujet);
-                
-            
             }
                 
             // Le relancer sur le sujet aimé d'ARIA
@@ -214,7 +208,6 @@ public class SentenceCreation {
             }
             //Sujet "aléatoire" ou question
             output = GenerateRandomSubject(sent, user);
-            return output;
             
         //Si Réponse -> Relancement ou Question
         } else {
