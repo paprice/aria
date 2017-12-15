@@ -250,14 +250,14 @@ public class MainWindow extends javax.swing.JFrame {
     private void RelaunchConvoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelaunchConvoActionPerformed
         CurrentConversation.setContext(Context.RELANCE);
         relaunchProgressBar.setValue(0);
-        SentenceCreation.GenerateResponse(null);
+        ShowAIResponse(SentenceCreation.GenerateResponse(null));
     }//GEN-LAST:event_RelaunchConvoActionPerformed
 
     private void relaunchProgressBarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_relaunchProgressBarStateChanged
         if (relaunchProgressBar.getValue() == 30){
             CurrentConversation.setContext(Context.RELANCE);
             relaunchProgressBar.setValue(0);
-            SentenceCreation.GenerateResponse(null);
+            ShowAIResponse(SentenceCreation.GenerateResponse(null));
         }
     }//GEN-LAST:event_relaunchProgressBarStateChanged
 
