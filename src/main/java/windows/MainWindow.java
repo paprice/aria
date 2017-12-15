@@ -18,6 +18,7 @@ import java.net.URL;
 import javafx.beans.value.ChangeListener;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 
@@ -31,16 +32,23 @@ public class MainWindow extends javax.swing.JFrame {
     WindowsController wc;
     private final int size = 60;
     private int sec = 0;
-    private Timer t = new Timer(30000, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if(sec <= 30) {
-                relaunchProgressBar.setValue(++sec);
-            } else {}
-        }
-    });
+    private Timer t;
 
     private ImageIcon AiImage;
+
+    private void TimeProgressBar() {
+        ActionListener listener = new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                if (relaunchProgressBar.getValue() < 30) {
+                    relaunchProgressBar.setValue(relaunchProgressBar.getValue()+1);
+                } else {
+                    RelaunchConvoActionPerformed(ae);
+                }
+            }
+        };
+
+        t = new Timer(1000, listener);
+    }
 
     public MainWindow(String user) {
 
@@ -55,6 +63,9 @@ public class MainWindow extends javax.swing.JFrame {
         UserText.requestFocusInWindow();
         LabelImage.setIcon(AiImage);
         LabelImage.setVisible(true);
+        TimeProgressBar();
+
+        t.start();
 
     }
 
@@ -254,14 +265,13 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_RelaunchConvoActionPerformed
 
     private void relaunchProgressBarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_relaunchProgressBarStateChanged
-        if (relaunchProgressBar.getValue() == 30){
+        if (relaunchProgressBar.getValue() == 30) {
             CurrentConversation.setContext(Context.RELANCE);
             relaunchProgressBar.setValue(0);
             ShowAIResponse(SentenceCreation.GenerateResponse(null));
         }
     }//GEN-LAST:event_relaunchProgressBarStateChanged
 
-    
     private void ShowAIResponse(String resp) {
         Console.setText(Console.getText() + "ARIA > " + resp + "\nUSER > ");
     }
