@@ -244,7 +244,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         String output = wc.AiDecortication(userText, db);
         ShowAIResponse(output);
-
+        relaunchProgressBar.setValue(0);
     }
 
 
