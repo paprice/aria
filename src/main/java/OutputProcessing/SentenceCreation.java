@@ -52,95 +52,17 @@ public class SentenceCreation {
         realiser = new Realiser();
     }
 
-    /*public static String GenerateResponse(List<Word> words, boolean isQuestion, Sentence sent) {
-        Sentence sent = CurrentConversation.getLastSentence();
-        String output = "";
-        User user = User.Instance();
-
-        if (!isQuestion) {
-            if (!WindowsController.wasLastQuestion) {
-                boolean aime = false;
-                for (Word v : sent.getVerb()) {
-                    if (v.getWord().contains("aime")) {
-                        aime = true;
-                    }
-                }
-                if (aime) {
-                    output = GenerateComparativeResponse(words, user);
-                } else {
-                    output = GenerateQuestionResponse(words, sent);
-                }
-                WindowsController.wasLastQuestion = true;
-            } else if (WindowsController.wasLastQuestion) {
-                //output = "D'accord.";
-                boolean find = false;
-                Document newSub = new Document();
-                MongoDB mongo = MongoDB.Instance();
-
-                for (Word w : sent.getSubject()) {
-
-                    if (w.getType().contains("NC")) {
-                        String desc = mongo.GetSingleDefinition(w.getWord(), "nc");
-                        if (desc != null) {
-                            List<Document> docs = mongo.GetSameDesc(desc);
-                            int i = 0;
-                            while (i < docs.size() && !find) {
-                                if (!docs.get(i).getString("word").equals(w.getWord())) {
-                                    if (!user.contains(docs.get(i).getString("word"))) {
-                                        find = true;
-                                        newSub = docs.get(i);
-                                    }
-                                }
-                                i++;
-                            }
-                        }
-                    }
-                }
-                if (find) {
-                    String verb = "aimer";
-                    String subject = "tu";
-                    String obj = newSub.getString("word") + "(" + newSub.getString("desc") + ")";
-
-                    NPPhraseSpec sub = factory.createNounPhrase("le", subject);
-                    sub.setFeature(Feature.PERSON, Person.SECOND);
-                    sub.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
-                    sub.setFeature(LexicalFeature.GENDER, Gender.FEMININE);
-                    sub.setFeature(Feature.PRONOMINAL, true);
-
-                    VPPhraseSpec ve = factory.createVerbPhrase(verb);
-
-                    SPhraseSpec ret = factory.createClause();
-                    ret.setSubject(sub);
-                    ret.setVerb(ve);
-                    ret.setObject(obj);
-
-                    ret.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
-
-                    //NPPhraseSpec o = factory.createNounPhrase("le", newSub.getString("word"));
-                    output += realiser.realiseSentence(ret);
-                } else {
-                    output += "Y a-t-il d'autres sujets que nous n'avons pas encore abordé qui te passionnent?";
-                }
-
-                WindowsController.wasLastQuestion = false;
-
-            }
-        } else {
-            output = GeneratePreferenceResponse(words);
-        }
-        return output;
-    }*/
     public static String GenerateResponse(List<Word> words/*, Sentence sent*/) {
         Sentence sent = CurrentConversation.getLastSentence();
         String output = "";
         User user = User.Instance();
         Context context = CurrentConversation.getContext();
         
-        //Si Affirmation -> Question || Comparaison des goûts
+        //Si Affirmation -> Question ou Comparaison des goûts
         if (context == Context.AFFIRMATION) {
             boolean aime = false;
             for (Word v : sent.getVerb()) {
-                if (v.getWord().contains("aime")) {
+                if (v.getWord().contains("aime") || v.getWord().contains("adore")) {
                     aime = true;
                 }
             }
